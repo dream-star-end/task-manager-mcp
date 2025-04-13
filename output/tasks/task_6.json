@@ -1,0 +1,28 @@
+{
+  "id": "6",
+  "name": "系统管理",
+  "description": "构建系统管理模块，包括用户管理、系统配置和日志审计功能。",
+  "status": "todo",
+  "priority": "low",
+  "dependencies": [
+    "1"
+  ],
+  "blocked_by": [
+    "1"
+  ],
+  "created_at": "2025-04-14T02:25:19.986238",
+  "updated_at": "2025-04-14T02:25:19.986238",
+  "completed_at": null,
+  "tags": [
+    "用户管理",
+    "系统配置",
+    "日志审计"
+  ],
+  "assigned_to": null,
+  "estimated_hours": null,
+  "actual_hours": null,
+  "code_references": [],
+  "parent_task_id": null,
+  "complexity": "medium",
+  "subtasks": []
+}

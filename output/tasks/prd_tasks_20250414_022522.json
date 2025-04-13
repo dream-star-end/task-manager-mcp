@@ -1,0 +1,174 @@
+[
+  {
+    "id": "1",
+    "name": "文档管理",
+    "description": "构建文档管理模块，实现知识文档的创建、编辑、删除，支持文件夹或标签分类管理，支持 Word, PDF, Markdown 等格式文档上传，并提供文档在线预览功能。",
+    "status": "todo",
+    "priority": "high",
+    "dependencies": [],
+    "blocked_by": [],
+    "created_at": "2025-04-14T02:25:19.986238",
+    "updated_at": "2025-04-14T02:25:19.986238",
+    "completed_at": null,
+    "tags": [
+      "文档",
+      "上传",
+      "预览",
+      "分类"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "parent_task_id": null,
+    "complexity": "medium",
+    "subtasks": []
+  },
+  {
+    "id": "2",
+    "name": "搜索功能",
+    "description": "构建搜索功能模块，实现基于标题、内容、标签的全文检索，支持高级搜索选项（如按作者、时间范围筛选），并提供搜索结果关键词高亮显示。",
+    "status": "todo",
+    "priority": "high",
+    "dependencies": [
+      "1"
+    ],
+    "blocked_by": [
+      "1"
+    ],
+    "created_at": "2025-04-14T02:25:19.986238",
+    "updated_at": "2025-04-14T02:25:19.986238",
+    "completed_at": null,
+    "tags": [
+      "搜索",
+      "全文检索",
+      "高级搜索",
+      "关键词"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "parent_task_id": null,
+    "complexity": "medium",
+    "subtasks": []
+  },
+  {
+    "id": "3",
+    "name": "版本控制",
+    "description": "构建版本控制模块，记录文档的修改历史，支持查看历史版本和回滚到指定版本。",
+    "status": "todo",
+    "priority": "medium",
+    "dependencies": [
+      "1"
+    ],
+    "blocked_by": [
+      "1"
+    ],
+    "created_at": "2025-04-14T02:25:19.986238",
+    "updated_at": "2025-04-14T02:25:19.986238",
+    "completed_at": null,
+    "tags": [
+      "版本",
+      "历史",
+      "回滚"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "parent_task_id": null,
+    "complexity": "medium",
+    "subtasks": []
+  },
+  {
+    "id": "4",
+    "name": "权限管理",
+    "description": "构建权限管理模块，支持按用户、用户组或角色设置文档的查看、编辑权限，区分管理员、编辑者、普通用户等角色。",
+    "status": "todo",
+    "priority": "medium",
+    "dependencies": [
+      "1"
+    ],
+    "blocked_by": [
+      "1"
+    ],
+    "created_at": "2025-04-14T02:25:19.986238",
+    "updated_at": "2025-04-14T02:25:19.986238",
+    "completed_at": null,
+    "tags": [
+      "权限",
+      "用户",
+      "角色"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "parent_task_id": null,
+    "complexity": "medium",
+    "subtasks": []
+  },
+  {
+    "id": "5",
+    "name": "用户激励",
+    "description": "构建用户激励模块，统计用户贡献度（如上传文档数、编辑次数），设立知识贡献排行榜。",
+    "status": "todo",
+    "priority": "low",
+    "dependencies": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "blocked_by": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "created_at": "2025-04-14T02:25:19.986238",
+    "updated_at": "2025-04-14T02:25:19.986238",
+    "completed_at": null,
+    "tags": [
+      "激励",
+      "贡献度",
+      "排行榜"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "parent_task_id": null,
+    "complexity": "medium",
+    "subtasks": []
+  },
+  {
+    "id": "6",
+    "name": "系统管理",
+    "description": "构建系统管理模块，包括用户管理、系统配置和日志审计功能。",
+    "status": "todo",
+    "priority": "low",
+    "dependencies": [
+      "1"
+    ],
+    "blocked_by": [
+      "1"
+    ],
+    "created_at": "2025-04-14T02:25:19.986238",
+    "updated_at": "2025-04-14T02:25:19.986238",
+    "completed_at": null,
+    "tags": [
+      "用户管理",
+      "系统配置",
+      "日志审计"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "parent_task_id": null,
+    "complexity": "medium",
+    "subtasks": []
+  }
+]

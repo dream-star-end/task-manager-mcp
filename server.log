@@ -1,0 +1,1432 @@
+2025-04-13 21:44:15,972 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 21:44:15,972 - config - INFO - Configured LLM provider: gemini
+2025-04-13 21:44:15,972 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 21:44:15,972 - src.llm.gemini - ERROR - Gemini API Key not provided or found in environment variable GEMINI_API_KEY.
+2025-04-13 21:44:15,972 - config - ERROR - Failed to initialize LLM client for provider 'gemini': Gemini API Key is required.
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\config.py", line 40, in get_llm_client
+    client = GeminiLLM()
+             ^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 41, in __init__
+    raise ValueError("Gemini API Key is required.")
+ValueError: Gemini API Key is required.
+2025-04-13 21:44:15,986 - server_module - INFO - Initializing TaskService...
+2025-04-13 21:44:15,986 - src.services.prd_parser - INFO - [PrdParser Init] Initialized without an LLM client. Will use fallback parsing.
+2025-04-13 21:44:15,986 - services.task_service - INFO - TaskService initialized. PrdParser configured without LLM support.
+2025-04-13 21:44:15,986 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 21:44:19,228 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 21:44:19,228 - config - INFO - Configured LLM provider: gemini
+2025-04-13 21:44:19,228 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 21:44:19,228 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 21:44:19,228 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 21:44:19,228 - config - INFO - Created GeminiLLM client.
+2025-04-13 21:44:19,228 - server_module - INFO - Initializing TaskService...
+2025-04-13 21:44:19,228 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 21:44:19,228 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 21:44:19,228 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 21:44:23,943 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 21:44:23,943 - config - INFO - Configured LLM provider: gemini
+2025-04-13 21:44:23,943 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 21:44:23,943 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 21:44:23,943 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 21:44:23,943 - config - INFO - Created GeminiLLM client.
+2025-04-13 21:44:23,946 - server_module - INFO - Initializing TaskService...
+2025-04-13 21:44:23,946 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 21:44:23,946 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 21:44:23,946 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 21:44:27,005 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 21:44:27,005 - config - INFO - Configured LLM provider: gemini
+2025-04-13 21:44:27,005 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 21:44:27,005 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 21:44:27,005 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 21:44:27,005 - config - INFO - Created GeminiLLM client.
+2025-04-13 21:44:27,007 - server_module - INFO - Initializing TaskService...
+2025-04-13 21:44:27,007 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 21:44:27,007 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 21:44:27,007 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 21:44:45,628 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 21:44:45,628 - config - INFO - Configured LLM provider: gemini
+2025-04-13 21:44:45,628 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 21:44:45,628 - src.llm.gemini - ERROR - Gemini API Key not provided or found in environment variable GEMINI_API_KEY.
+2025-04-13 21:44:45,628 - config - ERROR - Failed to initialize LLM client for provider 'gemini': Gemini API Key is required.
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\config.py", line 40, in get_llm_client
+    client = GeminiLLM()
+             ^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 41, in __init__
+    raise ValueError("Gemini API Key is required.")
+ValueError: Gemini API Key is required.
+2025-04-13 21:44:45,628 - server_module - INFO - Initializing TaskService...
+2025-04-13 21:44:45,628 - src.services.prd_parser - INFO - [PrdParser Init] Initialized without an LLM client. Will use fallback parsing.
+2025-04-13 21:44:45,628 - services.task_service - INFO - TaskService initialized. PrdParser configured without LLM support.
+2025-04-13 21:44:45,628 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 21:45:15,367 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 21:45:15,367 - config - INFO - Configured LLM provider: gemini
+2025-04-13 21:45:15,367 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 21:45:15,367 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 21:45:15,367 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 21:45:15,367 - config - INFO - Created GeminiLLM client.
+2025-04-13 21:45:15,370 - server_module - INFO - Initializing TaskService...
+2025-04-13 21:45:15,370 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 21:45:15,370 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 21:45:15,370 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 21:45:17,652 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 21:45:24,386 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 21:45:24,386 - server_module - INFO - 解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 21:45:24,386 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 21:45:24,386 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-13 21:45:24,387 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-13 21:45:24,387 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-13 21:46:31,958 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 21:46:31,958 - config - INFO - Configured LLM provider: gemini
+2025-04-13 21:46:31,958 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 21:46:31,958 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 21:46:31,958 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 21:46:31,958 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 21:46:31,958 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 21:46:31,958 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 21:46:31,958 - config - INFO - Created GeminiLLM client.
+2025-04-13 21:46:31,960 - server_module - INFO - Initializing TaskService...
+2025-04-13 21:46:31,960 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 21:46:31,960 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 21:46:31,960 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 21:46:31,971 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 21:49:07,617 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 21:49:07,617 - server_module - INFO - 解析PRD文档为主任务: # 项目：新一代智能运动App
+
+## 1. 用户认证
+### 1.1 用户注册
+- 实现手机号、邮...
+2025-04-13 21:49:07,617 - services.task_service - INFO - 解析PRD文档: # 项目：新一代智能运动App
+
+## 1. 用户认证
+### 1.1 用户注册
+- 实现手机号、邮...
+2025-04-13 21:49:07,617 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-13 21:49:07,617 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-13 21:49:07,617 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-13 21:49:12,557 - src.llm.gemini - INFO - Successfully parsed PRD into 14 validated task dictionaries using Gemini.
+2025-04-13 21:49:12,557 - src.services.prd_parser - INFO - [PrdParser LLM] Received 14 validated task dictionaries from LLM client.
+2025-04-13 21:49:12,558 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 14 tasks...
+2025-04-13 21:49:15,868 - src.services.prd_parser - INFO - [PrdParser LLM] Received 20 dependency pairs from LLM.
+2025-04-13 21:49:15,868 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 20 dependency pairs from second LLM call.
+2025-04-13 21:49:15,869 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 14 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-13 21:49:15,869 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 14 tasks.
+2025-04-13 21:49:15,869 - server_module - INFO - 主任务列表已写入文件: prd_main_tasks_20250413_214915.md
+2025-04-13 21:52:24,385 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 21:52:24,386 - server_module - INFO - 为任务 1 生成子任务
+2025-04-13 21:52:24,386 - services.task_service - INFO - 为任务 1 生成子任务...
+2025-04-13 21:52:24,386 - src.llm.gemini - INFO - Generating subtasks for task 1 (1. 用户认证) using Gemini model
+2025-04-13 21:53:00,758 - src.llm.gemini - ERROR - Failed to decode JSON response from Gemini: Unterminated string starting at: line 40 column 12960 (char 13947). Response text: [
+  {
+    "description": "设计用户认证流程，包括注册、登录、密码重置等环节。",
+    "id": "1.1",
+    "name": "用户认证流程设计",
+    "priority": "critical",
+    "estimated_hours": 8,
+    "tags": ["认证", "设计", "流程图", "用户体验"]
+  },
+  {
+    "description": "实现用户注册功能，包括用户名、密码等信息的验证和存储。",
+    "id": "1.2",
+    "name": "用户注册功能实现",
+    "priority": "critical",
+    "estimated_hours": 16,
+    "tags": ["注册", "后端", "数据库", "API", "安全", "验证", "密码加密"]
+  },
+  {
+    "description": "实现用户登录功能，验证用户身份并生成会话。",
+    "id": "1.3",
+    "name": "用户登录功能实现",
+    "priority": "critical",
+    "estimated_hours": 16,
+    "tags": ["登录", "后端", "数据库", "API", "安全", "会话管理", "身份验证", "Token"]
+  },
+  {
+    "description": "实现密码重置功能，允许用户通过邮箱或短信重置密码。",
+    "id": "1.4",
+    "name": "密码重置功能实现",
+    "priority": "high",
+    "estimated_hours": 8,
+    "tags": ["密码", "重置", "后端", "API", "安全", "邮箱", "短信", "验证"]
+  },
+  {
+    "description": "对用户认证相关功能进行单元测试和集成测试，确保其稳定性和安全性。",
+    "id": "1.5",
+    "name": "用户认证功能测试",
+    "priority": "high",
+    "estimated_hours": 16,
+    "tags": ["测试", "单元测试", "集成测试", "安全测试", "回归测试", "自动化测试", "性能测试", "API测试", "用户体验测试", "兼容性测试", "冒烟测试", "探索性测试", "验收测试", "A/B测试", "灰度测试", "渗透测试", "模糊测试", "静态代码分析", "动态代码分析", "代码审查", "代码覆盖率", "测试报告", "缺陷管理", "测试用例设计", "测试环境搭建", "测试数据准备", "测试脚本编写", "测试工具使用", "测试流程管理", "测试团队协作", "测试风险评估", "测试质量保证", "测试度量分析", "测试改进优化", "测试文档编写", "测试培训", "测试咨询", "测试外包", "测试认证", "测试标准", "测试规范", "测试方法", "测试技术", "测试理论", "测试实践", "测试案例", "测试经验", "测试教训", "测试最佳实践", "测试未来趋势", "测试职业发展", "测试社区", "测试资源", "测试工具", "测试框架", "测试平台", "测试服务", "测试解决方案", "测试自动化", "测试智能化", "测试云化", "测试移动化", "测试大数据化", "测试物联网化", "测试人工智能化", "测试区块链化", "测试元宇宙化", "测试Web3化", "测试DevOps化", "测试敏捷化", "测试持续集成", "测试持续交付", "测试持续部署", "测试左移", "测试右移", "测试全栈", "测试安全", "测试性能", "测试可用性", "测试可维护性", "测试可扩展性", "测试可移植性", "测试可重用性", "测试可配置性", "测试可定制性", "测试可监控性", "测试可审计性", "测试可追溯性", "测试可恢复性", "测试可容错性", "测试可伸缩性", "测试可信赖性", "测试可预测性", "测试可验证性", "测试可确认性", "测试可接受性", "测试可理解性", "测试可操作性", "测试可学习性", "测试可记忆性", "测试可访问性", "测试可支持性", "测试可维护性", "测试可进化性", "测试可持续性", "测试可适应性", "测试可弹性", "测试可韧性", "测试可复原性", "测试可再生性", "测试可循环性", "测试可降解性", "测试可回收性", "测试可再利用性", "测试可再循环性", "测试可再制造性", "测试可再设计性", "测试可再创造性", "测试可再发现性", "测试可再认识性", "测试可再评估性", "测试可再改进性", "测试可再优化性", "测试可再创新性", "测试可再突破性", "测试可再超越性", "测试可再引领性", "测试可再赋能性", "测试可再激活性", "测试可再繁荣性", "测试可再辉煌性", "测试可再永恒性", "测试可再无限性", "测试可再可能性", "测试可再奇迹性", "测试可再梦想性", "测试可再希望性", "测试可再光明性", "测试可再美好性", "测试可再幸福性", "测试可再快乐性", "测试可再健康性", "测试可再长寿性", "测试可再和平性", "测试可再繁荣性", "测试可再昌盛性", "测试可再强盛性", "测试可再伟大性", "测试可再复兴性", "测试可再中国梦性", "测试可再人类命运共同体性", "测试可再世界大同性", "测试可再宇宙和谐性", "测试可再万物共生性", "测试可再可持续发展性", "测试可再绿色环保性", "测试可再低碳节能性", "测试可再循环经济性", "测试可再生态文明性", "测试可再美丽中国性", "测试可再全球生态文明性", "测试可再宇宙生态文明性", "测试可再万物生态文明性", "测试可再可持续发展目标性", "测试可再联合国2030年可持续发展议程性", "测试可再人类命运共同体构建性", "测试可再世界大同理想实现性", "测试可再宇宙和谐共生性", "测试可再万物和谐共生性", "测试可再可持续发展道路性", "测试可再绿色发展道路性", "测试可再低碳发展道路性", "测试可再循环经济发展道路性", "测试可再生态文明发展道路性", "测试可再美丽中国建设道路性", "测试可再全球生态文明建设道路性", "测试可再宇宙生态文明建设道路性", "测试可再万物生态文明建设道路性", "测试可再可持续发展模式性", "测试可再绿色发展模式性", "测试可再低碳发展模式性", "测试可再循环经济发展模式性", "测试可再生态文明发展模式性", "测试可再美丽中国建设模式性", "测试可再全球生态文明建设模式性", "测试可再宇宙生态文明建设模式性", "测试可再万物生态文明建设模式性", "测试可再可持续发展理念性", "测试可再绿色发展理念性", "测试可再低碳发展理念性", "测试可再循环经济发展理念性", "测试可再生态文明发展理念性", "测试可再美丽中国建设理念性", "测试可再全球生态文明建设理念性", "测试可再宇宙生态文明建设理念性", "测试可再万物生态文明建设理念性", "测试可再可持续发展价值观性", "测试可再绿色发展价值观性", "测试可再低碳发展价值观性", "测试可再循环经济发展价值观性", "测试可再生态文明发展价值观性", "测试可再美丽中国建设价值观性", "测试可再全球生态文明建设价值观性", "测试可再宇宙生态文明建设价值观性", "测试可再万物生态文明建设价值观性", "测试可再可持续发展伦理性", "测试可再绿色发展伦理性", "测试可再低碳发展伦理性", "测试可再循环经济发展伦理性", "测试可再生态文明发展伦理性", "测试可再美丽中国建设伦理性", "测试可再全球生态文明建设伦理性", "测试可再宇宙生态文明建设伦理性", "测试可再万物生态文明建设伦理性", "测试可再可持续发展文化性", "测试可再绿色发展文化性", "测试可再低碳发展文化性", "测试可再循环经济发展文化性", "测试可再生态文明发展文化性", "测试可再美丽中国建设文化性", "测试可再全球生态文明建设文化性", "测试可再宇宙生态文明建设文化性", "测试可再万物生态文明建设文化性", "测试可再可持续发展制度性", "测试可再绿色发展制度性", "测试可再低碳发展制度性", "测试可再循环经济发展制度性", "测试可再生态文明发展制度性", "测试可再美丽中国建设制度性", "测试可再全球生态文明建设制度性", "测试可再宇宙生态文明建设制度性", "测试可再万物生态文明建设制度性", "测试可再可持续发展政策性", "测试可再绿色发展政策性", "测试可再低碳发展政策性", "测试可再循环经济发展政策性", "测试可再生态文明发展政策性", "测试可再美丽中国建设政策性", "测试可再全球生态文明建设政策性", "测试可再宇宙生态文明建设政策性", "测试可再万物生态文明建设政策性", "测试可再可持续发展法律性", "测试可再绿色发展法律性", "测试可再低碳发展法律性", "测试可再循环经济发展法律性", "测试可再生态文明发展法律性", "测试可再美丽中国建设法律性", "测试可再全球生态文明建设法律性", "测试可再宇宙生态文明建设法律性", "测试可再万物生态文明建设法律性", "测试可再可持续发展标准性", "测试可再绿色发展标准性", "测试可再低碳发展标准性", "测试可再循环经济发展标准性", "测试可再生态文明发展标准性", "测试可再美丽中国建设标准性", "测试可再全球生态文明建设标准性", "测试可再宇宙生态文明建设标准性", "测试可再万物生态文明建设标准性", "测试可再可持续发展指标性", "测试可再绿色发展指标性", "测试可再低碳发展指标性", "测试可再循环经济发展指标性", "测试可再生态文明发展指标性", "测试可再美丽中国建设指标性", "测试可再全球生态文明建设指标性", "测试可再宇宙生态文明建设指标性", "测试可再万物生态文明建设指标性", "测试可再可持续发展评估性", "测试可再绿色发展评估性", "测试可再低碳发展评估性", "测试可再循环经济发展评估性", "测试可再生态文明发展评估性", "测试可再美丽中国建设评估性", "测试可再全球生态文明建设评估性", "测试可再宇宙生态文明建设评估性", "测试可再万物生态文明建设评估性", "测试可再可持续发展监测性", "测试可再绿色发展监测性", "测试可再低碳发展监测性", "测试可再循环经济发展监测性", "测试可再生态文明发展监测性", "测试可再美丽中国建设监测性", "测试可再全球生态文明建设监测性", "测试可再宇宙生态文明建设监测性", "测试可再万物生态文明建设监测性", "测试可再可持续发展预警性", "测试可再绿色发展预警性", "测试可再低碳发展预警性", "测试可再循环经济发展预警性", "测试可再生态文明发展预警性", "测试可再美丽中国建设预警性", "测试可再全球生态文明建设预警性", "测试可再宇宙生态文明建设预警性", "测试可再万物生态文明建设预警性", "测试可再可持续发展治理性", "测试可再绿色发展治理性", "测试可再低碳发展治理性", "测试可再循环经济发展治理性", "测试可再生态文明发展治理性", "测试可再美丽中国建设治理性", "测试可再全球生态文明建设治理性", "测试可再宇宙生态文明建设治理性", "测试可再万物生态文明建设治理性", "测试可再可持续发展合作性", "测试可再绿色发展合作性", "测试可再低碳发展合作性", "测试可再循环经济发展合作性", "测试可再生态文明发展合作性", "测试可再美丽中国建设合作性", "测试可再全球生态文明建设合作性", "测试可再宇宙生态文明建设合作性", "测试可再万物生态文明建设合作性", "测试可再可持续发展创新性", "测试可再绿色发展创新性", "测试可再低碳发展创新性", "测试可再循环经济发展创新性", "测试可再生态文明发展创新性", "测试可再美丽中国建设创新性", "测试可再全球生态文明建设创新性", "测试可再宇宙生态文明建设创新性", "测试可再万物生态文明建设创新性", "测试可再可持续发展教育性", "测试可再绿色发展教育性", "测试可再低碳发展教育性", "测试可再循环经济发展教育性", "测试可再生态文明发展教育性", "测试可再美丽中国建设教育性", "测试可再全球生态文明建设教育性", "测试可再宇宙生态文明建设教育性", "测试可再万物生态文明建设教育性", "测试可再可持续发展传播性", "测试可再绿色发展传播性", "测试可再低碳发展传播性", "测试可再循环经济发展传播性", "测试可再生态文明发展传播性", "测试可再美丽中国建设传播性", "测试可再全球生态文明建设传播性", "测试可再宇宙生态文明建设传播性", "测试可再万物生态文明建设传播性", "测试可再可持续发展参与性", "测试可再绿色发展参与性", "测试可再低碳发展参与性", "测试可再循环经济发展参与性", "测试可再生态文明发展参与性", "测试可再美丽中国建设参与性", "测试可再全球生态文明建设参与性", "测试可再宇宙生态文明建设参与性", "测试可再万物生态文明建设参与性", "测试可再可持续发展责任性", "测试可再绿色发展责任性", "测试可再低碳发展责任性", "测试可再循环经济发展责任性", "测试可再生态文明发展责任性", "测试可再美丽中国建设责任性", "测试可再全球生态文明建设责任性", "测试可再宇宙生态文明建设责任性", "测试可再万物生态文明建设责任性", "测试可再可持续发展行动性", "测试可再绿色发展行动性", "测试可再低碳发展行动性", "测试可再循环经济发展行动性", "测试可再生态文明发展行动性", "测试可再美丽中国建设行动性", "测试可再全球生态文明建设行动性", "测试可再宇宙生态文明建设行动性", "测试可再万物生态文明建设行动性", "测试可再可持续发展绩效性", "测试可再绿色发展绩效性", "测试可再低碳发展绩效性", "测试可再循环经济发展绩效性", "测试可再生态文明发展绩效性", "测试可再美丽中国建设绩效性", "测试可再全球生态文明建设绩效性", "测试可再宇宙生态文明建设绩效性", "测试可再万物生态文明建设绩效性", "测试可再可持续发展影响性", "测试可再绿色发展影响性", "测试可再低碳发展影响性", "测试可再循环经济发展影响性", "测试可再生态文明发展影响性", "测试可再美丽中国建设影响性", "测试可再全球生态文明建设影响性", "测试可再宇宙生态文明建设影响性", "测试可再万物生态文明建设影响性", "测试可再可持续发展风险性", "测试可再绿色发展风险性", "测试可再低碳发展风险性", "测试可再循环经济发展风险性", "测试可再生态文明发展风险性", "测试可再美丽中国建设风险性", "测试可再全球生态文明建设风险性", "测试可再宇宙生态文明建设风险性", "测试可再万物生态文明建设风险性", "测试可再可持续发展机遇性", "测试可再绿色发展机遇性", "测试可再低碳发展机遇性", "测试可再循环经济发展机遇性", "测试可再生态文明发展机遇性", "测试可再美丽中国建设机遇性", "测试可再全球生态文明建设机遇性", "测试可再宇宙生态文明建设机遇性", "测试可再万物生态文明建设机遇性", "测试可再可持续发展挑战性", "测试可再绿色发展挑战性", "测试可再低碳发展挑战性", "测试可再循环经济发展挑战性", "测试可再生态文明发展挑战性", "测试可再美丽中国建设挑战性", "测试可再全球生态文明建设挑战性", "测试可再宇宙生态文明建设挑战性", "测试可再万物生态文明建设挑战性", "测试可再可持续发展前景性", "测试可再绿色发展前景性", "测试可再低碳发展前景性", "测试可再循环经济发展前景性", "测试可再生态文明发展前景性", "测试可再美丽中国建设前景性", "测试可再全球生态文明建设前景性", "测试可再宇宙生态文明建设前景性", "测试可再万物生态文明建设前景性", "测试可再可持续发展未来性", "测试可再绿色发展未来性", "测试可再低碳发展未来性", "测试可再循环经济发展未来性", "测试可再生态文明发展未来性", "测试可再美丽中国建设未来性", "测试可再全球生态文明建设未来性", "测试可再宇宙生态文明建设未来性", "测试可再万物生态文明建设未来性", "测试可再可持续发展愿景性", "测试可再绿色发展愿景性", "测试可再低碳发展愿景性", "测试可再循环经济发展愿景性", "测试可再生态文明发展愿景性", "测试可再美丽中国建设愿景性", "测试可再全球生态文明建设愿景性", "测试可再宇宙生态文明建设愿景性", "测试可再万物生态文明建设愿景性", "测试可再可持续发展目标性", "测试可再绿色发展目标性", "测试可再低碳发展目标性", "测试可再循环经济发展目标性", "测试可再生态文明发展目标性", "测试可再美丽中国建设目标性", "测试可再全球生态文明建设目标性", "测试可再宇宙生态文明建设目标性", "测试可再万物生态文明建设目标性", "测试可再可持续发展路径性", "测试可再绿色发展路径性", "测试可再低碳发展路径性", "测试可再循环经济发展路径性", "测试可再生态文明发展路径性", "测试可再美丽中国建设路径性", "测试可再全球生态文明建设路径性", "测试可再宇宙生态文明建设路径性", "测试可再万物生态文明建设路径性", "测试可再可持续发展模式性", "测试可再绿色发展模式性", "测试可再低碳发展模式性", "测试可再循环经济发展模式性", "测试可再生态文明发展模式性", "测试可再美丽中国建设模式性", "测试可再全球生态文明建设模式性", "测试可再宇宙生态文明建设模式性", "测试可再万物生态文明建设模式性", "测试可再可持续发展理念性", "测试可再绿色发展理念性", "测试可再低碳发展理念性", "测试可再循环经济发展理念性", "测试可再生态文明发展理念性", "测试可再美丽中国建设理念性", "测试可再全球生态文明建设理念性", "测试可再宇宙生态文明建设理念性", "测试可再万物生态文明建设理念性", "测试可再可持续发展价值观性", "测试可再绿色发展价值观性", "测试可再低碳发展价值观性", "测试可再循环经济发展价值观性", "测试可再生态文明发展价值观性", "测试可再美丽中国建设价值观性", "测试可再全球生态文明建设价值观性", "测试可再宇宙生态文明建设价值观性", "测试可再万物生态文明建设价值观性", "测试可再可持续发展伦理性", "测试可再绿色发展伦理性", "测试可再低碳发展伦理性", "测试可再循环经济发展伦理性", "测试可再生态文明发展伦理性", "测试可再美丽中国建设伦理性", "测试可再全球生态文明建设伦理性", "测试可再宇宙生态文明建设伦理性", "测试可再万物生态文明建设伦理性", "测试可再可持续发展文化性", "测试可再绿色发展文化性", "测试可再低碳发展文化性", "测试可再循环经济发展文化性", "测试可再生态文明发展文化性", "测试可再美丽中国建设文化性", "测试可再全球生态文明建设文化性", "测试可再宇宙生态文明建设文化性", "测试可再万物生态文明建设文化性", "测试可再可持续发展制度性", "测试可再绿色发展制度性", "测试可再低碳发展制度性", "测试可再循环经济发展制度性", "测试可再生态文明发展制度性", "测试可再美丽中国建设制度性", "测试可再全球生态文明建设制度性", "测试可再宇宙生态文明建设制度性", "测试可再万物生态文明建设制度性", "测试可再可持续发展政策性", "测试可再绿色发展政策性", "测试可再低碳发展政策性", "测试可再循环经济发展政策性", "测试可再生态文明发展政策性", "测试可再美丽中国建设政策性", "测试可再全球生态文明建设政策性", "测试可再宇宙生态文明建设政策性", "测试可再万物生态文明建设政策性", "测试可再可持续发展法律性", "测试可再绿色发展法律性", "测试可再低碳发展法律性", "测试可再循环经济发展法律性", "测试可再生态文明发展法律性", "测试可再美丽中国建设法律性", "测试可再全球生态文明建设法律性", "测试可再宇宙生态文明建设法律性", "测试可再万物生态文明建设法律性", "测试可再可持续发展标准性", "测试可再绿色发展标准性", "测试可再低碳发展标准性", "测试可再循环经济发展标准性", "测试可再生态文明发展标准性", "测试可再美丽中国建设标准性", "测试可再全球生态文明建设标准性", "测试可再宇宙生态文明建设标准性", "测试可再万物生态文明建设标准性", "测试可再可持续发展指标性", "测试可再绿色发展指标性", "测试可再低碳发展指标性", "测试可再循环经济发展指标性", "测试可再生态文明发展指标性", "测试可再美丽中国建设指标性", "测试可再全球生态文明建设指标性", "测试可再宇宙生态文明建设指标性", "测试可再万物生态文明建设指标性", "测试可再可持续发展评估性", "测试可再绿色发展评估性", "测试可再低碳发展评估性", "测试可再循环经济发展评估性", "测试可再生态文明发展评估性", "测试可再美丽中国建设评估性", "测试可再全球生态文明建设评估性", "测试可再宇宙生态文明建设评估性", "测试可再万物生态文明建设评估性", "测试可再可持续发展监测性", "测试可再绿色发展监测性", "测试可再低碳发展监测性", "测试可再循环经济发展监测性", "测试可再生态文明发展监测性", "测试可再美丽中国建设监测性", "测试可再全球生态文明建设监测性", "测试可再宇宙生态文明建设监测性", "测试可再万物生态文明建设监测性", "测试可再可持续发展预警性", "测试可再绿色发展预警性", "测试可再低碳发展预警性", "测试可再循环经济发展预警性", "测试可再生态文明发展预警性", "测试可再美丽中国建设预警性", "测试可再全球生态文明建设预警性", "测试可再宇宙生态文明建设预警性", "测试可再万物生态文明建设预警性", "测试可再可持续发展治理性", "测试可再绿色发展治理性", "测试可再低碳发展治理性", "测试可再循环经济发展治理性", "测试可再生态文明发展治理性", "测试可再美丽中国建设治理性", "测试可再全球生态文明建设治理性", "测试可再宇宙生态文明建设治理性", "测试可再万物生态文明建设治理性", "测试可再可持续发展合作性", "测试可再绿色发展合作性", "测试可再低碳发展合作性", "测试可再循环经济发展合作性", "测试可再生态文明发展合作性", "测试可再美丽中国建设合作性", "测试可再全球生态文明建设合作性", "测试可再宇宙生态文明建设合作性", "测试可再万物生态文明建设合作性", "测试可再可持续发展创新性", "测试可再绿色发展创新性", "测试可再低碳发展创新性", "测试可再循环经济发展创新性", "测试可再生态文明发展创新性", "测试可再美丽中国建设创新性", "测试可再全球生态文明建设创新性", "测试可再宇宙生态文明建设创新性", "测试可再万物生态文明建设创新性", "测试可再可持续发展教育性", "测试可再绿色发展教育性", "测试可再低碳发展教育性", "测试可再循环经济发展教育性", "测试可再生态文明发展教育性", "测试可再美丽中国建设教育性", "测试可再全球生态文明建设教育性", "测试可再宇宙生态文明建设教育性", "测试可再万物生态文明建设教育性", "测试可再可持续发展传播性", "测试可再绿色发展传播性", "测试可再低碳发展传播性", "测试可再循环经济发展传播性", "测试可再生态文明发展传播性", "测试可再美丽中国建设传播性", "测试可再全球生态文明建设传播性", "测试可再宇宙生态文明建设传播性", "测试可再万物生态文明建设传播性", "测试可再可持续发展参与性", "测试可再绿色发展参与性", "测试可再低碳发展参与性", "测试可再循环经济发展参与性", "测试可再生态文明发展参与性", "测试可再美丽中国建设参与性", "测试可再全球生态文明建设参与性", "测试可再宇宙生态文明建设参与性", "测试可再万物生态文明建设参与性", "测试可再可持续发展责任性", "测试可再绿色发展责任性", "测试可再低碳发展责任性", "测试可再循环经济发展责任性", "测试可再生态文明发展责任性", "测试可再美丽中国建设责任性", "测试可再全球生态文明建设责任性", "测试可再宇宙生态文明建设责任性", "测试可再万物生态文明建设责任性", "测试可再可持续发展行动性", "测试可再绿色发展行动性", "测试可再低碳发展行动性", "测试可再循环经济发展行动性", "测试可再生态文明发展行动性", "测试可再美丽中国建设行动性", "测试可再全球生态文明建设行动性", "测试可再宇宙生态文明建设行动性", "测试可再万物生态文明建设行动性", "测试可再可持续发展绩效性", "测试可再绿色发展绩效性", "测试可再低碳发展绩效性", "测试可再循环经济发展绩效性", "测试可再生态文明发展绩效性", "测试可再美丽中国建设绩效性", "测试可再全球生态文明建设绩效性", "测试可再宇宙生态文明建设绩效性", "测试可再万物生态文明建设绩效性", "测试可再可持续发展影响性", "测试可再绿色发展影响性", "测试可再低碳发展影响性", "测试可再循环经济发展影响性", "测试可再生态文明发展影响性", "测试可再美丽中国建设影响性", "测试可再全球生态文明建设影响性", "测试可再宇宙生态文明建设影响性", "测试可再万物生态文明建设影响性", "测试可再可持续发展风险性", "测试可再绿色发展风险性", "测试可再低碳发展风险性", "测试可再循环经济发展风险性", "测试可再生态文明发展风险性", "测试可再美丽中国建设风险性", "测试可再全球生态文明建设风险性", "测试可再宇宙生态文明建设风险性", "测试可再万物生态文明建设风险性", "测试可再可持续发展机遇性", "测试可再绿色发展机遇性", "测试可再低碳发展机遇性", "测试可再循环经济发展机遇性", "测试可再生态文明发展机遇性", "测试可再美丽中国建设机遇性", "测试可再全球生态文明建设机遇性", "测试可再宇宙生态文明建设机遇性", "测试可再万物生态文明建设机遇性", "测试可再可持续发展挑战性", "测试可再绿色发展挑战性", "测试可再低碳发展挑战性", "测试可再循环经济发展挑战性", "测试可再生态文明发展挑战性", "测试可再美丽中国建设挑战性", "测试可再全球生态文明建设挑战性", "测试可再宇宙生态文明建设挑战性", "测试可再万物生态文明建设挑战性", "测试可再可持续发展前景性", "测试可再绿色发展前景性", "测试可再低碳发展前景性", "测试可再循环经济发展前景性", "测试可再生态文明发展前景性", "测试可再美丽中国建设前景性", "测试可再全球生态文明建设前景性", "测试可再宇宙生态文明建设前景性", "测试可再万物生态文明建设前景性", "测试可再可持续发展未来性", "测试可再绿色发展未来性", "测试可再低碳发展未来性", "测试可再循环经济发展未来性", "测试可再生态文明发展未来性", "测试可再美丽中国建设未来性", "测试可再全球生态文明建设未来性", "测试可再宇宙生态文明建设未来性", "测试可再万物生态文明建设未来性", "测试可再可持续发展愿景性", "测试可再绿色发展愿景性", "测试可再低碳发展愿景性", "测试可再循环经济发展愿景性", "测试可再生态文明发展愿景性", "测试可再美丽中国建设愿景性", "测试可再全球生态文明建设愿景性", "测试可再宇宙生态文明建设愿景性", "测试可再万物生态文明建设愿景性", "测试可再可持续发展目标性", "测试可再绿色发展目标性", "测试可再低碳发展目标性", "测试可再循环经济发展目标性", "测试可再生态文明发展目标性", "测试可再美丽中国建设目标性", "测试可再全球生态文明建设目标性", "测试可再宇宙生态文明建设目标性", "测试可再万物生态文明建设目标性", "测试可再可持续发展路径性", "测试可再绿色发展路径性", "测试可再低碳发展路径性", "测试可再循环经济发展路径性", "测试可再生态文明发展路径性", "测试可再美丽中国建设路径性", "测试可再全球生态文明建设路径性", "测试可再宇宙生态文明建设路径性", "测试可再万物生态文明建设路径性", "测试可再可持续发展模式性", "测试可再绿色发展模式性", "测试可再低碳发展模式性", "测试可再循环经济发展模式性", "测试可再生态文明发展模式性", "测试可再美丽中国建设模式性", "测试可再全球生态文明建设模式性", "测试可再宇宙生态文明建设模式性", "测试可再万物生态文明建设模式性", "测试可再可持续发展理念性", "测试可再绿色发展理念性", "测试可再低碳发展理念性", "测试可再循环经济发展理念性", "测试可再生态文明发展理念性", "测试可再美丽中国建设理念性", "测试可再全球生态文明建设理念性", "测试可再宇宙生态文明建设理念性", "测试可再万物生态文明建设理念性", "测试可再可持续发展价值观性", "测试可再绿色发展价值观性", "测试可再低碳发展价值观性", "测试可再循环经济发展价值观性", "测试可再生态文明发展价值观性", "测试可再美丽中国建设价值观性", "测试可再全球生态文明建设价值观性", "测试可再宇宙生态文明建设价值观性", "测试可再万物生态文明建设价值观性", "测试可再可持续发展伦理性", "测试可再绿色发展伦理性", "测试可再低碳发展伦理性", "测试可再循环经济发展伦理性", "测试可再生态文明发展伦理性", "测试可再美丽中国建设伦理性", "测试可再全球生态文明建设伦理性", "测试可再宇宙生态文明建设伦理性", "测试可再万物生态文明建设伦理性", "测试可再可持续发展文化性", "测试可再绿色发展文化性", "测试可再低碳发展文化性", "测试可再循环经济发展文化性", "测试可再生态文明发展文化性", "测试可再美丽中国建设文化性", "测试可再全球生态文明建设文化性", "测试可再宇宙生态文明建设文化性", "测试可再万物生态文明建设文化性", "测试可再可持续发展制度性", "测试可再绿色发展制度性", "测试可再低碳发展制度性", "测试可再循环经济发展制度性", "测试可再生态文明发展制度性", "测试可再美丽中国建设制度性", "测试可再全球生态文明建设制度性", "测试可再宇宙生态文明建设制度性", "测试可再万物生态文明建设制度性", "测试可再可持续发展政策性", "测试可再绿色发展政策性", "测试可再低碳发展政策性", "测试可再循环经济发展政策性", "测试可再生态文明发展政策性", "测试可再美丽中国建设政策性", "测试可再全球生态文明建设政策性", "测试可再宇宙生态文明建设政策性", "测试可再万物生态文明建设政策性", "测试可再可持续发展法律性", "测试可再绿色发展法律性", "测试可再低碳发展法律性", "测试可再循环经济发展法律性", "测试可再生态文明发展法律性", "测试可再美丽中国建设法律性", "测试可再全球生态文明建设法律性", "测试可再宇宙生态文明建设法律性", "测试可再万物生态文明建设法律性", "测试可再可持续发展标准性", "测试可再绿色发展标准性", "测试可再低碳发展标准性", "测试可再循环经济发展标准性", "测试可再生态文明发展标准性", "测试可再美丽中国建设标准性", "测试可再全球生态文明建设标准性", "测试可再宇宙生态文明建设标准性", "测试可再万物生态文明建设标准性", "测试可再可持续发展指标性", "测试可再绿色发展指标性", "测试可再低碳发展指标性", "测试可再循环经济发展指标性", "测试可再生态文明发展指标性", "测试可再美丽中国建设指标性", "
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 169, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 40 column 12960 (char 13947)
+2025-04-13 21:53:00,787 - src.llm.gemini - ERROR - Error generating subtasks with Gemini: Failed to parse LLM JSON response: Unterminated string starting at: line 40 column 12960 (char 13947)
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 169, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 40 column 12960 (char 13947)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 401, in generate_subtasks_for_task_async
+    subtasks_data = await self.generate_structured_content_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 175, in generate_structured_content_async
+    raise Exception(f"Failed to parse LLM JSON response: {e}") from e
+Exception: Failed to parse LLM JSON response: Unterminated string starting at: line 40 column 12960 (char 13947)
+2025-04-13 21:53:00,787 - services.task_service - ERROR - 生成子任务时发生错误: Failed to generate subtasks: Failed to parse LLM JSON response: Unterminated string starting at: line 40 column 12960 (char 13947)
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 169, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 40 column 12960 (char 13947)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 401, in generate_subtasks_for_task_async
+    subtasks_data = await self.generate_structured_content_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 175, in generate_structured_content_async
+    raise Exception(f"Failed to parse LLM JSON response: {e}") from e
+Exception: Failed to parse LLM JSON response: Unterminated string starting at: line 40 column 12960 (char 13947)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\services\task_service.py", line 511, in expand_task
+    subtasks_data = await self.prd_parser.llm_client.generate_subtasks_for_task_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 438, in generate_subtasks_for_task_async
+    raise Exception(f"Failed to generate subtasks: {e}") from e
+Exception: Failed to generate subtasks: Failed to parse LLM JSON response: Unterminated string starting at: line 40 column 12960 (char 13947)
+2025-04-13 21:55:11,345 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 21:55:11,345 - config - INFO - Configured LLM provider: gemini
+2025-04-13 21:55:11,345 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 21:55:11,345 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 21:55:11,345 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 21:55:11,345 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 21:55:11,345 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 21:55:11,345 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 21:55:11,345 - config - INFO - Created GeminiLLM client.
+2025-04-13 21:55:11,349 - server_module - INFO - Initializing TaskService...
+2025-04-13 21:55:11,349 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 21:55:11,349 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 21:55:11,349 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 21:55:11,363 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:10:03,856 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 22:10:03,856 - config - INFO - Configured LLM provider: gemini
+2025-04-13 22:10:03,856 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 22:10:03,856 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 22:10:03,856 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 22:10:03,856 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 22:10:03,856 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 22:10:03,856 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 22:10:03,856 - config - INFO - Created GeminiLLM client.
+2025-04-13 22:10:03,872 - server_module - INFO - Initializing TaskService...
+2025-04-13 22:10:03,872 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 22:10:03,872 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 22:10:03,872 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 22:10:03,888 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:10:38,682 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 22:10:38,682 - server_module - INFO - 解析PRD文档为主任务: # 项目：新一代智能运动App
+
+## 1. 用户认证
+### 1.1 用户注册
+- 实现手机号、邮...
+2025-04-13 22:10:38,682 - services.task_service - INFO - 解析PRD文档: # 项目：新一代智能运动App
+
+## 1. 用户认证
+### 1.1 用户注册
+- 实现手机号、邮...
+2025-04-13 22:10:38,682 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-13 22:10:38,682 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-13 22:10:38,682 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-13 22:10:44,916 - src.llm.gemini - INFO - Successfully parsed PRD into 14 validated task dictionaries using Gemini.
+2025-04-13 22:10:44,916 - src.services.prd_parser - INFO - [PrdParser LLM] Received 14 validated task dictionaries from LLM client.
+2025-04-13 22:10:44,916 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 14 tasks...
+2025-04-13 22:10:47,430 - src.services.prd_parser - INFO - [PrdParser LLM] Received 15 dependency pairs from LLM.
+2025-04-13 22:10:47,430 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 15 dependency pairs from second LLM call.
+2025-04-13 22:10:47,431 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 14 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-13 22:10:47,431 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 14 tasks.
+2025-04-13 22:10:47,432 - server_module - INFO - 主任务列表已写入文件: prd_main_tasks_20250413_221047.md
+2025-04-13 22:11:58,584 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 22:11:58,584 - server_module - INFO - 为任务 3 生成子任务
+2025-04-13 22:11:58,584 - services.task_service - INFO - 为任务 3 生成子任务...
+2025-04-13 22:11:58,584 - src.llm.gemini - INFO - Generating subtasks for task 3 (3. 统计与报表) using Gemini model
+2025-04-13 22:12:04,752 - src.llm.gemini - INFO - Successfully generated 8 subtasks for task 3
+2025-04-13 22:12:04,752 - services.task_service - ERROR - 创建子任务 3.1 失败: TaskStorage.create_task() got an unexpected keyword argument 'code_references'
+2025-04-13 22:12:04,752 - services.task_service - ERROR - 创建子任务 3.2 失败: TaskStorage.create_task() got an unexpected keyword argument 'code_references'
+2025-04-13 22:12:04,752 - services.task_service - ERROR - 创建子任务 3.3 失败: TaskStorage.create_task() got an unexpected keyword argument 'code_references'
+2025-04-13 22:12:04,752 - services.task_service - ERROR - 创建子任务 3.4 失败: TaskStorage.create_task() got an unexpected keyword argument 'code_references'
+2025-04-13 22:12:04,752 - services.task_service - ERROR - 创建子任务 3.5 失败: TaskStorage.create_task() got an unexpected keyword argument 'code_references'
+2025-04-13 22:12:04,752 - services.task_service - ERROR - 创建子任务 3.6 失败: TaskStorage.create_task() got an unexpected keyword argument 'code_references'
+2025-04-13 22:12:04,752 - services.task_service - ERROR - 创建子任务 3.7 失败: TaskStorage.create_task() got an unexpected keyword argument 'code_references'
+2025-04-13 22:12:04,752 - services.task_service - ERROR - 创建子任务 3.8 失败: TaskStorage.create_task() got an unexpected keyword argument 'code_references'
+2025-04-13 22:12:53,718 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 22:12:53,718 - server_module - INFO - 更新任务 1 的代码引用
+2025-04-13 22:12:53,718 - services.task_service - INFO - 更新任务 1 的代码引用: ['src/auth/main.py', 'src/models/user.py']
+2025-04-13 22:15:04,352 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 22:15:04,352 - config - INFO - Configured LLM provider: gemini
+2025-04-13 22:15:04,352 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 22:15:04,352 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 22:15:04,352 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 22:15:04,352 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 22:15:04,352 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 22:15:04,352 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 22:15:04,352 - config - INFO - Created GeminiLLM client.
+2025-04-13 22:15:04,352 - server_module - INFO - Initializing TaskService...
+2025-04-13 22:15:04,352 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 22:15:04,352 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 22:15:04,352 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 22:15:04,368 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:15:49,723 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 22:15:49,723 - server_module - INFO - 解析PRD文档为主任务: # 项目：新一代智能运动App
+
+## 1. 用户认证
+### 1.1 用户注册
+- 实现手机号、邮...
+2025-04-13 22:15:49,723 - services.task_service - INFO - 解析PRD文档: # 项目：新一代智能运动App
+
+## 1. 用户认证
+### 1.1 用户注册
+- 实现手机号、邮...
+2025-04-13 22:15:49,723 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-13 22:15:49,723 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-13 22:15:49,724 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-13 22:15:55,818 - src.llm.gemini - INFO - Successfully parsed PRD into 14 validated task dictionaries using Gemini.
+2025-04-13 22:15:55,818 - src.services.prd_parser - INFO - [PrdParser LLM] Received 14 validated task dictionaries from LLM client.
+2025-04-13 22:15:55,818 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 14 tasks...
+2025-04-13 22:15:58,352 - src.services.prd_parser - INFO - [PrdParser LLM] Received 15 dependency pairs from LLM.
+2025-04-13 22:15:58,352 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 15 dependency pairs from second LLM call.
+2025-04-13 22:15:58,352 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 14 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-13 22:15:58,352 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 14 tasks.
+2025-04-13 22:15:58,353 - server_module - INFO - 主任务列表已写入文件: prd_main_tasks_20250413_221558.md
+2025-04-13 22:16:18,381 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 22:16:18,381 - server_module - INFO - 为任务 3 生成子任务
+2025-04-13 22:16:18,381 - services.task_service - INFO - 为任务 3 生成子任务...
+2025-04-13 22:16:18,381 - src.llm.gemini - INFO - Generating subtasks for task 3 (3. 统计与报表) using Gemini model
+2025-04-13 22:16:25,865 - src.llm.gemini - INFO - Successfully generated 10 subtasks for task 3
+2025-04-13 22:16:25,865 - services.task_service - ERROR - 创建子任务 3.1 失败: Task with ID '3.1' already exists.
+2025-04-13 22:16:25,865 - services.task_service - ERROR - 创建子任务 3.2 失败: Task with ID '3.2' already exists.
+2025-04-13 22:16:25,866 - server_module - INFO - 子任务列表已写入文件: task_3_subtasks_20250413_221625.md
+2025-04-13 22:26:32,484 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 22:26:32,484 - config - INFO - Configured LLM provider: gemini
+2025-04-13 22:26:32,484 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 22:26:32,484 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 22:26:32,484 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 22:26:32,484 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 22:26:32,484 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 22:26:32,484 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 22:26:32,484 - config - INFO - Created GeminiLLM client.
+2025-04-13 22:26:32,499 - server_module - INFO - Initializing TaskService...
+2025-04-13 22:26:32,499 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 22:26:32,499 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 22:26:32,499 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 22:26:32,520 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:05,496 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:09,153 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:10,195 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:23,142 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:23,144 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:24,018 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:24,018 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:27,182 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:27,345 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:27,550 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:29:29,528 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:30:39,589 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:30:39,589 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:30:43,648 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 22:30:45,280 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:03:08,977 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:04:56,911 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:04:56,911 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:04:58,051 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:04:58,053 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:04:59,362 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:04:59,363 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:02,683 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:03,723 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:03,985 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:05,226 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:06,020 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:06,542 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:07,730 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:07,741 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:11,514 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:12,395 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:05:15,409 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 23:05:15,409 - config - INFO - 配置的LLM提供商: gemini
+2025-04-13 23:05:15,409 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 23:05:15,409 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:05:15,409 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:05:15,409 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 23:05:15,409 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 23:05:15,409 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 23:05:15,409 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-13 23:05:15,412 - server_module - INFO - Initializing TaskService...
+2025-04-13 23:05:15,412 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 23:05:15,412 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 23:05:15,412 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 23:05:15,453 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:12:29,817 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 23:12:29,817 - config - INFO - 配置的LLM提供商: gemini
+2025-04-13 23:12:29,817 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 23:12:29,817 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:12:29,817 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:12:29,817 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 23:12:29,817 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 23:12:29,817 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 23:12:29,817 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-13 23:12:29,817 - server_module - INFO - Initializing TaskService...
+2025-04-13 23:12:29,817 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 23:12:29,817 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 23:12:29,817 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 23:12:29,833 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:13:41,608 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:13:41,608 - server_module - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 23:13:41,609 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-13 23:13:41,609 - server_module - INFO - 旧任务已成功清空
+2025-04-13 23:13:41,609 - server_module - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 0 个文件
+2025-04-13 23:13:41,609 - server_module - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 0 个文件
+2025-04-13 23:13:41,609 - server_module - INFO - 所有任务相关文件已清空
+2025-04-13 23:13:41,609 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 23:13:41,609 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-13 23:13:41,609 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-13 23:13:41,609 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-13 23:13:45,950 - src.llm.gemini - INFO - Successfully parsed PRD into 7 validated task dictionaries using Gemini.
+2025-04-13 23:13:45,950 - src.services.prd_parser - INFO - [PrdParser LLM] Received 7 validated task dictionaries from LLM client.
+2025-04-13 23:13:45,950 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 7 tasks...
+2025-04-13 23:13:47,597 - src.services.prd_parser - INFO - [PrdParser LLM] Received 8 dependency pairs from LLM.
+2025-04-13 23:13:47,598 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 8 dependency pairs from second LLM call.
+2025-04-13 23:13:47,598 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 7 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-13 23:13:47,598 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 7 tasks.
+2025-04-13 23:13:47,598 - server_module - INFO - 主任务列表已写入文件: prd_main_tasks_20250413_231347.md
+2025-04-13 23:13:47,599 - server_module - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250413_231347.json
+2025-04-13 23:13:47,609 - server_module - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250413_231347.md
+2025-04-13 23:15:38,824 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:15:38,824 - server_module - INFO - 获取下一个可执行任务
+2025-04-13 23:15:38,824 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-13 23:15:47,634 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:15:47,635 - server_module - INFO - 为任务 1 生成 5 个子任务
+2025-04-13 23:15:47,635 - services.task_service - INFO - 为任务 1 生成 5 个子任务...
+2025-04-13 23:15:47,635 - src.llm.gemini - INFO - Generating subtasks for task 1 (项目背景) using Gemini model
+2025-04-13 23:15:52,864 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-13 23:15:52,865 - server_module - ERROR - 展开任务失败: name 'timestamp' is not defined
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\server.py", line 963, in expand_task
+    json_filename = f"task_{parent_task['id']}_subtasks_{timestamp}.json"
+                                                         ^^^^^^^^^
+NameError: name 'timestamp' is not defined
+2025-04-13 23:17:09,278 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:17:09,278 - server_module - INFO - 更新任务 1
+2025-04-13 23:17:09,278 - services.task_service - INFO - 更新任务 1
+2025-04-13 23:17:23,804 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:17:23,804 - server_module - INFO - 创建新任务: 需求分析
+2025-04-13 23:17:23,804 - services.task_service - INFO - 创建新任务: 需求分析
+2025-04-13 23:26:16,171 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 23:26:16,171 - config - INFO - 配置的LLM提供商: gemini
+2025-04-13 23:26:16,171 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 23:26:16,171 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:26:16,171 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:26:16,171 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 23:26:16,171 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 23:26:16,171 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 23:26:16,171 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-13 23:26:16,171 - server_module - INFO - Initializing TaskService...
+2025-04-13 23:26:16,171 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 23:26:16,171 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 23:26:16,171 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 23:26:16,200 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:27:00,141 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:27:00,142 - server_module - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 23:27:00,142 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-13 23:27:00,142 - server_module - INFO - 旧任务已成功清空
+2025-04-13 23:27:00,144 - server_module - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 9 个文件
+2025-04-13 23:27:00,144 - server_module - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 1 个文件
+2025-04-13 23:27:00,144 - server_module - INFO - 所有任务相关文件已清空
+2025-04-13 23:27:00,144 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 23:27:00,144 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-13 23:27:00,144 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-13 23:27:00,144 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-13 23:27:04,632 - src.llm.gemini - INFO - Successfully parsed PRD into 7 validated task dictionaries using Gemini.
+2025-04-13 23:27:04,632 - src.services.prd_parser - INFO - [PrdParser LLM] Received 7 validated task dictionaries from LLM client.
+2025-04-13 23:27:04,632 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 7 tasks...
+2025-04-13 23:27:06,214 - src.services.prd_parser - INFO - [PrdParser LLM] Received 7 dependency pairs from LLM.
+2025-04-13 23:27:06,214 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 7 dependency pairs from second LLM call.
+2025-04-13 23:27:06,214 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 7 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-13 23:27:06,214 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 7 tasks.
+2025-04-13 23:27:06,215 - server_module - INFO - 主任务列表已写入文件: prd_main_tasks_20250413_232706.md
+2025-04-13 23:27:06,215 - server_module - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250413_232706.json
+2025-04-13 23:27:06,217 - server_module - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250413_232706.md
+2025-04-13 23:27:29,231 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:27:29,231 - server_module - INFO - 为任务 1 生成 5 个子任务
+2025-04-13 23:27:29,231 - services.task_service - INFO - 为任务 1 生成 5 个子任务...
+2025-04-13 23:27:29,231 - src.llm.gemini - INFO - Generating subtasks for task 1 (项目背景) using Gemini model
+2025-04-13 23:27:35,970 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-13 23:27:35,970 - server_module - ERROR - 展开任务失败: name 'timestamp' is not defined
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\server.py", line 1014, in expand_task
+    json_filename = f"task_{parent_task['id']}_subtasks_{timestamp}.json"
+                                                         ^^^^^^^^^
+NameError: name 'timestamp' is not defined
+2025-04-13 23:29:43,753 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:29:43,753 - server_module - INFO - 为任务 1 生成 5 个子任务
+2025-04-13 23:29:43,753 - services.task_service - INFO - 为任务 1 生成 5 个子任务...
+2025-04-13 23:29:43,753 - services.task_service - INFO - 发现任务 1 已存在 5 个子任务，将删除并重新生成...
+2025-04-13 23:29:43,753 - services.task_service - INFO - 旧子任务已删除
+2025-04-13 23:29:43,753 - src.llm.gemini - INFO - Generating subtasks for task 1 (项目背景) using Gemini model
+2025-04-13 23:30:21,510 - src.llm.gemini - ERROR - Failed to decode JSON response from Gemini: Expecting value: line 30 column 15971 (char 16842). Response text: [
+  {
+    "code_references": [],
+    "complexity": "medium",
+    "description": "进行需求分析，明确知识库平台的核心功能模块，例如文档上传、分类管理、全文检索、版本控制、权限管理等。输出需求规格文档，详细描述各项功能的需求、用户故事和验收标准。",
+    "id": "1.1",
+    "name": "需求分析与规格定义",
+    "priority": "critical",
+    "estimated_hours": 24,
+    "tags": ["需求分析", "文档编写", "项目管理"]
+  },
+  {
+    "code_references": [],
+    "complexity": "high",
+    "description": "设计知识库平台的整体架构，包括前端技术选型、后端技术选型、数据库选型、存储方案选型等。重点考虑系统的可扩展性、安全性、性能和可维护性。输出系统架构设计文档，详细描述各组件之间的关系和交互。",
+    "id": "1.2",
+    "name": "系统架构设计",
+    "priority": "critical",
+    "estimated_hours": 32,
+    "tags": ["架构设计", "技术选型", "系统设计"]
+  },
+  {
+    "code_references": [],
+    "complexity": "high",
+    "description": "开发文档上传、分类管理、全文检索、版本控制、权限管理等核心功能模块的后端API接口。实现文档的存储、索引、检索和版本管理等功能。确保API接口的安全性、稳定性和性能。",
+    "id": "1.3",
+    "name": "后端API开发",
+    "priority": "critical",
+    "estimated_hours": 80,
+    "tags": ["后端", "API", "数据库", "全文检索", "权限管理", "版本控制", "存储", "索引", "文档处理", "安全", "性能", "稳定", "可扩展性", "可维护性", "测试", "部署", "监控", "日志", "错误处理", "文档", "代码审查", "单元测试", "集成测试", "性能测试", "安全测试", "用户体验", "用户界面", "前端", "设计", "用户", "管理员", "角色", "权限", "认证", "授权", "OAuth2", "JWT", "API网关", "负载均衡", "缓存", "CDN", "对象存储", "关系数据库", "NoSQL数据库", "搜索引擎", "Elasticsearch", "Solr", "Lucene", "全文索引", "倒排索引", "分词", "停用词", "同义词", "拼写检查", "自动补全", "高亮显示", "相关性排序", "分页", "排序", "过滤", "聚合", "统计", "报表", "仪表盘", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控", "告警", "日志", "审计", "安全", "合规", "数据备份", "数据恢复", "灾难恢复", "高可用", "容错", "弹性伸缩", "自动化", "DevOps", "CI/CD", "容器化", "Docker", "Kubernetes", "微服务", "服务发现", "服务治理", "API文档", "Swagger", "OpenAPI", "Postman", "测试用例", "测试数据", "测试报告", "性能指标", "安全漏洞", "用户反馈", "需求变更", "迭代", "敏捷开发", "Scrum", "Kanban", "项目管理", "团队协作", "沟通", "协调", "风险管理", "质量保证", "持续改进", "创新", "学习", "成长", "分享", "贡献", "知识", "经验", "最佳实践", "文档", "代码", "配置", "数据", "环境", "部署", "监控",
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 170, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 30 column 15971 (char 16842)
+2025-04-13 23:30:21,512 - src.llm.gemini - ERROR - Error generating subtasks with Gemini: Failed to parse LLM JSON response: Expecting value: line 30 column 15971 (char 16842)
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 170, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 30 column 15971 (char 16842)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 432, in generate_subtasks_for_task_async
+    subtasks_data = await self.generate_structured_content_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 176, in generate_structured_content_async
+    raise Exception(f"Failed to parse LLM JSON response: {e}") from e
+Exception: Failed to parse LLM JSON response: Expecting value: line 30 column 15971 (char 16842)
+2025-04-13 23:30:21,513 - services.task_service - ERROR - 生成子任务时发生错误: Failed to generate subtasks: Failed to parse LLM JSON response: Expecting value: line 30 column 15971 (char 16842)
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 170, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 30 column 15971 (char 16842)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 432, in generate_subtasks_for_task_async
+    subtasks_data = await self.generate_structured_content_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 176, in generate_structured_content_async
+    raise Exception(f"Failed to parse LLM JSON response: {e}") from e
+Exception: Failed to parse LLM JSON response: Expecting value: line 30 column 15971 (char 16842)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\services\task_service.py", line 571, in expand_task
+    subtasks_data = await self.prd_parser.llm_client.generate_subtasks_for_task_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 479, in generate_subtasks_for_task_async
+    raise Exception(f"Failed to generate subtasks: {e}") from e
+Exception: Failed to generate subtasks: Failed to parse LLM JSON response: Expecting value: line 30 column 15971 (char 16842)
+2025-04-13 23:33:37,196 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 23:33:37,196 - config - INFO - 配置的LLM提供商: gemini
+2025-04-13 23:33:37,196 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 23:33:37,196 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:33:37,196 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:33:37,196 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 23:33:37,196 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 23:33:37,196 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 23:33:37,196 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-13 23:33:37,196 - server_module - INFO - Initializing TaskService...
+2025-04-13 23:33:37,196 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 23:33:37,196 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 23:33:37,196 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 23:33:37,217 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:33:55,798 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:33:55,798 - server_module - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 23:33:55,798 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-13 23:33:55,798 - server_module - INFO - 旧任务已成功清空
+2025-04-13 23:33:55,800 - server_module - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 8 个文件
+2025-04-13 23:33:55,800 - server_module - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 1 个文件
+2025-04-13 23:33:55,800 - server_module - INFO - 所有任务相关文件已清空
+2025-04-13 23:33:55,800 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 23:33:55,800 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-13 23:33:55,800 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-13 23:33:55,800 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-13 23:33:59,353 - src.llm.gemini - INFO - Successfully parsed PRD into 5 validated task dictionaries using Gemini.
+2025-04-13 23:33:59,354 - src.services.prd_parser - INFO - [PrdParser LLM] Received 5 validated task dictionaries from LLM client.
+2025-04-13 23:33:59,354 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 5 tasks...
+2025-04-13 23:34:00,889 - src.services.prd_parser - INFO - [PrdParser LLM] Received 7 dependency pairs from LLM.
+2025-04-13 23:34:00,889 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 7 dependency pairs from second LLM call.
+2025-04-13 23:34:00,889 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 5 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-13 23:34:00,889 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 5 tasks.
+2025-04-13 23:34:00,889 - server_module - INFO - 主任务列表已写入文件: prd_main_tasks_20250413_233400.md
+2025-04-13 23:34:00,891 - server_module - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250413_233400.json
+2025-04-13 23:34:00,891 - server_module - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250413_233400.md
+2025-04-13 23:34:08,624 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:34:08,624 - server_module - INFO - 为任务 1 生成 5 个子任务
+2025-04-13 23:34:08,624 - services.task_service - INFO - 为任务 1 生成 5 个子任务...
+2025-04-13 23:34:08,624 - src.llm.gemini - INFO - Generating subtasks for task 1 (项目背景) using Gemini model
+2025-04-13 23:34:13,315 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-13 23:34:13,315 - server_module - INFO - 子任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_1_subtasks_20250413_233413.json
+2025-04-13 23:34:13,315 - server_module - INFO - 已更新父任务JSON文件
+2025-04-13 23:34:13,316 - server_module - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_1_subtasks_20250413_233413.md
+2025-04-13 23:34:33,530 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:34:33,531 - server_module - INFO - 获取任务 2 的详情
+2025-04-13 23:42:15,808 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 23:42:15,808 - config - INFO - 配置的LLM提供商: gemini
+2025-04-13 23:42:15,808 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 23:42:15,808 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:42:15,808 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:42:15,808 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 23:42:15,808 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 23:42:15,808 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 23:42:15,808 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-13 23:42:15,812 - server_module - INFO - Initializing TaskService...
+2025-04-13 23:42:15,812 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 23:42:15,812 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 23:42:15,812 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 23:42:15,829 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:42:45,651 - server_module - INFO - Initializing LLM client based on environment configuration...
+2025-04-13 23:42:45,651 - config - INFO - 配置的LLM提供商: gemini
+2025-04-13 23:42:45,651 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-13 23:42:45,651 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:42:45,651 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-13 23:42:45,651 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-13 23:42:45,651 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-13 23:42:45,651 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-13 23:42:45,651 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-13 23:42:45,654 - server_module - INFO - Initializing TaskService...
+2025-04-13 23:42:45,654 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-13 23:42:45,654 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-13 23:42:45,654 - server_module - INFO - TaskService initialized successfully.
+2025-04-13 23:42:45,670 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-13 23:43:02,806 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:43:02,806 - server_module - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 23:43:02,807 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-13 23:43:02,807 - server_module - INFO - 旧任务已成功清空
+2025-04-13 23:43:02,808 - server_module - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-13 23:43:02,808 - server_module - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 2 个文件
+2025-04-13 23:43:02,808 - server_module - INFO - 所有任务相关文件已清空
+2025-04-13 23:43:02,808 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-13 23:43:02,808 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-13 23:43:02,808 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-13 23:43:02,808 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-13 23:43:06,831 - src.llm.gemini - INFO - Successfully parsed PRD into 7 validated task dictionaries using Gemini.
+2025-04-13 23:43:06,831 - src.services.prd_parser - INFO - [PrdParser LLM] Received 7 validated task dictionaries from LLM client.
+2025-04-13 23:43:06,831 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 7 tasks...
+2025-04-13 23:43:08,339 - src.services.prd_parser - INFO - [PrdParser LLM] Received 7 dependency pairs from LLM.
+2025-04-13 23:43:08,339 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 7 dependency pairs from second LLM call.
+2025-04-13 23:43:08,339 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 7 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-13 23:43:08,339 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 7 tasks.
+2025-04-13 23:43:08,340 - server_module - INFO - 主任务列表已写入文件: prd_main_tasks_20250413_234308.md
+2025-04-13 23:43:08,340 - server_module - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250413_234308.json
+2025-04-13 23:43:08,342 - server_module - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250413_234308.md
+2025-04-13 23:43:20,656 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:43:20,657 - server_module - INFO - 为任务 1 生成 5 个子任务
+2025-04-13 23:43:20,657 - services.task_service - INFO - 为任务 1 生成 5 个子任务...
+2025-04-13 23:43:20,657 - src.llm.gemini - INFO - Generating subtasks for task 1 (项目背景) using Gemini model
+2025-04-13 23:43:56,651 - src.llm.gemini - ERROR - Failed to decode JSON response from Gemini: Unterminated string starting at: line 20 column 13868 (char 14533). Response text: [
+  {
+    "code_references": [],
+    "complexity": "medium",
+    "description": "进行需求分析，明确知识库平台的核心功能模块，例如文档上传、分类、检索、预览、权限管理、版本控制等。输出需求规格文档，详细描述每个功能模块的具体需求，包括用户故事、功能列表、性能指标等。同时，确定技术选型，例如后端框架、数据库、前端框架、全文检索技术等。",
+    "id": "1.1",
+    "name": "需求分析与技术选型",
+    "priority": "critical",
+    "estimated_hours": 24,
+    "tags": ["需求分析", "技术选型", "文档编写"]
+  },
+  {
+    "code_references": [],
+    "complexity": "high",
+    "description": "设计数据库模型，包括文档信息表、用户信息表、分类信息表、权限信息表、版本信息表等。确定表之间的关系，例如文档与用户之间的上传关系、文档与分类之间的关系等。设计API接口，包括文档上传接口、文档检索接口、文档预览接口、权限管理接口等。确定接口的输入输出参数、请求方式、返回状态码等。",
+    "id": "1.2",
+    "name": "数据库与API设计",
+    "priority": "critical",
+    "estimated_hours": 40,
+    "tags": ["数据库", "API", "设计模式", "后端", "架构设计", "数据建模", "RESTful API 设计", "接口文档", "ER图", "数据库规范", "API规范", "数据字典", "数据表设计", "接口设计", "数据库性能优化", "API性能优化", "API安全性", "数据库安全性", "数据备份", "数据恢复", "数据库监控", "API监控", "数据库日志", "API日志", "数据库审计", "API审计", "数据库权限", "API权限", "数据库连接池", "API连接池", "数据库事务", "API事务", "数据库锁", "API锁", "数据库索引", "API索引", "数据库缓存", "API缓存", "数据库分库分表", "API负载均衡", "数据库读写分离", "API限流", "数据库主从复制", "API熔断", "数据库灾备", "API降级", "数据库容灾", "API容错", "数据库高可用", "API高可用", "数据库扩展性", "API扩展性", "数据库可维护性", "API可维护性", "数据库可测试性", "API可测试性", "数据库可监控性", "API可监控性", "数据库可审计性", "API可审计性", "数据库可追溯性", "API可追溯性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植性", "数据库可重用性", "API可重用性", "数据库可配置性", "API可配置性", "数据库可管理性", "API可管理性", "数据库可维护性", "API可维护性", "数据库可扩展性", "API可扩展性", "数据库可伸缩性", "API可伸缩性", "数据库可移植性", "API可移植
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 170, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 20 column 13868 (char 14533)
+2025-04-13 23:43:56,652 - src.llm.gemini - ERROR - Error generating subtasks with Gemini: Failed to parse LLM JSON response: Unterminated string starting at: line 20 column 13868 (char 14533)
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 170, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 20 column 13868 (char 14533)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 432, in generate_subtasks_for_task_async
+    subtasks_data = await self.generate_structured_content_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 176, in generate_structured_content_async
+    raise Exception(f"Failed to parse LLM JSON response: {e}") from e
+Exception: Failed to parse LLM JSON response: Unterminated string starting at: line 20 column 13868 (char 14533)
+2025-04-13 23:43:56,653 - services.task_service - ERROR - 生成子任务时发生错误: Failed to generate subtasks: Failed to parse LLM JSON response: Unterminated string starting at: line 20 column 13868 (char 14533)
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 170, in generate_structured_content_async
+    parsed_data = json.loads(json_string)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 20 column 13868 (char 14533)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 432, in generate_subtasks_for_task_async
+    subtasks_data = await self.generate_structured_content_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 176, in generate_structured_content_async
+    raise Exception(f"Failed to parse LLM JSON response: {e}") from e
+Exception: Failed to parse LLM JSON response: Unterminated string starting at: line 20 column 13868 (char 14533)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\services\task_service.py", line 571, in expand_task
+    subtasks_data = await self.prd_parser.llm_client.generate_subtasks_for_task_async(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 479, in generate_subtasks_for_task_async
+    raise Exception(f"Failed to generate subtasks: {e}") from e
+Exception: Failed to generate subtasks: Failed to parse LLM JSON response: Unterminated string starting at: line 20 column 13868 (char 14533)
+2025-04-13 23:44:09,818 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:44:09,818 - server_module - INFO - 为任务 1 生成 3 个子任务
+2025-04-13 23:44:09,818 - services.task_service - INFO - 为任务 1 生成 3 个子任务...
+2025-04-13 23:44:09,818 - src.llm.gemini - INFO - Generating subtasks for task 1 (项目背景) using Gemini model
+2025-04-13 23:44:12,897 - src.llm.gemini - INFO - Successfully generated 3 subtasks for task 1
+2025-04-13 23:44:12,897 - server_module - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_1.json
+2025-04-13 23:44:12,898 - server_module - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_1_subtasks_20250413_234412.md
+2025-04-13 23:44:31,701 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-13 23:44:31,702 - server_module - INFO - 为任务 2 生成 4 个子任务
+2025-04-13 23:44:31,702 - services.task_service - INFO - 为任务 2 生成 4 个子任务...
+2025-04-13 23:44:31,702 - src.llm.gemini - INFO - Generating subtasks for task 2 (文档管理) using Gemini model
+2025-04-13 23:44:35,794 - src.llm.gemini - INFO - Successfully generated 4 subtasks for task 2
+2025-04-13 23:44:35,795 - server_module - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_2.json
+2025-04-13 23:44:35,796 - server_module - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_2_subtasks_20250413_234435.md
+2025-04-14 00:28:54,381 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 00:28:54,381 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 00:28:54,381 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 00:28:54,381 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 00:28:54,381 - src.llm.gemini - ERROR - Gemini API Key not provided or found in environment variable GEMINI_API_KEY.
+2025-04-14 00:28:54,381 - config - ERROR - 初始化'gemini'提供商的LLM客户端失败: Gemini API Key is required.
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\config.py", line 38, in get_llm_client
+    client = GeminiLLM()
+             ^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 41, in __init__
+    raise ValueError("Gemini API Key is required.")
+ValueError: Gemini API Key is required.
+2025-04-14 00:28:54,381 - config - ERROR - 未找到GOOGLE_API_KEY环境变量，请确保已设置
+2025-04-14 00:28:54,384 - __main__ - INFO - Initializing TaskService...
+2025-04-14 00:28:54,384 - src.services.prd_parser - INFO - [PrdParser Init] Initialized without an LLM client. Will use fallback parsing.
+2025-04-14 00:28:54,384 - services.task_service - INFO - TaskService initialized. PrdParser configured without LLM support.
+2025-04-14 00:28:54,384 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 00:43:47,542 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 00:43:47,542 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 00:43:47,542 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 00:43:47,542 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 00:43:47,542 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 00:43:47,542 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 00:43:47,542 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 00:43:47,542 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 00:43:47,542 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 00:43:47,542 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 00:43:47,546 - __main__ - INFO - Initializing TaskService...
+2025-04-14 00:43:47,546 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 00:43:47,546 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 00:43:47,546 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 00:43:47,554 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 00:44:27,183 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 00:44:27,183 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 00:44:27,183 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 00:44:27,183 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 00:44:27,183 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 00:44:27,185 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 8 个文件
+2025-04-14 00:44:27,185 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 3 个文件
+2025-04-14 00:44:27,185 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 00:44:27,185 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 00:44:27,185 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 00:44:27,185 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 00:44:27,185 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 00:44:31,065 - src.llm.gemini - INFO - Successfully parsed PRD into 5 validated task dictionaries using Gemini.
+2025-04-14 00:44:31,065 - src.services.prd_parser - INFO - [PrdParser LLM] Received 5 validated task dictionaries from LLM client.
+2025-04-14 00:44:31,065 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 5 tasks...
+2025-04-14 00:44:32,879 - src.services.prd_parser - INFO - [PrdParser LLM] Received 7 dependency pairs from LLM.
+2025-04-14 00:44:32,879 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 7 dependency pairs from second LLM call.
+2025-04-14 00:44:32,879 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 5 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 00:44:32,879 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 5 tasks.
+2025-04-14 00:44:32,879 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_004432.json
+2025-04-14 00:44:32,879 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_004432.md
+2025-04-14 00:45:51,225 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 00:45:51,225 - __main__ - INFO - 为任务 3 生成 6 个子任务
+2025-04-14 00:45:51,225 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 00:45:51,225 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 00:45:51,225 - src.llm.gemini - INFO - Generating subtasks for task 3 (功能需求) using Gemini model
+2025-04-14 00:45:56,479 - src.llm.gemini - INFO - Successfully generated 6 subtasks for task 3
+2025-04-14 00:45:56,479 - services.task_service - ERROR - Error generating subtasks: TaskStorage.create_task() got an unexpected keyword argument 'status'
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\services\task_service.py", line 577, in expand_task
+    subtask = self.storage.create_task(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: TaskStorage.create_task() got an unexpected keyword argument 'status'
+2025-04-14 00:53:18,779 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 00:53:18,779 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 00:53:18,779 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 00:53:18,779 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 00:53:18,779 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 00:53:18,779 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 00:53:18,779 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 00:53:18,779 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 00:53:18,779 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 00:53:18,779 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 00:53:18,781 - __main__ - INFO - Initializing TaskService...
+2025-04-14 00:53:18,781 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 00:53:18,781 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 00:53:18,781 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 00:53:18,798 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 00:53:31,947 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 00:53:31,947 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 00:53:31,947 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 00:53:31,947 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 00:53:31,947 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 00:53:31,947 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 00:53:31,947 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 00:53:31,947 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 00:53:31,947 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 00:53:31,947 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 00:53:31,951 - __main__ - INFO - Initializing TaskService...
+2025-04-14 00:53:31,951 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 00:53:31,951 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 00:53:31,951 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 00:53:31,968 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 00:53:54,707 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 00:53:54,707 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 00:53:54,707 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 00:53:54,707 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 00:53:54,707 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 00:53:54,708 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 6 个文件
+2025-04-14 00:53:54,709 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 1 个文件
+2025-04-14 00:53:54,709 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 00:53:54,709 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 00:53:54,709 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 00:53:54,709 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 00:53:54,709 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 00:53:58,208 - src.llm.gemini - INFO - Successfully parsed PRD into 6 validated task dictionaries using Gemini.
+2025-04-14 00:53:58,208 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 validated task dictionaries from LLM client.
+2025-04-14 00:53:58,208 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 6 tasks...
+2025-04-14 00:53:59,944 - src.services.prd_parser - INFO - [PrdParser LLM] Received 9 dependency pairs from LLM.
+2025-04-14 00:53:59,944 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 9 dependency pairs from second LLM call.
+2025-04-14 00:53:59,944 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 6 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 00:53:59,944 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 6 tasks.
+2025-04-14 00:53:59,948 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_005359.json
+2025-04-14 00:53:59,948 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_005359.md
+2025-04-14 00:54:22,600 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 00:54:22,600 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 00:54:22,600 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 00:54:22,600 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 00:54:22,600 - src.llm.gemini - INFO - Generating subtasks for task 1 (文档管理) using Gemini model
+2025-04-14 00:54:27,461 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 00:54:27,462 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_1.json
+2025-04-14 00:54:27,462 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_1_subtasks_20250414_005427.md
+2025-04-14 00:55:20,650 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 00:55:20,650 - __main__ - INFO - 为任务 2 生成 4 个子任务
+2025-04-14 00:55:20,650 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 00:55:20,650 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 00:55:20,650 - src.llm.gemini - INFO - Generating subtasks for task 2 (搜索功能) using Gemini model
+2025-04-14 00:55:24,496 - src.llm.gemini - INFO - Successfully generated 4 subtasks for task 2
+2025-04-14 00:55:24,498 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_2.json
+2025-04-14 00:55:24,498 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_2_subtasks_20250414_005524.md
+2025-04-14 00:55:32,459 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 00:55:32,459 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 00:55:32,459 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 01:02:36,759 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 01:02:36,759 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 01:02:36,759 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 01:02:36,759 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 01:02:36,759 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 01:02:36,759 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 01:02:36,759 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 01:02:36,759 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 01:02:36,759 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 01:02:36,759 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 01:02:36,762 - __main__ - INFO - Initializing TaskService...
+2025-04-14 01:02:36,762 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 01:02:36,762 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 01:02:36,762 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 01:02:36,783 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 01:02:42,121 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:02:42,121 - __main__ - INFO - 更新任务 1
+2025-04-14 01:02:42,121 - services.task_service - INFO - 更新任务 1
+2025-04-14 01:02:49,318 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:02:49,319 - __main__ - INFO - 获取任务列表 (状态: , 优先级: , 标签: , 页码: 1)
+2025-04-14 01:02:49,319 - services.task_service - INFO - 获取任务列表 (状态: , 优先级: , 标签: , 负责人: , 页码: 1)
+2025-04-14 01:03:08,539 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:03:08,539 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 01:03:08,539 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 01:03:08,540 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 01:03:08,540 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 01:03:08,541 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-14 01:03:08,542 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 3 个文件
+2025-04-14 01:03:08,542 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 01:03:08,542 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 01:03:08,542 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 01:03:08,542 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 01:03:08,542 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 01:03:11,768 - src.llm.gemini - INFO - Successfully parsed PRD into 6 validated task dictionaries using Gemini.
+2025-04-14 01:03:11,768 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 validated task dictionaries from LLM client.
+2025-04-14 01:03:11,768 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 6 tasks...
+2025-04-14 01:03:13,772 - src.services.prd_parser - INFO - [PrdParser LLM] Received 11 dependency pairs from LLM.
+2025-04-14 01:03:13,772 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 11 dependency pairs from second LLM call.
+2025-04-14 01:03:13,772 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 6 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 01:03:13,772 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 6 tasks.
+2025-04-14 01:03:13,774 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_010313.json
+2025-04-14 01:03:13,775 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_010313.md
+2025-04-14 01:03:19,203 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:03:19,203 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 01:03:19,203 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 01:03:19,203 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 01:03:19,203 - src.llm.gemini - INFO - Generating subtasks for task 1 (文档管理) using Gemini model
+2025-04-14 01:03:23,966 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 01:03:23,967 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_1.json
+2025-04-14 01:03:23,967 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_1_subtasks_20250414_010323.md
+2025-04-14 01:04:15,573 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:04:15,573 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 01:04:15,573 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 01:11:08,623 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 01:11:08,623 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 01:11:08,623 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 01:11:08,623 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 01:11:08,623 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 01:11:08,623 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 01:11:08,623 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 01:11:08,623 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 01:11:08,623 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 01:11:08,623 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 01:11:08,623 - __main__ - INFO - Initializing TaskService...
+2025-04-14 01:11:08,623 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 01:11:08,623 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 01:11:08,623 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 01:11:08,639 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 01:11:29,888 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:11:29,888 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 01:11:29,888 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 01:11:29,888 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 01:11:29,888 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 01:11:29,890 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-14 01:11:29,891 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 2 个文件
+2025-04-14 01:11:29,891 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 01:11:29,891 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 01:11:29,891 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 01:11:29,891 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 01:11:29,891 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 01:11:33,242 - src.llm.gemini - INFO - Successfully parsed PRD into 6 validated task dictionaries using Gemini.
+2025-04-14 01:11:33,242 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 validated task dictionaries from LLM client.
+2025-04-14 01:11:33,242 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 6 tasks...
+2025-04-14 01:11:34,831 - src.services.prd_parser - INFO - [PrdParser LLM] Received 8 dependency pairs from LLM.
+2025-04-14 01:11:34,831 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 8 dependency pairs from second LLM call.
+2025-04-14 01:11:34,831 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 6 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 01:11:34,832 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 6 tasks.
+2025-04-14 01:11:34,834 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_011134.json
+2025-04-14 01:11:34,834 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_011134.md
+2025-04-14 01:11:47,437 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:11:47,437 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 01:11:47,437 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 01:11:47,437 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 01:11:47,437 - src.llm.gemini - INFO - Generating subtasks for task 1 (文档管理) using Gemini model
+2025-04-14 01:11:51,307 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 01:11:51,308 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_1.json
+2025-04-14 01:11:51,308 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_1_subtasks_20250414_011151.md
+2025-04-14 01:12:26,560 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:12:26,561 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 01:12:26,561 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 01:25:01,468 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 01:25:01,468 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 01:25:01,468 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 01:25:01,468 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 01:25:01,468 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 01:25:01,468 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 01:25:01,468 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 01:25:01,468 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 01:25:01,468 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 01:25:01,468 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 01:25:01,468 - __main__ - INFO - Initializing TaskService...
+2025-04-14 01:25:01,468 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 01:25:01,468 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 01:25:01,468 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 01:25:01,484 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 01:25:07,366 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 01:25:07,366 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 01:25:07,366 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 01:25:07,366 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 01:25:07,366 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 01:25:07,366 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 01:25:07,366 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 01:25:07,366 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 01:25:07,366 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 01:25:07,366 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 01:25:07,369 - __main__ - INFO - Initializing TaskService...
+2025-04-14 01:25:07,369 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 01:25:07,369 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 01:25:07,369 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 01:25:07,409 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 01:25:23,384 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:25:23,384 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 01:25:23,384 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 01:25:23,384 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 01:25:23,384 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 01:25:23,386 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-14 01:25:23,386 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 2 个文件
+2025-04-14 01:25:23,386 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 01:25:23,386 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 01:25:23,386 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 01:25:23,386 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 01:25:23,386 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 01:25:27,123 - src.llm.gemini - INFO - Successfully parsed PRD into 6 validated task dictionaries using Gemini.
+2025-04-14 01:25:27,123 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 validated task dictionaries from LLM client.
+2025-04-14 01:25:27,123 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 6 tasks...
+2025-04-14 01:25:28,859 - src.services.prd_parser - INFO - [PrdParser LLM] Received 9 dependency pairs from LLM.
+2025-04-14 01:25:28,859 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 9 dependency pairs from second LLM call.
+2025-04-14 01:25:28,859 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 6 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 01:25:28,859 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 6 tasks.
+2025-04-14 01:25:28,862 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_012528.json
+2025-04-14 01:25:28,862 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_012528.md
+2025-04-14 01:25:41,156 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:25:41,156 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 01:25:41,156 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 01:25:41,156 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 01:25:41,156 - src.llm.gemini - INFO - Generating subtasks for task 1 (文档管理) using Gemini model
+2025-04-14 01:25:45,990 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 01:25:45,992 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_1.json
+2025-04-14 01:25:45,992 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_1_subtasks_20250414_012545.md
+2025-04-14 01:25:54,086 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:25:54,086 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 01:25:54,086 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 01:27:43,224 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 01:27:43,224 - __main__ - INFO - 获取任务列表 (状态: , 优先级: , 标签: , 页码: 1)
+2025-04-14 01:27:43,224 - services.task_service - INFO - 获取任务列表 (状态: , 优先级: , 标签: , 负责人: , 页码: 1)
+2025-04-14 02:04:03,434 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 02:04:03,434 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 02:04:03,434 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 02:04:03,434 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 02:04:03,434 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:04:03,434 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:04:03,434 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 02:04:03,434 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 02:04:03,434 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 02:04:03,434 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 02:04:03,439 - __main__ - INFO - Initializing TaskService...
+2025-04-14 02:04:03,439 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 02:04:03,439 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 02:04:03,439 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 02:04:03,456 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:04:24,388 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:04:24,388 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 02:04:24,388 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 02:04:24,388 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 02:04:24,388 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 02:04:24,390 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-14 02:04:24,390 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 2 个文件
+2025-04-14 02:04:24,390 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 02:04:24,390 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 02:04:24,390 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 02:04:24,390 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 02:04:24,390 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 02:04:27,767 - src.llm.gemini - INFO - Successfully parsed PRD into 6 validated task dictionaries using Gemini.
+2025-04-14 02:04:27,767 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 validated task dictionaries from LLM client.
+2025-04-14 02:04:27,767 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 6 tasks...
+2025-04-14 02:04:29,161 - src.services.prd_parser - INFO - [PrdParser LLM] Received 5 dependency pairs from LLM.
+2025-04-14 02:04:29,162 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 5 dependency pairs from second LLM call.
+2025-04-14 02:04:29,162 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 6 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 02:04:29,162 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 6 tasks.
+2025-04-14 02:04:29,162 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_020429.json
+2025-04-14 02:04:29,162 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_020429.md
+2025-04-14 02:05:22,943 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:05:22,943 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 02:05:22,943 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 02:05:22,943 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 02:05:22,943 - src.llm.gemini - INFO - Generating subtasks for task 1 (文档管理) using Gemini model
+2025-04-14 02:05:27,376 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 02:05:27,376 - services.task_service - ERROR - Error generating subtasks: 'Task' object has no attribute 'subtasks'
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\services\task_service.py", line 571, in expand_task
+    if isinstance(parent_task.subtasks, list):
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\15870920340\AppData\Local\Programs\Python\Python312\Lib\site-packages\pydantic\main.py", line 856, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Task' object has no attribute 'subtasks'
+2025-04-14 02:07:17,046 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 02:07:17,046 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 02:07:17,046 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 02:07:17,046 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 02:07:17,046 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:07:17,046 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:07:17,046 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 02:07:17,046 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 02:07:17,046 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 02:07:17,046 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 02:07:17,051 - __main__ - INFO - Initializing TaskService...
+2025-04-14 02:07:17,051 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 02:07:17,051 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 02:07:17,051 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 02:07:17,068 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:07:53,074 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:07:53,074 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 02:07:53,074 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 02:07:53,074 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 02:07:53,074 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 02:07:53,076 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-14 02:07:53,076 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 1 个文件
+2025-04-14 02:07:53,077 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 02:07:53,077 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 02:07:53,077 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 02:07:53,077 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 02:07:53,077 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 02:07:57,509 - src.llm.gemini - INFO - Successfully parsed PRD into 6 validated task dictionaries using Gemini.
+2025-04-14 02:07:57,509 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 validated task dictionaries from LLM client.
+2025-04-14 02:07:57,509 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 6 tasks...
+2025-04-14 02:07:59,183 - src.services.prd_parser - INFO - [PrdParser LLM] Received 8 dependency pairs from LLM.
+2025-04-14 02:07:59,183 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 8 dependency pairs from second LLM call.
+2025-04-14 02:07:59,183 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 6 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 02:07:59,183 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 6 tasks.
+2025-04-14 02:07:59,186 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_020759.json
+2025-04-14 02:07:59,186 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_020759.md
+2025-04-14 02:08:06,037 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:08:06,037 - __main__ - INFO - 创建新任务: 文档创建和编辑功能
+2025-04-14 02:09:13,966 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:09:13,967 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 02:09:13,967 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 02:09:13,967 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 02:09:13,967 - src.llm.gemini - INFO - Generating subtasks for task 1 (文档管理) using Gemini model
+2025-04-14 02:09:20,055 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 02:09:20,055 - services.task_service - ERROR - Error generating subtasks: TaskStorage.update_task() takes 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\services\task_service.py", line 616, in expand_task
+    update_result = self.storage.update_task(task_id, {"subtasks": all_subtasks_data})
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: TaskStorage.update_task() takes 2 positional arguments but 3 were given
+2025-04-14 02:10:32,926 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 02:10:32,926 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 02:10:32,926 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 02:10:32,926 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 02:10:32,926 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:10:32,926 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:10:32,926 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 02:10:32,926 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 02:10:32,926 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 02:10:32,926 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 02:10:32,926 - __main__ - INFO - Initializing TaskService...
+2025-04-14 02:10:32,926 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 02:10:32,926 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 02:10:32,926 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 02:10:32,942 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:11:12,642 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:11:12,642 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 02:11:12,642 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 02:11:12,642 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 02:11:12,642 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 02:11:12,643 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-14 02:11:12,644 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 1 个文件
+2025-04-14 02:11:12,644 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 02:11:12,644 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 02:11:12,644 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 02:11:12,644 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 02:11:12,644 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 02:11:16,023 - src.llm.gemini - INFO - Successfully parsed PRD into 6 validated task dictionaries using Gemini.
+2025-04-14 02:11:16,023 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 validated task dictionaries from LLM client.
+2025-04-14 02:11:16,023 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 6 tasks...
+2025-04-14 02:11:17,757 - src.services.prd_parser - INFO - [PrdParser LLM] Received 9 dependency pairs from LLM.
+2025-04-14 02:11:17,757 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 9 dependency pairs from second LLM call.
+2025-04-14 02:11:17,757 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 6 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 02:11:17,757 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 6 tasks.
+2025-04-14 02:11:17,758 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_021117.json
+2025-04-14 02:11:17,760 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_021117.md
+2025-04-14 02:12:36,890 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:12:36,891 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 02:12:36,891 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 02:12:36,891 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 02:12:36,891 - src.llm.gemini - INFO - Generating subtasks for task 1 (文档管理) using Gemini model
+2025-04-14 02:12:42,283 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 02:12:42,283 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_1.json
+2025-04-14 02:12:42,283 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_1_subtasks_20250414_021242.md
+2025-04-14 02:13:08,463 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:13:08,463 - __main__ - INFO - 获取任务列表 (状态: , 优先级: , 标签: , 页码: 1)
+2025-04-14 02:13:08,463 - services.task_service - INFO - 获取任务列表 (状态: , 优先级: , 标签: , 负责人: , 页码: 1)
+2025-04-14 02:13:51,851 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:13:51,851 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 02:13:51,851 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 02:24:47,650 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 02:24:47,650 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 02:24:47,650 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 02:24:47,650 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 02:24:47,650 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:24:47,650 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:24:47,650 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 02:24:47,650 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 02:24:47,650 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 02:24:47,650 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 02:24:47,661 - __main__ - INFO - Initializing TaskService...
+2025-04-14 02:24:47,661 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 02:24:47,661 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 02:24:47,661 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 02:24:47,676 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:25:16,839 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:25:16,839 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 02:25:16,839 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 02:25:16,840 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 02:25:16,840 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 02:25:16,841 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-14 02:25:16,841 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 2 个文件
+2025-04-14 02:25:16,841 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 02:25:16,841 - services.task_service - INFO - 解析PRD文档: 项目名称：企业内部知识库系统
+
+项目背景：
+当前公司内部知识分散，查找困难，缺乏统一的管理平台。为了...
+2025-04-14 02:25:16,842 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 02:25:16,842 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 02:25:16,842 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 02:25:19,986 - src.llm.gemini - INFO - Successfully parsed PRD into 6 validated task dictionaries using Gemini.
+2025-04-14 02:25:19,986 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 validated task dictionaries from LLM client.
+2025-04-14 02:25:19,986 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 6 tasks...
+2025-04-14 02:25:22,056 - src.services.prd_parser - INFO - [PrdParser LLM] Received 11 dependency pairs from LLM.
+2025-04-14 02:25:22,056 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 11 dependency pairs from second LLM call.
+2025-04-14 02:25:22,056 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 6 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 02:25:22,056 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 6 tasks.
+2025-04-14 02:25:22,056 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\prd_tasks_20250414_022522.json
+2025-04-14 02:25:22,058 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\prd_main_tasks_20250414_022522.md
+2025-04-14 02:25:30,112 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:25:30,112 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 02:25:30,112 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 02:25:30,112 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 02:25:30,112 - src.llm.gemini - INFO - Generating subtasks for task 1 (文档管理) using Gemini model
+2025-04-14 02:25:35,573 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 02:25:35,574 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\task-manager-mcp\output\tasks\task_1.json
+2025-04-14 02:25:35,574 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\task-manager-mcp\output\md\task_1_subtasks_20250414_022535.md
+2025-04-14 02:25:41,803 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:25:41,804 - __main__ - INFO - 获取任务列表 (状态: , 优先级: , 标签: , 页码: 1)
+2025-04-14 02:25:41,804 - services.task_service - INFO - 获取任务列表 (状态: , 优先级: , 标签: , 负责人: , 页码: 1)
+2025-04-14 02:25:56,999 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:25:56,999 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 02:25:56,999 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 02:40:15,851 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 02:40:15,851 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 02:40:15,851 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 02:40:15,851 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 02:40:15,851 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:40:15,851 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:40:15,851 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 02:40:15,851 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 02:40:15,851 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 02:40:15,851 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 02:40:15,851 - __main__ - INFO - Initializing TaskService...
+2025-04-14 02:40:15,851 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 02:40:15,851 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 02:40:15,851 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 02:40:15,877 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:43:35,559 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 02:43:35,559 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 02:43:35,559 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 02:43:35,559 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 02:43:35,559 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:43:35,559 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:43:35,559 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 02:43:35,559 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 02:43:35,559 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 02:43:35,559 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 02:43:35,569 - __main__ - INFO - Initializing TaskService...
+2025-04-14 02:43:35,569 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 02:43:35,569 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 02:43:35,569 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 02:43:35,592 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest

@@ -1,0 +1,34 @@
+{
+  "id": "5",
+  "name": "用户激励",
+  "description": "构建用户激励模块，统计用户贡献度（如上传文档数、编辑次数），设立知识贡献排行榜。",
+  "status": "todo",
+  "priority": "low",
+  "dependencies": [
+    "2",
+    "3",
+    "1",
+    "4"
+  ],
+  "blocked_by": [
+    "2",
+    "3",
+    "1",
+    "4"
+  ],
+  "created_at": "2025-04-14T02:25:19.986238",
+  "updated_at": "2025-04-14T02:25:19.986238",
+  "completed_at": null,
+  "tags": [
+    "激励",
+    "贡献度",
+    "排行榜"
+  ],
+  "assigned_to": null,
+  "estimated_hours": null,
+  "actual_hours": null,
+  "code_references": [],
+  "parent_task_id": null,
+  "complexity": "medium",
+  "subtasks": []
+}
