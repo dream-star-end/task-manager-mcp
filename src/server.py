@@ -28,22 +28,6 @@ PROJECT_PRD_CONTENT = ""
 
 # 获取项目根目录 (server.py 的上上级目录)
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-log_file_path = os.path.join(project_root, 'server.log')
-
-# 设置日志配置
-logger = setup_logging(log_file_path, logging.INFO)
-
-# ----> Initialize LLM Client using the factory <----
-logger.info("Initializing LLM client based on environment configuration...")
-llm_client = get_llm_client() # Returns LLMInterface instance or None
-
-# 创建MCP实例 - 使用标准变量名 'mcp' 而不是 'mcp_app'
-mcp = FastMCP("task-manager-mcp")
-
-# ----> 创建任务服务实例，并注入 LLM 客户端 <----
-logger.info("Initializing TaskService...")
-task_service = TaskService(llm_client=llm_client)
-logger.info(f"TaskService initialized successfully.")
 
 # 获取用于保存文件的目录路径（从环境变量获取，若未设置则使用项目根目录下的output文件夹）
 DEFAULT_OUTPUT_DIR = os.path.join(project_root, 'output')  
@@ -60,6 +44,20 @@ os.makedirs(MD_DIR, exist_ok=True)
 
 # 修改日志文件路径
 log_file_path = os.path.join(LOGS_DIR, 'server.log')
+# 设置日志配置
+logger = setup_logging(log_file_path, logging.INFO)
+
+# ----> Initialize LLM Client using the factory <----
+logger.info("Initializing LLM client based on environment configuration...")
+llm_client = get_llm_client() # Returns LLMInterface instance or None
+
+# 创建MCP实例 - 使用标准变量名 'mcp' 而不是 'mcp_app'
+mcp = FastMCP("task-manager-mcp")
+
+# ----> 创建任务服务实例，并注入 LLM 客户端 <----
+logger.info("Initializing TaskService...")
+task_service = TaskService(llm_client=llm_client)
+logger.info(f"TaskService initialized successfully.")
 
 # 以下是从server.py中移除的工具函数，它们已经被移到了utils目录中的相应模块
 
@@ -372,9 +370,10 @@ async def update_task(
     tags: str = "",
     assigned_to: str = "",
     estimated_hours: str = "",
-    actual_hours: str = ""
+    actual_hours: str = "",
+    dependencies: str = ""
 ) -> list[types.TextContent]:
-    """更新现有任务信息
+    """更新现有任务信息，包括依赖关系
     
     Args:
         task_id: 要更新的任务ID
@@ -384,46 +383,98 @@ async def update_task(
         priority: 新的任务优先级，可选值为：low, medium, high, critical
         tags: 新的任务标签，多个标签以逗号分隔
         assigned_to: 新的任务负责人
-        estimated_hours: 新的预估完成时间（小时）
-        actual_hours: 实际完成时间（小时）
+        estimated_hours: 新的预估工时
+        actual_hours: 实际工时
+        dependencies: 新的依赖任务ID列表（逗号分隔），将覆盖现有依赖。
+                      如果为空字符串或不提供，则依赖关系不变。
         
     Returns:
-        List: 包含更新后任务信息的JSON响应
+        List: 包含更新后任务信息的格式化响应
     """
     logger.info(f"更新任务 {task_id}")
     
-    update_params = {}
-    
-    if name:
-        update_params["name"] = name
-        
-    if description:
-        update_params["description"] = description
-        
-    if status:
-        update_params["status"] = status
-        
-    if priority:
-        update_params["priority"] = priority
-        
+    # 处理标签
+    tags_list = []
     if tags:
-        update_params["tags"] = [tag.strip() for tag in tags.split(",")]
-        
-    if assigned_to:
-        update_params["assigned_to"] = assigned_to
-        
+        tags_list = [tag.strip() for tag in tags.split(',')]
+    
+    # 处理依赖
+    dependencies_list = None # 使用None表示不更新依赖关系
+    if dependencies: # 只有当dependencies不为空字符串时才处理
+        dependencies_list = [dep.strip() for dep in dependencies.split(',') if dep.strip()]
+        logger.info(f"请求更新任务 {task_id} 的依赖为: {dependencies_list}")
+    elif dependencies == "": # 如果传入空字符串，则表示清空依赖
+        dependencies_list = []
+        logger.info(f"请求清空任务 {task_id} 的依赖")
+
+    # 处理估计工时和实际工时
+    estimated_hours_float = None
     if estimated_hours:
         try:
-            update_params["estimated_hours"] = float(estimated_hours)
+            estimated_hours_float = float(estimated_hours)
         except ValueError:
-            pass
-            
+            return [
+                types.TextContent(
+                    type="text",
+                    text=json.dumps({
+                        "success": False,
+                        "error": f"Invalid estimated_hours: {estimated_hours}. Must be a number.",
+                        "error_code": "invalid_estimated_hours"
+                    }, ensure_ascii=False)
+                )
+            ]
+    
+    actual_hours_float = None
     if actual_hours:
         try:
-            update_params["actual_hours"] = float(actual_hours)
+            actual_hours_float = float(actual_hours)
         except ValueError:
-            pass
+            return [
+                types.TextContent(
+                    type="text",
+                    text=json.dumps({
+                        "success": False,
+                        "error": f"Invalid actual_hours: {actual_hours}. Must be a number.",
+                        "error_code": "invalid_actual_hours"
+                    }, ensure_ascii=False)
+                )
+            ]
     
+    # 提取代码引用
+    code_files = None
+    if description and "[CODE_FILES:" in description:
+        # 从描述中提取代码引用
+        start_idx = description.find("[CODE_FILES:") + len("[CODE_FILES:")
+        end_idx = description.find("]", start_idx)
+        if start_idx > 0 and end_idx > start_idx:
+            code_refs_str = description[start_idx:end_idx].strip()
+            code_files = [ref.strip() for ref in code_refs_str.split(',')]
+    
+    # 准备更新参数
+    update_params = {}
+    if name:
+        update_params["name"] = name
+    if description:
+        update_params["description"] = description
+    if status:
+        update_params["status"] = status
+    if priority:
+        update_params["priority"] = priority
+    if tags_list:
+        update_params["tags"] = tags_list
+    if assigned_to:
+        update_params["assigned_to"] = assigned_to
+    if estimated_hours_float is not None:
+        update_params["estimated_hours"] = estimated_hours_float
+    if actual_hours_float is not None:
+        update_params["actual_hours"] = actual_hours_float
+    if code_files:
+        update_params["code_files"] = code_files
+    # 只有当 dependencies_list 不是 None 时才将其加入更新参数
+    if dependencies_list is not None:
+        update_params["dependencies"] = dependencies_list
+    
+    # 执行更新
     result = task_service.update_task(task_id, **update_params)
     
     # 如果更新成功，更新任务的JSON文件
@@ -431,57 +482,6 @@ async def update_task(
         task_json_path = save_task_to_json(result["task"], TASKS_DIR)
         if task_json_path:
             result["task_json_path"] = task_json_path
-            
-        # 如果更新的是状态，并且是子任务(ID包含点号)，则考虑更新父任务状态
-        if status and "." in task_id:
-            try:
-                # 获取父任务ID（子任务ID格式通常为 "父ID.子ID"）
-                parent_task_id = task_id.split(".")[0]
-                parent_task = task_service.storage.get_task(parent_task_id)
-                
-                if parent_task:
-                    logger.info(f"检查是否需要更新父任务 {parent_task_id} 的状态")
-                    
-                    # 获取父任务的所有子任务
-                    all_tasks = task_service.storage.list_tasks()
-                    child_tasks = [t for t in all_tasks if t.id.startswith(f"{parent_task_id}.")]
-                    
-                    if child_tasks:
-                        child_statuses = [t.status for t in child_tasks]
-                        
-                        # 根据子任务状态决定父任务状态
-                        new_parent_status = None
-                        
-                        # 如果所有子任务都完成，则父任务也完成
-                        if all(s == "done" for s in child_statuses):
-                            new_parent_status = "done"
-                            logger.info(f"所有子任务已完成，将父任务 {parent_task_id} 状态更新为 'done'")
-                        
-                        # 如果有任何子任务被阻塞，则父任务也被阻塞
-                        elif "blocked" in child_statuses:
-                            new_parent_status = "blocked"
-                            logger.info(f"存在被阻塞的子任务，将父任务 {parent_task_id} 状态更新为 'blocked'")
-                        
-                        # 如果有任何子任务进行中，则父任务也进行中
-                        elif "in_progress" in child_statuses:
-                            new_parent_status = "in_progress"
-                            logger.info(f"存在进行中的子任务，将父任务 {parent_task_id} 状态更新为 'in_progress'")
-                        
-                        # 如果父任务状态需要更新
-                        if new_parent_status and parent_task.status != new_parent_status:
-                            parent_result = task_service.update_task(parent_task_id, status=new_parent_status)
-                            
-                            if parent_result.get("success") and parent_result.get("task"):
-                                parent_json_path = save_task_to_json(parent_result["task"], TASKS_DIR)
-                                if parent_json_path:
-                                    result["parent_task_updated"] = True
-                                    result["parent_task"] = parent_result["task"]
-                                    result["parent_task_json_path"] = parent_json_path
-                                    logger.info(f"父任务 {parent_task_id} 状态已更新为 '{new_parent_status}'")
-            except Exception as e:
-                logger.error(f"更新父任务状态时出错: {str(e)}")
-                # 这里不抛出异常，因为更新父任务是附加功能，不应影响子任务的成功更新
-                result["parent_task_update_error"] = str(e)
     
     return [
         types.TextContent(

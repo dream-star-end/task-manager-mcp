@@ -1,0 +1,18 @@
+2025-04-14 23:53:29,029 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\output\logs\server.log
+2025-04-14 23:53:29,029 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 23:53:29,029 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 23:53:29,029 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 23:53:29,029 - src.llm.gemini - ERROR - Gemini API Key not provided or found in environment variable GEMINI_API_KEY.
+2025-04-14 23:53:29,029 - config - ERROR - 初始化'gemini'提供商的LLM客户端失败: Gemini API Key is required.
+Traceback (most recent call last):
+  File "D:\code\git_project\task-manager-mcp\src\config.py", line 38, in get_llm_client
+    client = GeminiLLM()
+             ^^^^^^^^^^^
+  File "D:\code\git_project\task-manager-mcp\src\llm\gemini.py", line 41, in __init__
+    raise ValueError("Gemini API Key is required.")
+ValueError: Gemini API Key is required.
+2025-04-14 23:53:29,041 - config - ERROR - 未找到GOOGLE_API_KEY环境变量，请确保已设置
+2025-04-14 23:53:29,045 - __main__ - INFO - Initializing TaskService...
+2025-04-14 23:53:29,045 - src.services.prd_parser - INFO - [PrdParser Init] Initialized without an LLM client. Will use fallback parsing.
+2025-04-14 23:53:29,045 - services.task_service - INFO - TaskService initialized. PrdParser configured without LLM support.
+2025-04-14 23:53:29,045 - __main__ - INFO - TaskService initialized successfully.
