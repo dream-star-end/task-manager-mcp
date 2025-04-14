@@ -8,8 +8,8 @@
 |---------|---------|
 | `decompose_prd` | 解析PRD文档，自动拆解为任务列表 |
 | `add_task` | 创建新任务 |
-| `update_task` | 更新现有任务信息，包括标记任务为完成 |
-| `set_task_dependency` | 设置任务依赖关系 |
+| `update_task` | 更新现有任务信息，包括状态、依赖关系、代码引用等 |
+| `get_task` | 获取任务详情 |
 | `get_task_list` | 获取任务列表 |
 | `get_next_executable_task` | 获取下一个可执行任务 |
 | `expand_task` | 为指定任务生成子任务 |
@@ -108,13 +108,13 @@
 
 ### update_task
 
-更新现有任务信息，包括标记任务为完成。
+更新现有任务信息，包括标记任务为完成和更新依赖关系。
 
 **参数：**
 
 | 参数名 | 类型 | 必填 | 说明 |
 |-------|------|-----|-----|
-| `task_id` | string | 是 | 任务ID |
+| `task_id` | string | 是 | 任务ID，对于子任务使用`父任务ID.子任务编号`格式，如`task-1.1` |
 | `name` | string | 否 | 新任务名称 |
 | `description` | string | 否 | 新任务描述 |
 | `status` | string | 否 | 新任务状态，包括标记任务为完成(`done`)、进行中(`in_progress`)、阻塞(`blocked`)或取消(`cancelled`) |
@@ -123,80 +123,102 @@
 | `assigned_to` | string | 否 | 新的任务负责人 |
 | `estimated_hours` | string | 否 | 新的预估工时 |
 | `actual_hours` | string | 否 | 实际工时 |
+| `dependencies` | string | 否 | 逗号分隔的新依赖任务ID列表。**此操作会覆盖任务现有的所有依赖关系**。如果提供空字符串 `""`，则会清空任务的所有依赖。如果不提供此参数，则依赖关系保持不变。 |
 
 **返回值：**
 
 ```json
 {
-  "id": "task-a1b2c3d4",
-  "name": "实现用户登录功能",
-  "description": "开发用户登录界面和后端验证 [CODE_FILES: src/auth/login.py, src/models/user.py]",
-  "status": "done",
-  "dependencies": [],
-  "subtasks": ["task-e5f6g7h8"],
-  "parent_task_id": null,
-  "code_references": ["src/auth/login.py", "src/models/user.py"],
-  "created_at": "2025-03-31T14:30:00Z",
-  "updated_at": "2025-03-31T16:30:00Z"
+  "success": true,
+  "task": {
+    "id": "task-i9j0k1l2",
+    "name": "实现用户注册功能",
+    "description": "开发用户注册界面和后端处理",
+    "status": "todo",
+    "priority": "high",
+    "dependencies": ["task-x7y8z9w0"], // 更新后的依赖
+    "blocked_by": ["task-x7y8z9w0"], // blocked_by 也会相应更新
+    "subtasks": [],
+    "parent_task_id": null,
+    "code_references": [],
+    "complexity": "medium",
+    "estimated_hours": 8,
+    "created_at": "2025-03-31T15:00:00Z",
+    "updated_at": "2025-04-20T11:00:00Z" // 更新时间已改变
+  },
+  "message": "Task task-i9j0k1l2 updated successfully"
 }
 ```
 
+**子任务更新说明：**
+
+当更新子任务状态时，系统会自动同步父任务状态，遵循以下规则：
+1. 如果所有子任务都完成，则父任务自动更新为完成状态
+2. 如果有任何子任务被阻塞，则父任务自动更新为阻塞状态
+3. 如果有任何子任务进行中，则父任务自动更新为进行中状态
+
+子任务的更新直接影响父任务的`subtasks`字段中对应的子任务数据。
+**注意：** `update_task` 工具不支持直接更新子任务的依赖关系，子任务的依赖通常由父任务或其执行流程决定。
+
 **示例调用：**
 
+更新任务状态、描述并设置新的依赖：
 ```
 <mcp:tool name="update_task">
-<mcp:parameter name="task_id">task-a1b2c3d4</mcp:parameter>
+<mcp:parameter name="task_id">task-i9j0k1l2</mcp:parameter>
+<mcp:parameter name="status">in_progress</mcp:parameter>
+<mcp:parameter name="description">正在实现后端注册逻辑</mcp:parameter>
+<mcp:parameter name="dependencies">task-x7y8z9w0</mcp:parameter> // 设置新的依赖，会覆盖旧的
+</mcp:tool>
+```
+
+清空任务依赖：
+```
+<mcp:tool name="update_task">
+<mcp:parameter name="task_id">task-i9j0k1l2</mcp:parameter>
+<mcp:parameter name="dependencies"></mcp:parameter> // 传入空字符串清空依赖
+</mcp:tool>
+```
+
+更新子任务状态：
+```
+<mcp:tool name="update_task">
+<mcp:parameter name="task_id">task-a1b2c3d4.1</mcp:parameter>
 <mcp:parameter name="status">done</mcp:parameter>
-<mcp:parameter name="description">开发用户登录界面和后端验证 [CODE_FILES: src/auth/login.py, src/models/user.py]</mcp:parameter>
-<mcp:parameter name="actual_hours">4.5</mcp:parameter>
+<mcp:parameter name="actual_hours">5.5</mcp:parameter>
 </mcp:tool>
 ```
 
 **Cursor IDE中的调用：**
 ```
-@task-manager 将任务task-a1b2c3d4标记为完成，实现代码在src/auth/login.py和src/models/user.py，实际用时4.5小时
+@task-manager 更新任务task-i9j0k1l2的状态为in_progress，描述为"正在实现后端注册逻辑"，并设置其依赖为task-x7y8z9w0
 ```
 
-### set_task_dependency
+### get_task
 
-设置任务依赖关系。
+获取任务详情。
 
 **参数：**
 
 | 参数名 | 类型 | 必填 | 说明 |
 |-------|------|-----|-----|
-| `task_id` | string | 是 | 任务ID |
-| `depends_on` | array | 是 | 依赖任务ID列表 |
+| `task_id` | string | 是 | 要获取的任务ID |
 
 **返回值：**
 
-```json
-{
-  "id": "task-i9j0k1l2",
-  "name": "实现用户注册功能",
-  "description": "开发用户注册界面和后端处理",
-  "status": "todo",
-  "depends_on": ["task-a1b2c3d4", "task-m3n4o5p6"],
-  "subtasks": [],
-  "parent_task": null,
-  "code_files": [],
-  "created_at": "2025-03-31T15:00:00Z",
-  "updated_at": "2025-03-31T15:10:00Z"
-}
-```
+返回包含任务详细信息的JSON对象。
 
 **示例调用：**
 
 ```
-<mcp:tool name="set_task_dependency">
-<mcp:parameter name="task_id">task-i9j0k1l2</mcp:parameter>
-<mcp:parameter name="depends_on">["task-a1b2c3d4", "task-m3n4o5p6"]</mcp:parameter>
+<mcp:tool name="get_task">
+<mcp:parameter name="task_id">task-a1b2c3d4</mcp:parameter>
 </mcp:tool>
 ```
 
 **Cursor IDE中的调用：**
 ```
-@task-manager 设置任务task-i9j0k1l2依赖于task-a1b2c3d4和task-m3n4o5p6
+@task-manager 获取任务 task-a1b2c3d4 的详情
 ```
 
 ### get_task_list
@@ -385,38 +407,74 @@
 
 | 参数名 | 类型 | 必填 | 说明 |
 |-------|------|-----|-----|
-| `task_id` | string | 是 | 任务ID |
+| `task_id` | string | 是 | 任务ID，子任务使用`父任务ID.子任务编号`格式 |
 | `code_references` | array | 是 | 新的代码引用列表 |
 
 **返回值：**
 
+当更新子任务时，返回更新后的子任务字典:
 ```json
 {
-  "id": "task-a1b2c3d4",
-  "name": "实现用户登录功能",
-  "description": "开发用户登录界面和后端验证 [CODE_FILES: src/auth/login.py, src/models/user.py]",
-  "status": "done",
-  "depends_on": [],
-  "subtasks": ["task-e5f6g7h8"],
-  "parent_task": null,
-  "code_files": ["src/auth/login.py", "src/models/user.py"],
-  "created_at": "2025-03-31T14:30:00Z",
-  "updated_at": "2025-03-31T16:30:00Z"
+  "success": true,
+  "message": "Successfully updated code references for subtask task-a1b2c3d4.1",
+  "task": {
+    "id": "task-a1b2c3d4.1",
+    "name": "设计登录表单",
+    "description": "创建美观且符合设计规范的登录表单",
+    "status": "done",
+    "priority": "high",
+    "dependencies": [],
+    "parent_task_id": "task-a1b2c3d4",
+    "complexity": "medium",
+    "estimated_hours": 4,
+    "code_references": ["src/components/LoginForm.vue"], // 更新后的代码引用
+    "created_at": "2025-03-31T14:35:00Z",
+    "updated_at": "2025-04-20T10:00:00Z" // 更新时间已改变
+  }
+}
+```
+
+当更新主任务时，返回更新后的主任务字典:
+```json
+{
+  "success": true,
+  "message": "Successfully updated code references for task task-a1b2c3d4",
+  "task": {
+    "id": "task-a1b2c3d4",
+    "name": "实现用户登录功能",
+    "description": "开发用户登录界面和后端验证 [CODE_FILES: src/auth/login.py, src/models/user.py]",
+    "status": "done",
+    "depends_on": [],
+    "subtasks": ["task-e5f6g7h8"],
+    "parent_task": null,
+    "code_files": ["src/auth/login.py", "src/models/user.py", "src/config.py"], // 更新后的代码引用
+    "created_at": "2025-03-31T14:30:00Z",
+    "updated_at": "2025-04-20T10:05:00Z" // 更新时间已改变
+  }
 }
 ```
 
 **示例调用：**
 
+更新子任务：
+```
+<mcp:tool name="update_task_code_references">
+<mcp:parameter name="task_id">task-a1b2c3d4.1</mcp:parameter>
+<mcp:parameter name="code_references">["src/components/LoginForm.vue"]</mcp:parameter>
+</mcp:tool>
+```
+
+更新主任务：
 ```
 <mcp:tool name="update_task_code_references">
 <mcp:parameter name="task_id">task-a1b2c3d4</mcp:parameter>
-<mcp:parameter name="code_references">["src/auth/login.py", "src/models/user.py"]</mcp:parameter>
+<mcp:parameter name="code_references">["src/auth/login.py", "src/models/user.py", "src/config.py"]</mcp:parameter>
 </mcp:tool>
 ```
 
 **Cursor IDE中的调用：**
 ```
-@task-manager 更新任务task-a1b2c3d4的代码引用
+@task-manager 更新子任务task-a1b2c3d4.1的代码引用为: src/components/LoginForm.vue
 ```
 
 ### use_description

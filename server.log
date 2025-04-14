@@ -1430,3 +1430,249 @@ TypeError: TaskStorage.update_task() takes 2 positional arguments but 3 were giv
 2025-04-14 02:43:35,569 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
 2025-04-14 02:43:35,569 - __main__ - INFO - TaskService initialized successfully.
 2025-04-14 02:43:35,592 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:49:20,963 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:49:20,965 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: file://docs/Monopoly_React_PRD.md...
+2025-04-14 02:49:20,965 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 02:49:20,965 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 02:49:20,965 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 02:49:20,967 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\tasks，共删除 7 个文件
+2025-04-14 02:49:20,967 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\task-manager-mcp\output\md，共删除 2 个文件
+2025-04-14 02:49:20,967 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 02:49:20,967 - services.task_service - INFO - 解析PRD文档: file://docs/Monopoly_React_PRD.md...
+2025-04-14 02:49:20,967 - services.task_service - ERROR - 读取PRD文件失败: [Errno 2] No such file or directory: 'docs/Monopoly_React_PRD.md'
+2025-04-14 02:52:53,713 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:52:53,715 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:52:54,671 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:52:54,700 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:53:05,886 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 02:53:05,886 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 02:53:05,886 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 02:53:05,886 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 02:53:05,886 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:53:05,886 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 02:53:05,886 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 02:53:05,886 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 02:53:05,886 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 02:53:05,886 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 02:53:05,886 - __main__ - INFO - Initializing TaskService...
+2025-04-14 02:53:05,886 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 02:53:05,886 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 02:53:05,886 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 02:53:06,161 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:53:17,881 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:53:17,988 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 02:53:43,579 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:53:43,579 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: file://docs/Monopoly_React_PRD.md...
+2025-04-14 02:53:43,579 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 02:53:43,579 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 02:53:43,579 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 02:53:43,579 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\tasks，共删除 0 个文件
+2025-04-14 02:53:43,579 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\md，共删除 0 个文件
+2025-04-14 02:53:43,579 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 02:53:43,579 - services.task_service - INFO - 解析PRD文档: file://docs/Monopoly_React_PRD.md...
+2025-04-14 02:53:43,579 - services.task_service - ERROR - 读取PRD文件失败: [Errno 2] No such file or directory: 'docs/Monopoly_React_PRD.md'
+2025-04-14 02:54:08,057 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:54:08,057 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: file://docs/Monopoly_React_PRD.md...
+2025-04-14 02:54:08,057 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 02:54:08,057 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 02:54:08,058 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 02:54:08,058 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\tasks，共删除 0 个文件
+2025-04-14 02:54:08,058 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\md，共删除 0 个文件
+2025-04-14 02:54:08,058 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 02:54:08,058 - services.task_service - INFO - 解析PRD文档: file://docs/Monopoly_React_PRD.md...
+2025-04-14 02:54:08,058 - services.task_service - ERROR - 读取PRD文件失败: [Errno 2] No such file or directory: 'docs/Monopoly_React_PRD.md'
+2025-04-14 02:57:36,579 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:57:36,579 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: # React大富翁游戏产品需求文档
+
+## 1. 项目概述
+
+### 1.1 项目背景
+大富翁是一...
+2025-04-14 02:57:36,579 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 02:57:36,579 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 02:57:36,579 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 02:57:36,580 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\tasks，共删除 0 个文件
+2025-04-14 02:57:36,580 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\md，共删除 0 个文件
+2025-04-14 02:57:36,580 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 02:57:36,580 - services.task_service - INFO - 解析PRD文档: # React大富翁游戏产品需求文档
+
+## 1. 项目概述
+
+### 1.1 项目背景
+大富翁是一...
+2025-04-14 02:57:36,580 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 02:57:36,580 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 02:57:36,580 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 02:57:39,792 - src.llm.gemini - INFO - Successfully parsed PRD into 5 validated task dictionaries using Gemini.
+2025-04-14 02:57:39,792 - src.services.prd_parser - INFO - [PrdParser LLM] Received 5 validated task dictionaries from LLM client.
+2025-04-14 02:57:39,792 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 5 tasks...
+2025-04-14 02:57:41,150 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 dependency pairs from LLM.
+2025-04-14 02:57:41,150 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 6 dependency pairs from second LLM call.
+2025-04-14 02:57:41,150 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 5 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 02:57:41,150 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 5 tasks.
+2025-04-14 02:57:41,152 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\test-mcp\tasks\prd_tasks_20250414_025741.json
+2025-04-14 02:57:41,152 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\test-mcp\md\prd_main_tasks_20250414_025741.md
+2025-04-14 02:59:11,440 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:59:11,441 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 02:59:11,441 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 02:59:19,379 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:59:19,380 - __main__ - INFO - 更新任务 1
+2025-04-14 02:59:19,380 - services.task_service - INFO - 更新任务 1
+2025-04-14 02:59:31,354 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:59:31,354 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 02:59:31,355 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 02:59:31,355 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 02:59:31,355 - src.llm.gemini - INFO - Generating subtasks for task 1 (游戏初始化) using Gemini model
+2025-04-14 02:59:35,553 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 02:59:35,553 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\test-mcp\tasks\task_1.json
+2025-04-14 02:59:35,553 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\test-mcp\md\task_1_subtasks_20250414_025935.md
+2025-04-14 02:59:48,465 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 02:59:48,465 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 02:59:48,465 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 03:00:31,820 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:00:31,821 - __main__ - INFO - 更新任务 1.2
+2025-04-14 03:00:31,821 - services.task_service - INFO - 更新任务 1.2
+2025-04-14 03:03:14,617 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:03:14,617 - __main__ - INFO - 更新任务 1.2
+2025-04-14 03:03:14,617 - services.task_service - INFO - 更新任务 1.2
+2025-04-14 03:05:29,890 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 03:05:29,891 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 03:05:29,891 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 03:05:29,891 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 03:05:29,891 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 03:05:29,891 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 03:05:29,891 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 03:05:29,891 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 03:05:29,891 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 03:05:29,891 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 03:05:29,893 - __main__ - INFO - Initializing TaskService...
+2025-04-14 03:05:29,893 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 03:05:29,893 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 03:05:29,893 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 03:05:29,909 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 03:09:08,744 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 03:09:08,744 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 03:09:08,744 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 03:09:08,744 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 03:09:08,744 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 03:09:08,744 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 03:09:08,744 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 03:09:08,744 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 03:09:08,744 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 03:09:08,744 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 03:09:08,747 - __main__ - INFO - Initializing TaskService...
+2025-04-14 03:09:08,747 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 03:09:08,747 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 03:09:08,747 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 03:09:08,783 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 03:10:27,659 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:10:27,659 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: # React大富翁游戏产品需求文档
+
+## 1. 项目概述
+
+### 1.1 项目背景
+大富翁是一...
+2025-04-14 03:10:27,659 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 03:10:27,660 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 03:10:27,660 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 03:10:27,661 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\tasks，共删除 6 个文件
+2025-04-14 03:10:27,661 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\md，共删除 2 个文件
+2025-04-14 03:10:27,662 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 03:10:27,662 - services.task_service - INFO - 解析PRD文档: # React大富翁游戏产品需求文档
+
+## 1. 项目概述
+
+### 1.1 项目背景
+大富翁是一...
+2025-04-14 03:10:27,662 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 03:10:27,662 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 03:10:27,662 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 03:10:30,911 - src.llm.gemini - INFO - Successfully parsed PRD into 5 validated task dictionaries using Gemini.
+2025-04-14 03:10:30,911 - src.services.prd_parser - INFO - [PrdParser LLM] Received 5 validated task dictionaries from LLM client.
+2025-04-14 03:10:30,911 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 5 tasks...
+2025-04-14 03:10:32,373 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 dependency pairs from LLM.
+2025-04-14 03:10:32,373 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 6 dependency pairs from second LLM call.
+2025-04-14 03:10:32,373 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 5 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 03:10:32,373 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 5 tasks.
+2025-04-14 03:10:32,375 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\test-mcp\tasks\prd_tasks_20250414_031032.json
+2025-04-14 03:10:32,375 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\test-mcp\md\prd_main_tasks_20250414_031032.md
+2025-04-14 03:12:16,497 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:12:16,497 - __main__ - INFO - 清空现有任务并解析PRD文档为主任务: # React大富翁游戏产品需求文档
+
+## 1. 项目概述
+
+### 1.1 项目背景
+大富翁是一...
+2025-04-14 03:12:16,497 - __main__ - INFO - 已保存PRD内容到全局变量，供后续任务展开使用
+2025-04-14 03:12:16,497 - src.storage.task_storage - INFO - 所有任务和依赖关系已被清空
+2025-04-14 03:12:16,497 - __main__ - INFO - 旧任务已成功清空
+2025-04-14 03:12:16,498 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\tasks，共删除 6 个文件
+2025-04-14 03:12:16,499 - utils.file_operations - INFO - 已清空目录 D:\code\git_project\test-mcp\md，共删除 1 个文件
+2025-04-14 03:12:16,499 - __main__ - INFO - 所有任务相关文件已清空
+2025-04-14 03:12:16,499 - services.task_service - INFO - 解析PRD文档: # React大富翁游戏产品需求文档
+
+## 1. 项目概述
+
+### 1.1 项目背景
+大富翁是一...
+2025-04-14 03:12:16,499 - src.services.prd_parser - INFO - [PrdParser Parse] Attempting parsing with injected LLM client (GeminiLLM)...
+2025-04-14 03:12:16,499 - src.services.prd_parser - INFO - [PrdParser LLM] Calling llm_client.parse_prd_to_tasks_async with GeminiLLM...
+2025-04-14 03:12:16,499 - src.llm.gemini - INFO - Parsing PRD content using Gemini model: gemini-2.0-flash
+2025-04-14 03:12:19,854 - src.llm.gemini - INFO - Successfully parsed PRD into 5 validated task dictionaries using Gemini.
+2025-04-14 03:12:19,854 - src.services.prd_parser - INFO - [PrdParser LLM] Received 5 validated task dictionaries from LLM client.
+2025-04-14 03:12:19,854 - src.services.prd_parser - INFO - [PrdParser LLM] Preparing second LLM call for dependency analysis on 5 tasks...
+2025-04-14 03:12:21,232 - src.services.prd_parser - INFO - [PrdParser LLM] Received 6 dependency pairs from LLM.
+2025-04-14 03:12:21,232 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully applied 6 dependency pairs from second LLM call.
+2025-04-14 03:12:21,232 - src.services.prd_parser - INFO - [PrdParser LLM] Successfully created 5 Task objects using LLM-generated IDs. Dependency analysis complete.
+2025-04-14 03:12:21,232 - src.services.prd_parser - INFO - [PrdParser Parse] LLM parsing successful, found 5 tasks.
+2025-04-14 03:12:21,234 - __main__ - INFO - 任务列表已保存到JSON文件: D:\code\git_project\test-mcp\tasks\prd_tasks_20250414_031221.json
+2025-04-14 03:12:21,234 - __main__ - INFO - 主任务列表已写入文件: D:\code\git_project\test-mcp\md\prd_main_tasks_20250414_031221.md
+2025-04-14 03:14:15,804 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:14:15,804 - __main__ - INFO - 更新任务 3
+2025-04-14 03:14:15,804 - services.task_service - INFO - 更新任务 3
+2025-04-14 03:14:35,558 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:14:35,558 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 03:14:35,558 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 03:14:57,481 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:14:57,481 - __main__ - INFO - 更新任务 1
+2025-04-14 03:14:57,481 - services.task_service - INFO - 更新任务 1
+2025-04-14 03:15:37,832 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:15:37,833 - __main__ - INFO - 为任务 1 生成 5 个子任务
+2025-04-14 03:15:37,833 - __main__ - WARNING - 获取主任务列表失败: 'list' object has no attribute 'id'
+2025-04-14 03:15:37,833 - __main__ - INFO - 使用保存的PRD内容作为项目上下文
+2025-04-14 03:15:37,833 - src.llm.gemini - INFO - Generating subtasks for task 1 (游戏初始化) using Gemini model
+2025-04-14 03:15:42,970 - src.llm.gemini - INFO - Successfully generated 5 subtasks for task 1
+2025-04-14 03:15:42,970 - __main__ - INFO - 包含子任务的父任务已保存到JSON文件: D:\code\git_project\test-mcp\tasks\task_1.json
+2025-04-14 03:15:42,971 - __main__ - INFO - 子任务列表已写入文件: D:\code\git_project\test-mcp\md\task_1_subtasks_20250414_031542.md
+2025-04-14 03:15:51,792 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:15:51,792 - __main__ - INFO - 获取下一个可执行任务
+2025-04-14 03:15:51,792 - services.task_service - INFO - 获取下一个可执行任务
+2025-04-14 03:16:04,123 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:16:04,123 - __main__ - INFO - 更新任务 1.2
+2025-04-14 03:16:04,124 - services.task_service - INFO - 更新任务 1.2
+2025-04-14 03:16:04,124 - services.task_service - INFO - 存在进行中的子任务，将父任务 1 状态更新为 'in_progress'
+2025-04-14 03:18:22,440 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:18:22,441 - __main__ - INFO - 更新任务 1.2
+2025-04-14 03:18:22,441 - services.task_service - INFO - 更新任务 1.2
+2025-04-14 03:18:30,060 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2025-04-14 03:18:30,060 - __main__ - INFO - 更新任务 1.2 的代码引用
+2025-04-14 03:18:30,060 - services.task_service - INFO - 更新任务 1.2 的代码引用: ['src/redux/reducers/settingsSlice.js', 'src/redux/store.js', 'src/main.jsx', 'src/pages/SettingsPage.jsx']
+2025-04-14 03:18:30,060 - services.task_service - ERROR - 任务 1.2 未找到，无法更新代码引用
+2025-04-14 23:44:33,518 - __main__ - INFO - 日志配置已设置，日志文件: D:\code\git_project\task-manager-mcp\server.log
+2025-04-14 23:44:33,518 - __main__ - INFO - Initializing LLM client based on environment configuration...
+2025-04-14 23:44:33,518 - config - INFO - 配置的LLM提供商: gemini
+2025-04-14 23:44:33,518 - src.llm.base - INFO - Initializing GeminiLLM
+2025-04-14 23:44:33,518 - src.llm.gemini - INFO - HTTP_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 23:44:33,518 - src.llm.gemini - INFO - HTTPS_PROXY environment variable detected: http://127.0.0.1:7890
+2025-04-14 23:44:33,518 - src.llm.gemini - INFO - Proxy settings will be used by the underlying HTTP client if supported.
+2025-04-14 23:44:33,518 - src.llm.gemini - INFO - Google Generative AI SDK configured successfully.
+2025-04-14 23:44:33,518 - src.llm.gemini - INFO - Initialized Gemini model: gemini-2.0-flash
+2025-04-14 23:44:33,518 - config - INFO - 创建GeminiLLM客户端成功
+2025-04-14 23:44:33,521 - __main__ - INFO - Initializing TaskService...
+2025-04-14 23:44:33,521 - src.services.prd_parser - INFO - [PrdParser Init] Initialized with LLM client: GeminiLLM
+2025-04-14 23:44:33,521 - services.task_service - INFO - TaskService initialized. PrdParser configured with LLM support.
+2025-04-14 23:44:33,521 - __main__ - INFO - TaskService initialized successfully.
+2025-04-14 23:44:33,551 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 23:54:15,588 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 23:54:18,178 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-04-14 23:54:20,286 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest

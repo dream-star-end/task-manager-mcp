@@ -10,8 +10,9 @@
 - [x] 实现内存存储层`TaskStorage`
 - [x] 实现`decompose_prd`工具
 - [x] 实现`add_task`工具 
-- [x] 实现`update_task`工具
-- [x] 实现`set_task_dependency`工具
+- [x] 实现`update_task`工具 (包含状态、依赖、代码引用等更新)
+- [x] ~~实现`set_task_dependency`工具~~ (已合并到`update_task`)
+- [x] ~~实现`remove_task_dependency`工具~~ (通过`update_task`设置空依赖实现)
 - [x] 实现`get_task_list`工具
 - [x] 实现`get_next_executable_task`工具
 - [x] 实现`use_description`工具
@@ -72,7 +73,7 @@
 ### 优先级高
 - [ ] 添加各工具详细使用示例
 - [ ] 添加错误处理示例
-- [ ] 完善依赖管理说明
+- [ ] 完善依赖管理说明 (强调使用update_task)
 - [ ] 增加PRD解析最佳实践
 - [x] 更新API参考文档，包含expand_task和get_next_executable_task的变更
 - [x] 更新API参考文档，移除mark_task_done并强调update_task用于完成任务
@@ -82,7 +83,7 @@
 - [ ] 编写部署文档
 - [ ] 添加性能优化说明
 - [x] 编写贡献指南 (contributing.md)
-- [ ] 添加subtasks字段和子任务管理的文档说明
+- [x] 添加subtasks字段和子任务管理的文档说明
 
 ### 优先级低
 - [ ] 编写高级使用场景
@@ -94,9 +95,9 @@
 
 ### 必须完成
 - [ ] 创建基本单元测试
-- [ ] 测试所有工具功能
+- [ ] 测试所有工具功能 (包括update_task的依赖更新)
 - [ ] 测试任务状态转换
-- [ ] 测试依赖关系管理
+- [ ] 测试依赖关系管理 (包括循环依赖检测)
 - [ ] 测试错误处理
 - [ ] 测试子任务管理功能
 
@@ -227,11 +228,20 @@
 - [x] 简化API：移除mark_task_done工具，改为统一使用update_task来更新任务状态
 - [x] 文档更新：更新API参考和MCP规则文档，移除mark_task_done并强调使用update_task
 
+### 2025-04-20
+- [x] 修复：改进子任务状态更新逻辑，支持直接更新subtasks字段中的子任务
+- [x] 文档更新：更新API参考和MCP规则文档，添加子任务更新说明
+- [x] 增强：添加自动同步父任务状态的功能，当子任务状态变更时自动更新父任务状态
+- [x] 修复：改进子任务代码引用更新逻辑，支持直接更新subtasks字段中的子任务代码引用
+- [x] 文档更新：更新API参考和MCP规则文档，添加子任务代码引用更新说明
+- [x] 功能增强：update_task工具支持更新任务的依赖关系（dependencies字段）
+- [x] 文档更新：更新API参考和MCP规则文档，反映update_task对依赖关系更新的支持
+- [x] 简化API：移除 set_task_dependency 和 remove_task_dependency 工具，功能合并至 update_task
+
 ## 待完成任务
 
 - [ ] 任务时间线可视化功能
 - [ ] 团队协作功能
 - [ ] 任务导出功能
 - [ ] 自动化测试完善
-- [ ] 更新API参考文档，反映最新subtasks结构
-- [ ] 添加关于子任务管理的文档说明 
+- [ ] 更新API参考文档，反映最新subtasks结构 

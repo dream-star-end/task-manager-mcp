@@ -78,12 +78,13 @@ python -m mcp run server.py
 
 ### 任务管理
 
-创建、更新任务和管理依赖关系:
+创建、更新任务（包括状态、依赖关系、代码引用等）:
 
 ```
-<mcp:tool name="add_task">
-<mcp:parameter name="name">实现登录功能</mcp:parameter>
-<mcp:parameter name="description">开发用户登录界面和认证逻辑</mcp:parameter>
+<mcp:tool name="update_task">
+<mcp:parameter name="task_id">task-123</mcp:parameter>
+<mcp:parameter name="status">in_progress</mcp:parameter>
+<mcp:parameter name="dependencies">task-456,task-789</mcp:parameter> // 更新依赖，覆盖旧的
 </mcp:tool>
 ```
 
