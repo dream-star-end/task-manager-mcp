@@ -1,6 +1,0 @@
----
-description: 
-globs: 
-alwaysApply: true
----
-每次完成任务功能开发后，都要更新 [todolist.md](mdc:docs/todolist.md)
