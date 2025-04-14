@@ -11,9 +11,11 @@
   - [代码贡献](#代码贡献)
 - [开发流程](#开发流程)
   - [环境设置](#环境设置)
+  - [LLM配置](#llm配置)
   - [代码风格](#代码风格)
   - [测试](#测试)
   - [提交规范](#提交规范)
+- [项目结构](#项目结构)
 - [分支策略](#分支策略)
 - [发布流程](#发布流程)
 - [审核流程](#审核流程)
@@ -40,6 +42,7 @@
    - 预期行为与实际行为
    - 环境信息（操作系统、Python版本等）
    - 可能的截图或日志
+   - 如果问题与PRD解析或任务展开相关，请说明使用的LLM提供商和模型
 
 ### 功能请求
 
@@ -68,22 +71,52 @@
    cd task-manager-mcp
    ```
 
-2. 创建虚拟环境
+2. 安装uv（推荐）
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # Linux/macOS
-   venv\Scripts\activate     # Windows
+   pip install uv
    ```
 
-3. 安装开发依赖
+3. 使用uv创建虚拟环境
    ```bash
-   pip install -r requirements-dev.txt
+   uv venv
+   source .venv/bin/activate  # Linux/macOS
+   .venv\Scripts\activate     # Windows
    ```
 
-4. 安装pre-commit钩子
+4. 安装开发依赖
    ```bash
-   pre-commit install
+   uv pip install -r requirements-dev.txt
    ```
+
+5. 配置输出目录
+   ```bash
+   export MCP_OUTPUT_DIR="./output"  # Linux/macOS
+   set MCP_OUTPUT_DIR=./output       # Windows
+   ```
+
+### LLM配置
+
+项目支持多种LLM提供商用于PRD解析和任务展开。开发时需要配置至少一个：
+
+1. Gemini (推荐)
+   ```bash
+   export GEMINI_API_KEY="your-api-key-here"
+   export LLM_PROVIDER="gemini"
+   export MODEL_NAME="gemini-1.5-flash"  # 或其他Gemini模型
+   ```
+
+2. OpenAI
+   ```bash
+   export OPENAI_API_KEY="your-api-key-here"
+   export LLM_PROVIDER="openai"
+   export MODEL_NAME="gpt-4o"  # 或其他OpenAI模型
+   ```
+
+如果您所在地区需要代理才能访问这些服务，可以设置：
+```bash
+export HTTP_PROXY="http://your-proxy:port"
+export HTTPS_PROXY="http://your-proxy:port"
+```
 
 ### 代码风格
 
@@ -156,6 +189,49 @@ feat(task): 添加任务依赖关系校验功能
 解决 #123
 ```
 
+## 项目结构
+
+```
+task-manager-mcp/
+├── docs/                 # 文档
+├── output/               # 输出文件（自动生成）
+│   ├── logs/             # 日志文件
+│   ├── md/               # Markdown格式任务
+│   └── tasks/            # JSON格式任务
+├── src/                  # 源代码
+│   ├── llm/              # LLM集成
+│   │   ├── base.py       # LLM接口基类
+│   │   ├── gemini.py     # Gemini实现
+│   │   └── openai.py     # OpenAI实现
+│   ├── models/           # 数据模型
+│   │   └── task.py       # 任务模型
+│   ├── services/         # 服务实现
+│   │   ├── prd_parser.py # PRD解析服务
+│   │   └── task_service.py # 任务服务
+│   ├── storage/          # 存储实现
+│   │   └── task_storage.py # 任务存储
+│   ├── utils/            # 工具函数
+│   │   ├── file_operations.py # 文件操作
+│   │   └── task_utils.py # 任务工具
+│   └── server.py         # 主服务入口
+├── tests/                # 测试
+├── .gitignore            # Git忽略文件
+├── requirements.txt      # 依赖
+├── requirements-dev.txt  # 开发依赖
+└── README.md             # 项目说明
+```
+
+主要组件说明：
+
+1. **models**: 定义了`Task`数据模型及相关枚举
+2. **storage**: 实现任务存储和依赖关系管理
+3. **services**: 
+   - `task_service.py`: 实现核心任务管理逻辑
+   - `prd_parser.py`: 处理PRD文档解析
+4. **llm**: LLM集成实现，支持多种LLM提供商
+5. **utils**: 提供文件操作、任务工具等通用功能
+6. **server.py**: 定义MCP工具接口，管理服务初始化
+
 ## 分支策略
 
 - `main`: 稳定分支，包含已发布的代码
@@ -188,7 +264,6 @@ feat(task): 添加任务依赖关系校验功能
 
 - **问题讨论**: 使用[GitHub Issues](https://github.com/yourusername/task-manager-mcp/issues)
 - **特性讨论**: [GitHub Discussions](https://github.com/yourusername/task-manager-mcp/discussions)
-- **实时聊天**: [Gitter](https://gitter.im/task-manager-mcp)
 
 ---
 

@@ -67,12 +67,16 @@ class PrdParser:
         
         # Remove comments about old setup
 
-    async def parse(self, content: str) -> Tuple[List[Task], Optional[str]]:
+    async def parse(self, prd_content: str) -> Tuple[List[Task], Optional[str]]:
         """
-        解析PRD文档内容，提取任务和依赖关系 (Uses LLMInterface if available)
+        解析PRD文档并提取任务和依赖。
+        
+        首先尝试使用配置的LLM客户端解析，如果失败或未配置LLM客户端，则回退到使用正则表达式解析。
+        
+        注意：如果prd_content是以file://开头的文件路径，必须使用绝对路径，否则无法正确解析。
         
         Args:
-            content: PRD文档内容
+            prd_content: PRD文档内容
             
         Returns:
             Tuple[List[Task], Optional[str]]: 提取的任务列表和LLM解析错误信息 (if LLM was attempted and failed)
@@ -84,7 +88,7 @@ class PrdParser:
         if self.llm_client:
             try:
                 logger.info(f"[PrdParser Parse] Attempting parsing with injected LLM client ({type(self.llm_client).__name__})...")
-                parsed_tasks = await self.parse_with_llm(content)
+                parsed_tasks = await self.parse_with_llm(prd_content)
                 logger.info(f"[PrdParser Parse] LLM parsing successful, found {len(parsed_tasks)} tasks.")
                 return parsed_tasks, None 
             except Exception as e:
@@ -99,7 +103,7 @@ class PrdParser:
 
         # ----> Fallback Logic with Hierarchical Numeric IDs <----
         logger.info("[PrdParser Fallback] Starting basic regex parsing...")
-        headers = re.findall(r'#\s+(.*)|##\s+(.*)', content)
+        headers = re.findall(r'#\s+(.*)|##\s+(.*)', prd_content)
         
         tasks_map = {} # Map generated ID to {task: Task, level: int}
         h1_counter = 0
@@ -196,6 +200,8 @@ class PrdParser:
         使用配置的 LLMInterface 客户端的 parse_prd_to_tasks_async 方法解析PRD文档。
         现在期望 LLM 直接生成层级数字 ID。
         假定 self.llm_client 在调用此方法前已被验证存在。
+        
+        注意：如果prd_content是以file://开头的文件路径，必须使用绝对路径，否则无法正确解析。
         
         Args:
             prd_content: PRD文档内容

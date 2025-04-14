@@ -40,49 +40,63 @@ cd task-manager-mcp
 
 ### 2.3 安装依赖
 
-使用pip安装所需依赖：
+推荐使用uv进行安装（更快且支持子解释器隔离）：
 
 ```bash
-# 安装MCP SDK
-pip install mcp-python-sdk
+# 安装uv
+pip install uv
 
-# 安装其他依赖
+# 使用uv安装依赖
+uv pip install -r requirements.txt
+```
+
+或者使用传统pip安装：
+
+```bash
 pip install -r requirements.txt
 ```
 
 `requirements.txt`文件内容示例：
 
 ```
+fastmcp>=0.6.0
 uvicorn>=0.15.0
 pydantic>=1.8.2
-fastapi>=0.70.0
+google-generativeai>=0.3.0
 ```
 
-### 2.4 基本配置
+### 2.4 配置LLM
 
-创建配置文件：
+服务可以使用Gemini或OpenAI作为LLM提供商进行PRD解析和任务扩展。配置以下环境变量：
 
 ```bash
-# 复制示例配置文件
-cp config.example.yaml config.yaml
+# Gemini配置
+export GEMINI_API_KEY="your-api-key-here"
+export LLM_PROVIDER="gemini"
+export MODEL_NAME="gemini-1.5-flash"  # 或其它Gemini模型
+
+# 或OpenAI配置
+# export OPENAI_API_KEY="your-api-key-here"
+# export LLM_PROVIDER="openai"
+# export MODEL_NAME="gpt-4o"
 ```
 
-编辑`config.yaml`，根据需要调整设置：
+如果您所在的区域需要使用代理访问这些服务，还可以配置：
 
-```yaml
-# 服务设置
-service:
-  name: "task-manager-mcp"
-  host: "0.0.0.0"
-  port: 8000
-  debug: false
-
-# MCP服务配置
-mcp:
-  name: "task-manager"
-  sse: true
-  base_path: "/mcp"
+```bash
+export HTTP_PROXY="http://your-proxy:port"
+export HTTPS_PROXY="http://your-proxy:port"
 ```
+
+### 2.5 配置输出目录
+
+配置任务文件的输出目录：
+
+```bash
+export MCP_OUTPUT_DIR="/path/to/output/dir"
+```
+
+如果不设置，将默认使用项目根目录下的`output`文件夹。
 
 ## 3. 不同环境的安装
 
@@ -101,17 +115,7 @@ venv\Scripts\activate
 source venv/bin/activate
 
 # 安装依赖
-pip install -r requirements-dev.txt
-```
-
-开发环境配置文件`config-dev.yaml`：
-
-```yaml
-service:
-  debug: true
-
-logging:
-  level: "DEBUG"
+uv pip install -r requirements-dev.txt
 ```
 
 ### 3.2 生产环境
@@ -120,21 +124,10 @@ logging:
 
 ```bash
 # 安装生产依赖
-pip install -r requirements-prod.txt
+uv pip install -r requirements-prod.txt
 
-# 生成密钥
-python -c "import secrets; print(secrets.token_hex(32))" > .secret_key
-```
-
-生产环境配置示例`config-prod.yaml`：
-
-```yaml
-service:
-  debug: false
-
-logging:
-  level: "WARNING"
-  file: "/var/log/task-manager.log"
+# 创建日志目录
+mkdir -p /var/log/task-manager-mcp
 ```
 
 ## 4. 在Cursor IDE中配置
@@ -150,22 +143,36 @@ logging:
 添加以下配置：
 
 ```json
-"task-manager": {
-  "command": "/path/to/python",
-  "args": [
-    "-m",
-    "mcp",
-    "run",
-    "/absolute/path/to/task-manager-mcp/server.py"
-  ],
-  "env": {
-    "MCP_SERVICE_PORT": "8000",
-    "MCP_CONFIG_PATH": "/absolute/path/to/task-manager-mcp/config.yaml"
+{
+  "mcpServers": {
+    "task-manager": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "fastmcp",
+        "fastmcp",
+        "run",
+        "D:\\path\\to\\task-manager-mcp\\src\\server.py"
+      ],
+      "env": {
+        "GEMINI_API_KEY": "<你的Gemini API Key>",
+        "HTTP_PROXY": "http://127.0.0.1:7890",
+        "HTTPS_PROXY": "http://127.0.0.1:7890",
+        "MODEL_NAME": "gemini-1.5-flash",
+        "LLM_PROVIDER": "gemini",
+        "MCP_OUTPUT_DIR": "D:\\path\\to\\output\\dir\\"
+      }
+    }
   }
 }
 ```
 
-确保所有路径都使用绝对路径，Windows路径使用双反斜杠，例如：`C:\\Users\\name\\projects\\task-manager-mcp\\server.py`。
+请确保：
+- 替换`D:\\path\\to\\task-manager-mcp\\src\\server.py`为服务器脚本文件的**绝对路径**
+- 替换`<你的Gemini API Key>`为你的实际API密钥
+- 根据需要配置代理设置
+- 替换`D:\\path\\to\\output\\dir\\`为你希望存储任务文件的目录
 
 ### 4.2 重启Cursor IDE
 
@@ -173,24 +180,51 @@ logging:
 
 ## 5. Docker安装
 
-### 5.1 使用预构建镜像
+### 5.1 Dockerfile
 
-```bash
-# 拉取镜像
-docker pull yourusername/task-manager-mcp:latest
+创建Dockerfile：
 
-# 运行容器
-docker run -p 8000:8000 -v $(pwd)/config.yaml:/app/config.yaml yourusername/task-manager-mcp
+```dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# 安装UV
+RUN pip install uv
+
+# 拷贝项目文件
+COPY requirements.txt .
+COPY src/ src/
+COPY docs/ docs/
+
+# 创建输出目录
+RUN mkdir -p /app/output/tasks /app/output/md /app/output/logs
+
+# 设置环境变量
+ENV PYTHONPATH=/app
+ENV MCP_OUTPUT_DIR=/app/output
+
+# 暴露端口
+EXPOSE 8000
+
+# 使用UV运行服务
+CMD ["uv", "run", "--with", "fastmcp", "fastmcp", "run", "/app/src/server.py"]
 ```
 
-### 5.2 本地构建
+### 5.2 构建与运行
 
 ```bash
 # 构建镜像
 docker build -t task-manager-mcp .
 
 # 运行容器
-docker run -p 8000:8000 -v $(pwd)/config.yaml:/app/config.yaml task-manager-mcp
+docker run -d \
+  -p 8000:8000 \
+  -e GEMINI_API_KEY=your-api-key \
+  -e MODEL_NAME=gemini-1.5-flash \
+  -e LLM_PROVIDER=gemini \
+  --name task-manager-mcp \
+  task-manager-mcp
 ```
 
 ## 6. 验证安装
@@ -198,53 +232,41 @@ docker run -p 8000:8000 -v $(pwd)/config.yaml:/app/config.yaml task-manager-mcp
 启动服务：
 
 ```bash
-python -m mcp run server.py
+# 使用UV运行(推荐)
+uv run --with fastmcp fastmcp run src/server.py
+
+# 或直接使用Python运行
+cd src
+python server.py
 ```
 
 测试服务是否正常运行：
 
 ```bash
 # 使用curl请求
-curl http://localhost:8000/mcp/status
+curl http://localhost:8000/health
 
 # 预期输出
 {"status":"ok","version":"1.0.0"}
 ```
 
-或者在浏览器中访问：`http://localhost:8000/mcp`
+## 7. 环境变量一览
 
-## 7. 高级配置
+所有支持的环境变量：
 
-### 7.1 环境变量
-
-可以使用环境变量覆盖配置：
-
-```bash
-# 设置服务端口
-export MCP_SERVICE_PORT=9000
-
-# 设置日志级别
-export MCP_LOG_LEVEL=DEBUG
-
-# 使用自定义配置文件
-export MCP_CONFIG_PATH=/path/to/custom-config.yaml
-
-# DeepSeek API配置（用于PRD解析）
-export DEEPSEEK_API_KEY=your_api_key_here
-```
-
-如果未设置DeepSeek API密钥，系统将退回到基本的PRD解析模式，只提取标题作为任务。
-
-### 7.2 数据库配置
-
-默认使用内存存储，可配置数据库（未来支持）：
-
-```yaml
-storage:
-  type: "sqlite"
-  database:
-    url: "sqlite:///tasks.db"
-```
+| 环境变量 | 说明 | 默认值 |
+|---------|------|--------|
+| `GEMINI_API_KEY` | Gemini API密钥 | - |
+| `OPENAI_API_KEY` | OpenAI API密钥 | - |
+| `LLM_PROVIDER` | LLM提供商，`gemini`或`openai` | `gemini` |
+| `MODEL_NAME` | 使用的LLM模型名称 | `gemini-1.5-flash` |
+| `HTTP_PROXY` | HTTP代理 | - |
+| `HTTPS_PROXY` | HTTPS代理 | - |
+| `MCP_OUTPUT_DIR` | 输出文件保存路径 | `项目根目录/output` |
+| `MCP_LOGS_DIR` | 日志文件路径 | `MCP_OUTPUT_DIR/logs` |
+| `MCP_TASKS_DIR` | 任务JSON文件路径 | `MCP_OUTPUT_DIR/tasks` |
+| `MCP_MD_DIR` | Markdown文件路径 | `MCP_OUTPUT_DIR/md` |
+| `MCP_SERVICE_PORT` | 服务端口 | `8000` |
 
 ## 8. 常见问题
 
@@ -255,19 +277,18 @@ storage:
 解决：确保Python版本兼容，并尝试：
 
 ```bash
-pip install --upgrade pip
-pip install -r requirements.txt --no-cache-dir
+uv pip install -r requirements.txt --no-cache
 ```
 
-### 8.2 端口冲突
+### 8.2 LLM相关错误
 
-问题：启动服务时显示端口已被占用
+问题：PRD解析或任务展开失败，出现LLM相关错误
 
-解决：修改配置文件中的端口或使用环境变量：
-
-```bash
-export MCP_SERVICE_PORT=9000
-```
+解决：
+1. 确认LLM API密钥设置正确
+2. 检查网络连接或代理设置
+3. 确保使用的模型名称正确
+4. 如有代理需求，确保设置了`HTTP_PROXY`和`HTTPS_PROXY`环境变量
 
 ### 8.3 Cursor无法连接
 
@@ -275,9 +296,9 @@ export MCP_SERVICE_PORT=9000
 
 解决：
 1. 确认服务正在运行
-2. 检查配置中的路径是否正确
-3. 确保防火墙未阻止连接
-4. 尝试使用`127.0.0.1`替代`localhost`
+2. 检查配置中的路径是否正确（Windows路径需使用双反斜杠）
+3. 确保填写的是绝对路径而非相对路径
+4. 检查环境变量设置是否正确
 
 ## 9. 更新
 

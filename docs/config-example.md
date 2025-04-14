@@ -1,105 +1,127 @@
 # 任务管理MCP服务配置示例
 
-本文档提供任务管理MCP服务的配置示例，包括服务配置和部署选项。
+本文档提供任务管理MCP服务的配置示例，包括环境变量配置和部署选项。
 
-## 1. 配置文件示例
+## 1. 环境变量配置
 
-### config.yaml
+系统支持以下环境变量进行配置：
 
-```yaml
-# 任务管理MCP服务配置
-
-# 服务设置
-service:
-  name: "task-manager-mcp"
-  host: "0.0.0.0"
-  port: 8000
-  debug: false
-
-# MCP服务配置
-mcp:
-  # 服务名称（在IDE中引用）
-  name: "task-manager"
-  # 是否开启SSE模式
-  sse: true
-  # 基础URL路径，默认为/mcp
-  base_path: "/mcp"
-  # 配置工具ID前缀，可选
-  tool_id_prefix: ""
-
-# 存储设置
-storage:
-  # 目前支持 "memory"，后续将支持 "sqlite", "postgresql", "redis"
-  type: "memory"
-  # 数据库配置（当使用数据库存储时需要）
-  # database:
-  #   url: "sqlite:///tasks.db"
-  #   pool_size: 10
-
-# 任务设置
-tasks:
-  # 默认任务状态
-  default_status: "todo"
-  # 是否启用任务优先级
-  use_priority: false
-  # 是否启用任务截止日期
-  use_deadline: false
-  # 代码文件路径记录格式
-  code_files_format: "[CODE_FILES: {files}]"
-
-# 日志配置
-logging:
-  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
-  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-  file: "task-manager.log"
-```
-
-## 2. 环境变量配置
-
-可以使用环境变量覆盖配置文件中的设置：
+### LLM配置
 
 ```bash
-# 服务设置
-export MCP_SERVICE_PORT=9000
-export MCP_SERVICE_DEBUG=true
+# Gemini配置(推荐)
+export GEMINI_API_KEY="your-gemini-api-key"     # Gemini API密钥
+export LLM_PROVIDER="gemini"                   # 设置使用Gemini作为LLM供应商
+export MODEL_NAME="gemini-1.5-flash"            # 使用的模型，可选值：gemini-1.5-flash, gemini-1.5-pro等
 
-# MCP设置
-export MCP_NAME=task-manager
-export MCP_BASE_PATH=/task-manager
-export MCP_SSE=true
-
-# 存储设置
-export MCP_STORAGE_TYPE=sqlite
-export MCP_DATABASE_URL=sqlite:///tasks.db
-
-# 日志设置
-export MCP_LOG_LEVEL=DEBUG
+# 或OpenAI配置
+# export OPENAI_API_KEY="your-openai-api-key"   # OpenAI API密钥
+# export LLM_PROVIDER="openai"                  # 设置使用OpenAI作为LLM供应商
+# export MODEL_NAME="gpt-4o"                    # 使用的模型，可选值：gpt-4o, gpt-4-turbo等
 ```
 
-## 3. Cursor IDE配置
+### 代理配置
 
-在Cursor中配置MCP服务的示例：
+在某些网络环境下，可能需要配置代理才能访问LLM服务：
+
+```bash
+export HTTP_PROXY="http://127.0.0.1:7890"       # HTTP代理
+export HTTPS_PROXY="http://127.0.0.1:7890"      # HTTPS代理
+```
+
+### 输出目录配置
+
+配置任务相关文件的输出位置：
+
+```bash
+# 主输出目录(默认为项目根目录下的output文件夹)
+export MCP_OUTPUT_DIR="/path/to/output"
+
+# 以下为可选，如果不设置则使用MCP_OUTPUT_DIR下对应子目录
+export MCP_LOGS_DIR="/path/to/logs"             # 日志文件目录
+export MCP_TASKS_DIR="/path/to/tasks"           # 任务JSON文件目录
+export MCP_MD_DIR="/path/to/md"                 # Markdown文件目录
+```
+
+**重要提示**：当使用`decompose_prd`工具并采用`file://`格式指定PRD文件路径时，**必须**使用绝对路径。例如：
+- Windows系统: `file:///C:/Users/username/documents/prd.md`
+- Linux/macOS系统: `file:///home/username/projects/prd.md`
+
+相对路径将无法被正确解析。
+
+### 服务配置
+
+```bash
+export MCP_SERVICE_PORT=8000                    # 服务端口号
+export MCP_LOG_LEVEL=INFO                       # 日志级别(DEBUG, INFO, WARNING, ERROR)
+```
+
+## 2. Cursor IDE配置
+
+在Cursor中配置MCP服务的示例 (`~/.cursor/mcp.json`)：
 
 ```json
-// ~/.cursor/mcp.json
 {
-  "task-manager": {
-    "command": "C:\\Python310\\python.exe",
-    "args": [
-      "-m",
-      "mcp",
-      "run",
-      "D:\\projects\\task-manager-mcp\\server.py"
-    ],
-    "env": {
-      "MCP_SERVICE_PORT": "8000",
-      "MCP_LOG_LEVEL": "INFO"
+  "mcpServers": {
+    "task-manager": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "fastmcp",
+        "fastmcp",
+        "run",
+        "D:\\code\\git_project\\task-manager-mcp\\src\\server.py" // 注意: 替换为你的 server.py 绝对路径
+      ],
+      "env": {
+        "GEMINI_API_KEY": "<你的Gemini API Key>",
+        "HTTP_PROXY": "http://127.0.0.1:7890", // 代理设置 (如果需要)
+        "HTTPS_PROXY": "http://127.0.0.1:7890", // 代理设置 (如果需要)
+        "MODEL_NAME": "gemini-1.5-flash", // 或 openai 模型
+        "LLM_PROVIDER": "gemini", // 或 openai
+        "MCP_OUTPUT_DIR": "D:\\path\\to\\your\\output\\dir\\" // 可选：指定输出目录
+      }
     }
+    // 可能有其他服务器配置...
   }
 }
 ```
 
-## 4. Docker Compose 示例
+**注意:**
+- 确保 `command` 和 `args` 正确指向你的 `uv` 命令和 `server.py` 的绝对路径。
+- 对于Windows路径，需要使用双反斜杠（例如：`D:\\path\\to\\file.py`）。
+- 正确配置 `env` 中的 API 密钥、代理（如果需要）、模型名称和输出目录。
+
+## 3. Docker配置示例
+
+### Dockerfile
+
+```dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# 安装UV
+RUN pip install uv
+
+# 拷贝项目文件
+COPY requirements.txt .
+COPY src/ src/
+COPY docs/ docs/
+
+# 创建输出目录
+RUN mkdir -p /app/output/tasks /app/output/md /app/output/logs
+
+# 设置环境变量
+ENV PYTHONPATH=/app
+ENV MCP_OUTPUT_DIR=/app/output
+
+# 暴露端口
+EXPOSE 8000
+
+# 使用UV运行服务
+CMD ["uv", "run", "--with", "fastmcp", "fastmcp", "run", "/app/src/server.py"]
+```
 
 ### docker-compose.yml
 
@@ -112,14 +134,15 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./config.yaml:/app/config.yaml
-      - ./data:/app/data
+      - ./output:/app/output
     environment:
-      - MCP_NAME=task-manager
+      - GEMINI_API_KEY=your-api-key-here
+      - MODEL_NAME=gemini-1.5-flash
+      - LLM_PROVIDER=gemini
       - MCP_LOG_LEVEL=INFO
     restart: unless-stopped
 
-  # 数据库示例（后续扩展时使用）
+  # 未来可能的数据库服务
   # postgres:
   #   image: postgres:14
   #   environment:
@@ -135,7 +158,7 @@ services:
 #   postgres_data:
 ```
 
-## 5. Nginx 反向代理配置
+## 4. Nginx 反向代理配置
 
 当需要通过HTTPS提供服务或进行负载均衡时，可以使用Nginx作为反向代理：
 
@@ -154,7 +177,7 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         
-        # WebSocket 支持 (SSE 连接)
+        # WebSocket 支持
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -163,25 +186,44 @@ server {
 }
 ```
 
-## 6. 性能调优
+## 5. 性能调优
 
-对于高负载场景，可以考虑以下配置调整：
+### 使用uv运行服务
 
-### uvicorn 运行参数
+推荐使用uv运行服务，以获得更快的启动速度和更好的子解释器隔离：
 
 ```bash
-uvicorn server:mcp --host 0.0.0.0 --port 8000 --workers 4 --limit-concurrency 100 --timeout-keep-alive 120
+# 基本运行
+uv run --with fastmcp fastmcp run src/server.py
+
+# 高级配置：启用JIT编译(仅PyPy)，调整线程池
+UV_JIT=1 UV_THREAD_POOL_SIZE=8 uv run --with fastmcp fastmcp run src/server.py
 ```
 
-参数说明：
-- `--workers`: 工作进程数，通常设置为 CPU 核心数的 2 倍
-- `--limit-concurrency`: 每个工作进程的最大并发连接数
-- `--timeout-keep-alive`: 保持连接的超时时间（秒）
+### 内存优化技巧
 
-### 内存优化
-
-对于内存存储模式，可以通过环境变量限制最大任务数量：
+- 如果使用内存存储模式（默认），定期导出任务数据：
 
 ```bash
-export MCP_MAX_TASKS=10000
+# 设置自动导出间隔（秒）
+export MCP_AUTO_EXPORT_INTERVAL=3600
+```
+
+- 限制大型PRD文档解析的任务数：
+
+```bash
+# 限制每次PRD解析生成的最大任务数
+export MCP_MAX_TASKS_PER_PRD=100
+```
+
+### LLM优化
+
+调整LLM调用的超时和重试参数：
+
+```bash
+# 设置LLM调用超时时间(秒)
+export LLM_TIMEOUT=60
+
+# 设置LLM调用最大重试次数
+export LLM_MAX_RETRIES=3
 ``` 
