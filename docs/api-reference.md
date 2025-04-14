@@ -26,39 +26,37 @@
 
 | 参数名 | 类型 | 必填 | 说明 |
 |-------|------|-----|-----|
-| `prd_content` | string | 是 | PRD文档内容或资源标识符 |
+| `prd_content` | string | 是 | PRD文档内容或文件路径，支持直接文本或以file://开头的文件路径。**注意：使用file://格式时必须提供绝对路径** |
 
 **返回值：**
 
 ```json
-[
-  {
-    "id": "task-a1b2c3d4",
-    "name": "实现用户登录功能",
-    "description": "开发用户登录界面和后端验证",
-    "status": "todo",
-    "depends_on": [],
-    "subtasks": ["task-e5f6g7h8"],
-    "parent_task": null,
-    "code_files": [],
-    "created_at": "2025-03-31T14:30:00Z",
-    "updated_at": "2025-03-31T14:30:00Z"
-  },
-  ...
-]
+{
+  "success": true,
+  "tasks": [
+    {
+      "id": "1",
+      "name": "用户认证模块",
+      "description": "实现用户注册、登录和认证功能",
+      "status": "todo",
+      "priority": "high",
+      "dependencies": [],
+      "blocked_by": [],
+      "subtasks": [],
+      "tags": ["核心功能", "前端", "后端"],
+      "estimated_hours": 24,
+      "code_references": []
+    },
+    // 更多任务...
+  ],
+  "message": "已从PRD中提取13个主任务"
+}
 ```
 
 **示例调用：**
 
 ```
-<mcp:tool name="decompose_prd">
-<mcp:parameter name="prd_content">file://path/to/prd.md</mcp:parameter>
-</mcp:tool>
-```
-
-**Cursor IDE中的调用：**
-```
-@task-manager 解析这个PRD文档：file://path/to/prd.md
+@task-manager decompose_prd prd_content="file:///D:/projects/my-project/docs/prd.md"
 ```
 
 ### add_task
@@ -71,39 +69,43 @@
 |-------|------|-----|-----|
 | `name` | string | 是 | 任务名称 |
 | `description` | string | 否 | 任务描述 |
-| `depends_on` | array | 否 | 依赖任务ID列表 |
-| `parent_task` | string | 否 | 父任务ID |
+| `id` | string | 否 | 任务ID（可选，如未提供则自动生成） |
+| `priority` | string | 否 | 任务优先级，可选值为：low, medium, high, critical |
+| `tags` | string | 否 | 任务标签，多个标签以逗号分隔 |
+| `assigned_to` | string | 否 | 任务分配给谁 |
+| `estimated_hours` | string | 否 | 预估完成时间（小时） |
+| `dependencies` | string | 否 | 依赖的任务ID，多个依赖以逗号分隔 |
 
 **返回值：**
 
 ```json
 {
-  "id": "task-i9j0k1l2",
-  "name": "实现用户注册功能",
-  "description": "开发用户注册界面和后端处理",
-  "status": "todo",
-  "depends_on": ["task-a1b2c3d4"],
-  "subtasks": [],
-  "parent_task": null,
-  "code_files": [],
-  "created_at": "2025-03-31T15:00:00Z",
-  "updated_at": "2025-03-31T15:00:00Z"
+  "success": true,
+  "task": {
+    "id": "4",
+    "name": "实现用户注册功能",
+    "description": "开发用户注册界面和后端处理",
+    "status": "todo",
+    "priority": "high",
+    "dependencies": ["1", "2"],
+    "blocked_by": ["1", "2"],
+    "subtasks": [],
+    "parent_task_id": null,
+    "tags": ["前端", "用户功能"],
+    "code_references": [],
+    "complexity": "medium",
+    "estimated_hours": 8,
+    "created_at": "2025-03-31T15:00:00Z",
+    "updated_at": "2025-03-31T15:00:00Z"
+  },
+  "task_json_path": "/path/to/output/tasks/task-4.json"
 }
 ```
 
 **示例调用：**
 
 ```
-<mcp:tool name="add_task">
-<mcp:parameter name="name">实现用户注册功能</mcp:parameter>
-<mcp:parameter name="description">开发用户注册界面和后端处理</mcp:parameter>
-<mcp:parameter name="depends_on">["task-a1b2c3d4"]</mcp:parameter>
-</mcp:tool>
-```
-
-**Cursor IDE中的调用：**
-```
-@task-manager 创建一个新任务：实现用户注册功能，包括注册界面和后端验证
+@task-manager add_task name="实现用户注册功能" description="开发用户注册界面和后端处理" priority="high" tags="前端,用户功能" dependencies="1,2"
 ```
 
 ### update_task
@@ -114,7 +116,7 @@
 
 | 参数名 | 类型 | 必填 | 说明 |
 |-------|------|-----|-----|
-| `task_id` | string | 是 | 任务ID，对于子任务使用`父任务ID.子任务编号`格式，如`task-1.1` |
+| `task_id` | string | 是 | 任务ID，对于子任务使用`父任务ID.子任务编号`格式，如`1.1` |
 | `name` | string | 否 | 新任务名称 |
 | `description` | string | 否 | 新任务描述 |
 | `status` | string | 否 | 新任务状态，包括标记任务为完成(`done`)、进行中(`in_progress`)、阻塞(`blocked`)或取消(`cancelled`) |
@@ -131,22 +133,24 @@
 {
   "success": true,
   "task": {
-    "id": "task-i9j0k1l2",
+    "id": "4",
     "name": "实现用户注册功能",
-    "description": "开发用户注册界面和后端处理",
-    "status": "todo",
+    "description": "正在实现后端注册逻辑",
+    "status": "in_progress",
     "priority": "high",
-    "dependencies": ["task-x7y8z9w0"], // 更新后的依赖
-    "blocked_by": ["task-x7y8z9w0"], // blocked_by 也会相应更新
+    "dependencies": ["1"],
+    "blocked_by": ["1"],
     "subtasks": [],
     "parent_task_id": null,
+    "tags": ["前端", "用户功能"],
     "code_references": [],
     "complexity": "medium",
     "estimated_hours": 8,
     "created_at": "2025-03-31T15:00:00Z",
-    "updated_at": "2025-04-20T11:00:00Z" // 更新时间已改变
+    "updated_at": "2025-04-20T11:00:00Z"
   },
-  "message": "Task task-i9j0k1l2 updated successfully"
+  "message": "Task 4 updated successfully",
+  "task_json_path": "/path/to/output/tasks/task-4.json"
 }
 ```
 
@@ -157,41 +161,21 @@
 2. 如果有任何子任务被阻塞，则父任务自动更新为阻塞状态
 3. 如果有任何子任务进行中，则父任务自动更新为进行中状态
 
-子任务的更新直接影响父任务的`subtasks`字段中对应的子任务数据。
-**注意：** `update_task` 工具不支持直接更新子任务的依赖关系，子任务的依赖通常由父任务或其执行流程决定。
-
 **示例调用：**
 
 更新任务状态、描述并设置新的依赖：
 ```
-<mcp:tool name="update_task">
-<mcp:parameter name="task_id">task-i9j0k1l2</mcp:parameter>
-<mcp:parameter name="status">in_progress</mcp:parameter>
-<mcp:parameter name="description">正在实现后端注册逻辑</mcp:parameter>
-<mcp:parameter name="dependencies">task-x7y8z9w0</mcp:parameter> // 设置新的依赖，会覆盖旧的
-</mcp:tool>
+@task-manager update_task task_id="4" status="in_progress" description="正在实现后端注册逻辑" dependencies="1"
 ```
 
 清空任务依赖：
 ```
-<mcp:tool name="update_task">
-<mcp:parameter name="task_id">task-i9j0k1l2</mcp:parameter>
-<mcp:parameter name="dependencies"></mcp:parameter> // 传入空字符串清空依赖
-</mcp:tool>
+@task-manager update_task task_id="4" dependencies=""
 ```
 
 更新子任务状态：
 ```
-<mcp:tool name="update_task">
-<mcp:parameter name="task_id">task-a1b2c3d4.1</mcp:parameter>
-<mcp:parameter name="status">done</mcp:parameter>
-<mcp:parameter name="actual_hours">5.5</mcp:parameter>
-</mcp:tool>
-```
-
-**Cursor IDE中的调用：**
-```
-@task-manager 更新任务task-i9j0k1l2的状态为in_progress，描述为"正在实现后端注册逻辑"，并设置其依赖为task-x7y8z9w0
+@task-manager update_task task_id="1.1" status="done" actual_hours="5.5"
 ```
 
 ### get_task
@@ -206,19 +190,12 @@
 
 **返回值：**
 
-返回包含任务详细信息的JSON对象。
+返回包含任务详细信息的格式化文本，包括基本信息、详细内容、工时信息、标签、依赖关系和代码引用。
 
 **示例调用：**
 
 ```
-<mcp:tool name="get_task">
-<mcp:parameter name="task_id">task-a1b2c3d4</mcp:parameter>
-</mcp:tool>
-```
-
-**Cursor IDE中的调用：**
-```
-@task-manager 获取任务 task-a1b2c3d4 的详情
+@task-manager get_task task_id="1"
 ```
 
 ### get_task_list
@@ -229,51 +206,21 @@
 
 | 参数名 | 类型 | 必填 | 说明 |
 |-------|------|-----|-----|
-| `status` | string | 否 | 按状态筛选 |
-| `parent_task` | string | 否 | 按父任务筛选 |
+| `status` | string | 否 | 按状态筛选，可选值为：todo, in_progress, done, blocked, cancelled |
+| `priority` | string | 否 | 按优先级筛选，可选值为：low, medium, high, critical |
+| `tag` | string | 否 | 按标签筛选 |
+| `assigned_to` | string | 否 | 按负责人筛选 |
+| `page` | string | 否 | 页码，默认为1 |
+| `page_size` | string | 否 | 每页任务数量，默认为100 |
 
 **返回值：**
 
-```json
-[
-  {
-    "id": "task-a1b2c3d4",
-    "name": "实现用户登录功能",
-    "description": "开发用户登录界面和后端验证",
-    "status": "done",
-    "depends_on": [],
-    "subtasks": ["task-e5f6g7h8"],
-    "parent_task": null,
-    "code_files": ["src/auth/login.py", "src/models/user.py"],
-    "created_at": "2025-03-31T14:30:00Z",
-    "updated_at": "2025-03-31T16:30:00Z"
-  },
-  {
-    "id": "task-i9j0k1l2",
-    "name": "实现用户注册功能",
-    "description": "开发用户注册界面和后端处理",
-    "status": "todo",
-    "depends_on": ["task-a1b2c3d4", "task-m3n4o5p6"],
-    "subtasks": [],
-    "parent_task": null,
-    "code_files": [],
-    "created_at": "2025-03-31T15:00:00Z",
-    "updated_at": "2025-03-31T15:10:00Z"
-  }
-]
-```
+返回符合条件的任务列表，以表格和JSON格式展示。
 
 **示例调用：**
 
 ```
-<mcp:tool name="get_task_list">
-<mcp:parameter name="status">todo</mcp:parameter>
-</mcp:tool>
-```
-
-**Cursor IDE中的调用：**
-```
-@task-manager 获取所有待办任务
+@task-manager get_task_list status="todo" priority="high" tag="前端"
 ```
 
 ### get_next_executable_task
@@ -288,52 +235,12 @@
 
 **返回值：**
 
-返回一个最优先的可执行任务对象，如果没有可执行的任务，则返回空结果。
-
-```json
-{
-  "success": true,
-  "found": true,
-  "task": {
-    "id": "task-i9j0k1l2",
-    "name": "实现用户注册功能",
-    "description": "开发用户注册界面和后端处理",
-    "status": "todo",
-    "priority": "high",
-    "dependencies": ["task-a1b2c3d4"],
-    "blocked_by": [],
-    "subtasks": [],
-    "parent_task_id": null,
-    "code_references": [],
-    "complexity": "medium",
-    "estimated_hours": 8,
-    "created_at": "2025-03-31T15:00:00Z",
-    "updated_at": "2025-03-31T15:10:00Z"
-  }
-}
-```
-
-如果没有找到可执行任务：
-
-```json
-{
-  "success": true,
-  "found": false,
-  "message": "没有找到可执行的任务"
-}
-```
+返回一个最优先的可执行任务，如果没有可执行的任务，则返回相应提示。
 
 **示例调用：**
 
 ```
-<mcp:tool name="get_next_executable_task">
-<mcp:parameter name="limit">3</mcp:parameter>
-</mcp:tool>
-```
-
-**Cursor IDE中的调用：**
-```
-@task-manager 获取下一个可执行的任务
+@task-manager get_next_executable_task
 ```
 
 ### expand_task
@@ -349,54 +256,12 @@
 
 **返回值：**
 
-```json
-{
-  "success": true,
-  "parent_task": {
-    "id": "task-a1b2c3d4",
-    "name": "实现用户登录功能",
-    "description": "开发用户登录界面和后端验证",
-    "status": "todo",
-    "priority": "high",
-    "dependencies": [],
-    "blocked_by": [],
-    "subtasks": [
-      {
-        "id": "task-a1b2c3d4.1",
-        "name": "设计登录界面",
-        "description": "设计用户友好的登录界面",
-        "status": "todo",
-        "priority": "high",
-        "dependencies": [],
-        "parent_task_id": "task-a1b2c3d4",
-        "complexity": "medium",
-        "estimated_hours": 4,
-        "created_at": "2025-03-31T14:35:00Z",
-        "updated_at": "2025-03-31T14:35:00Z"
-      },
-      // 更多子任务...
-    ],
-    "created_at": "2025-03-31T14:30:00Z",
-    "updated_at": "2025-03-31T14:35:00Z"
-  },
-  "subtasks": [
-    // 子任务列表，格式与parent_task中的subtasks相同
-  ]
-}
-```
+返回父任务信息和生成的子任务列表，以及保存的文件路径。
 
 **示例调用：**
 
 ```
-<mcp:tool name="expand_task">
-<mcp:parameter name="task_id">task-a1b2c3d4</mcp:parameter>
-<mcp:parameter name="num_subtasks">3</mcp:parameter>
-</mcp:tool>
-```
-
-**Cursor IDE中的调用：**
-```
-@task-manager 为任务task-a1b2c3d4生成3个子任务
+@task-manager expand_task task_id="1" num_subtasks="3"
 ```
 
 ### update_task_code_references
@@ -407,74 +272,17 @@
 
 | 参数名 | 类型 | 必填 | 说明 |
 |-------|------|-----|-----|
-| `task_id` | string | 是 | 任务ID，子任务使用`父任务ID.子任务编号`格式 |
-| `code_references` | array | 是 | 新的代码引用列表 |
+| `task_id` | string | 是 | 任务ID |
+| `code_files` | string | 是 | 代码文件路径列表，以逗号分隔 |
 
 **返回值：**
 
-当更新子任务时，返回更新后的子任务字典:
-```json
-{
-  "success": true,
-  "message": "Successfully updated code references for subtask task-a1b2c3d4.1",
-  "task": {
-    "id": "task-a1b2c3d4.1",
-    "name": "设计登录表单",
-    "description": "创建美观且符合设计规范的登录表单",
-    "status": "done",
-    "priority": "high",
-    "dependencies": [],
-    "parent_task_id": "task-a1b2c3d4",
-    "complexity": "medium",
-    "estimated_hours": 4,
-    "code_references": ["src/components/LoginForm.vue"], // 更新后的代码引用
-    "created_at": "2025-03-31T14:35:00Z",
-    "updated_at": "2025-04-20T10:00:00Z" // 更新时间已改变
-  }
-}
-```
-
-当更新主任务时，返回更新后的主任务字典:
-```json
-{
-  "success": true,
-  "message": "Successfully updated code references for task task-a1b2c3d4",
-  "task": {
-    "id": "task-a1b2c3d4",
-    "name": "实现用户登录功能",
-    "description": "开发用户登录界面和后端验证 [CODE_FILES: src/auth/login.py, src/models/user.py]",
-    "status": "done",
-    "depends_on": [],
-    "subtasks": ["task-e5f6g7h8"],
-    "parent_task": null,
-    "code_files": ["src/auth/login.py", "src/models/user.py", "src/config.py"], // 更新后的代码引用
-    "created_at": "2025-03-31T14:30:00Z",
-    "updated_at": "2025-04-20T10:05:00Z" // 更新时间已改变
-  }
-}
-```
+返回更新后的任务信息，包括更新后的代码引用。
 
 **示例调用：**
 
-更新子任务：
 ```
-<mcp:tool name="update_task_code_references">
-<mcp:parameter name="task_id">task-a1b2c3d4.1</mcp:parameter>
-<mcp:parameter name="code_references">["src/components/LoginForm.vue"]</mcp:parameter>
-</mcp:tool>
-```
-
-更新主任务：
-```
-<mcp:tool name="update_task_code_references">
-<mcp:parameter name="task_id">task-a1b2c3d4</mcp:parameter>
-<mcp:parameter name="code_references">["src/auth/login.py", "src/models/user.py", "src/config.py"]</mcp:parameter>
-</mcp:tool>
-```
-
-**Cursor IDE中的调用：**
-```
-@task-manager 更新子任务task-a1b2c3d4.1的代码引用为: src/components/LoginForm.vue
+@task-manager update_task_code_references task_id="1" code_files="src/auth/login.py,src/models/user.py"
 ```
 
 ### use_description
@@ -522,10 +330,9 @@
 
 ```json
 {
-  "error": {
-    "code": "task_not_found",
-    "message": "指定的任务ID不存在"
-  }
+  "success": false,
+  "error": "指定的任务ID不存在",
+  "error_code": "task_not_found"
 }
 ```
 
@@ -538,6 +345,8 @@
 | `circular_dependency` | 检测到循环依赖 |
 | `invalid_parameter` | 无效的参数值 |
 | `missing_parameter` | 缺少必要参数 |
+| `prd_parse_error` | PRD解析失败 |
+| `expand_task_error` | 任务展开失败 |
 
 ## 数据模型
 
@@ -563,4 +372,5 @@
 | `completed_at` | string | 完成时间 (ISO 8601格式) |
 | `estimated_hours` | number | 预估工时 |
 | `actual_hours` | number | 实际工时 |
-| `assigned_to` | string | 任务负责人 | 
+| `assigned_to` | string | 任务负责人 |
+| `tags` | array | 任务标签列表 | 

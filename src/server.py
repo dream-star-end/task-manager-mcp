@@ -66,7 +66,7 @@ async def decompose_prd(prd_content: str) -> list[types.TextContent]:
     """解析PRD文档，自动拆解为主任务列表
     
     Args:
-        prd_content: PRD文档内容或文件路径，支持直接文本或以file://开头的文件路径
+        prd_content: PRD文档内容或文件路径，支持直接文本或以file://开头的文件路径（使用file://格式时必须提供绝对路径）
         
     Returns:
         List: 包含提取的主任务列表的格式化响应
