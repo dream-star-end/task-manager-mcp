@@ -71,45 +71,53 @@ class TaskStorage:
             # 加载主任务及其子任务
             for task_dict in tasks_data:
                 task_id = task_dict.get('id')
-                if not task_id:
-                    logger.warning(f"跳过无效任务数据: 缺少ID")
+                if not task_id or '.' in task_id: # 只处理主任务ID
+                    logger.warning(f"跳过无效或非主任务数据: {task_dict}")
                     continue
                 
-                # 创建任务对象
-                task = self._dict_to_task(task_dict)
-                
-                # 存储主任务
-                self.tasks[task_id] = task
-                self.dependency_graph[task_id] = set()
-                
-                # 加载子任务
-                if 'subtasks' in task_dict and isinstance(task_dict['subtasks'], list):
-                    subtasks = []
-                    for subtask_dict in task_dict['subtasks']:
-                        if not isinstance(subtask_dict, dict):
-                            continue
-                        
-                        subtask_id = subtask_dict.get('id')
-                        if not subtask_id:
-                            continue
-                            
-                        # 为子任务创建 Task 对象
-                        subtask = self._dict_to_task(subtask_dict)
-                        subtasks.append(subtask)
+                try:
+                    # 创建任务对象 (包含递归创建的子任务Task对象)
+                    task = self._dict_to_task(task_dict)
                     
-                    # 设置子任务列表
-                    task.subtasks = subtasks
+                    # 存储主任务
+                    self.tasks[task_id] = task
+                    logger.debug(f"主任务 {task_id} 已加载，包含 {len(task.subtasks)} 个子任务对象")
+
+                except Exception as load_e:
+                    logger.error(f"加载任务 {task_id} 失败: {load_e}", exc_info=True)
+                    continue # 继续加载下一个任务
             
-            # 重建依赖关系图
+            # 所有主任务及其子任务对象加载完毕后，重建依赖图
             self._rebuild_dependency_graph()
             
-            logger.info(f"从文件加载了 {len(self.tasks)} 个主任务")
+            logger.info(f"从文件加载了 {len(self.tasks)} 个主任务及其子任务")
             
         except Exception as e:
-            logger.error(f"从文件加载任务失败: {str(e)}")
+            logger.error(f"从文件加载任务失败: {str(e)}", exc_info=True)
     
     def _dict_to_task(self, task_dict: Dict) -> Task:
         """将任务字典转换为 Task 对象"""
+        # 获取依赖和被阻塞关系
+        dependencies = set(task_dict.get('dependencies', []))
+        blocked_by = set(task_dict.get('blocked_by', []))
+        
+        # 确保blocked_by包含所有依赖
+        for dep_id in dependencies:
+            blocked_by.add(dep_id)
+        
+        # 处理子任务（将字典列表转换为Task对象列表）
+        subtasks_data = task_dict.get('subtasks', [])
+        subtasks = []
+        if isinstance(subtasks_data, list):
+            for sub_dict in subtasks_data:
+                if isinstance(sub_dict, dict):
+                    try:
+                        subtasks.append(self._dict_to_task(sub_dict)) # 递归调用
+                    except Exception as e:
+                        logger.error(f"转换子任务字典失败 ({sub_dict.get('id')}): {e}")
+                elif isinstance(sub_dict, Task): # 如果已经是Task对象，直接添加
+                    subtasks.append(sub_dict)
+
         task = Task(
             id=task_dict.get('id', ''),
             name=task_dict.get('name', ''),
@@ -117,13 +125,15 @@ class TaskStorage:
             status=task_dict.get('status', 'todo'),
             priority=task_dict.get('priority', 'medium'),
             complexity=task_dict.get('complexity', 'medium'),
-            dependencies=set(task_dict.get('dependencies', [])),
-            blocked_by=set(task_dict.get('blocked_by', [])),
-            tags=task_dict.get('tags', []),
+            dependencies=dependencies,
+            blocked_by=blocked_by,
+            tags=task_dict.get('tags', []), 
             assigned_to=task_dict.get('assigned_to'),
             estimated_hours=task_dict.get('estimated_hours'),
             actual_hours=task_dict.get('actual_hours'),
             code_references=task_dict.get('code_references', []),
+            subtasks=subtasks, # 传入转换后的Task对象列表
+            parent_task_id=task_dict.get('parent_task_id') # 确保父任务ID也被处理
         )
         
         # 设置时间字段
@@ -183,42 +193,12 @@ class TaskStorage:
                             self.dependency_graph[dep_id] = set()
                         self.dependency_graph[dep_id].add(subtask_id)
     
-    def _save_tasks_to_file(self) -> None:
-        """将所有任务保存到主任务 JSON 文件"""
-        try:
-            # 将任务对象转换为可序列化的字典
-            tasks_data = []
-            
-            for task_id, task in self.tasks.items():
-                # 只保存主任务（不含点号的ID）
-                if "." in task_id:
-                    continue
-                
-                task_dict = self._task_to_dict(task)
-                
-                # 处理子任务
-                if hasattr(task, 'subtasks') and task.subtasks:
-                    task_dict['subtasks'] = [
-                        self._task_to_dict(subtask) 
-                        for subtask in task.subtasks 
-                        if isinstance(subtask, Task)
-                    ]
-                else:
-                    task_dict['subtasks'] = []
-                
-                tasks_data.append(task_dict)
-            
-            # 写入文件
-            with open(self.master_file_path, 'w', encoding='utf-8') as f:
-                json.dump(tasks_data, f, ensure_ascii=False, indent=2)
-                
-            logger.debug(f"所有任务已保存到文件: {self.master_file_path}")
-        except Exception as e:
-            logger.error(f"保存任务到文件失败: {str(e)}")
-    
     def _task_to_dict(self, task: Task) -> Dict:
-        """将 Task 对象转换为字典"""
-        return {
+        """将 Task 对象（包括子任务）转换为适合JSON序列化的字典"""
+        if not task:
+            return {}
+        
+        task_dict = {
             'id': task.id,
             'name': task.name,
             'description': task.description,
@@ -235,7 +215,34 @@ class TaskStorage:
             'created_at': task.created_at.isoformat() if task.created_at else None,
             'updated_at': task.updated_at.isoformat() if task.updated_at else None,
             'completed_at': task.completed_at.isoformat() if task.completed_at else None,
+            'parent_task_id': task.parent_task_id, # 从Task对象获取
+            # 初始化 subtasks 为空列表，后面填充
+            'subtasks': [] 
         }
+
+        # --- 修复: 递归处理子任务 --- 
+        if hasattr(task, 'subtasks') and isinstance(task.subtasks, list):
+            task_dict['subtasks'] = [self._task_to_dict(sub) for sub in task.subtasks if isinstance(sub, Task)]
+        
+        return task_dict
+    
+    def _save_tasks_to_file(self) -> None:
+        """将所有任务保存到主任务 JSON 文件"""
+        try:
+            tasks_data = []
+            # 只迭代主任务进行保存
+            for task_id, task in self.tasks.items():
+                if "." not in task_id: 
+                    # --- 修复: 直接使用 _task_to_dict 返回的完整字典 --- 
+                    tasks_data.append(self._task_to_dict(task))
+            
+            # 写入文件
+            with open(self.master_file_path, 'w', encoding='utf-8') as f:
+                json.dump(tasks_data, f, ensure_ascii=False, indent=2)
+                
+            logger.debug(f"所有主任务及其子任务已递归转换为字典并保存到文件: {self.master_file_path}")
+        except Exception as e:
+            logger.error(f"保存任务到文件失败: {str(e)}", exc_info=True)
     
     def create_task(
         self, 
@@ -351,10 +358,26 @@ class TaskStorage:
             parent_id = task_id.split(".")[0]
             parent_task = self.tasks.get(parent_id)
             
+            found_subtask = None
             if parent_task and hasattr(parent_task, 'subtasks') and isinstance(parent_task.subtasks, list):
                 for subtask in parent_task.subtasks:
                     if isinstance(subtask, Task) and subtask.id == task_id:
-                        return subtask
+                        found_subtask = subtask
+                        break
+            
+            # 如果第一次查找失败，尝试重新加载数据再查找一次 (处理可能的缓存问题)
+            if not found_subtask:
+                logger.warning(f"第一次查找子任务 {task_id} 失败，尝试重新加载数据...")
+                self._load_tasks_from_file() # 强制重新加载
+                parent_task = self.tasks.get(parent_id) # 重新获取父任务
+                if parent_task and hasattr(parent_task, 'subtasks') and isinstance(parent_task.subtasks, list):
+                    for subtask in parent_task.subtasks:
+                        if isinstance(subtask, Task) and subtask.id == task_id:
+                            logger.info(f"重新加载后成功找到子任务 {task_id}")
+                            found_subtask = subtask
+                            break
+            
+            return found_subtask # 返回找到的子任务或 None
         
         return None
     
@@ -366,7 +389,31 @@ class TaskStorage:
         
         # 处理可更新的字段
         for field, value in kwargs.items():
-            if hasattr(task, field) and field != "id":
+            if field == "subtasks":
+                # 特殊处理子任务列表
+                if not isinstance(value, list):
+                    logger.error(f"更新任务 {task_id} 失败: subtasks 字段值不是列表")
+                    continue
+                
+                # --- 修复: 根据传入列表的类型决定如何处理 --- 
+                if not value: # 空列表
+                    task.subtasks = []
+                    logger.info(f"任务 {task_id} 的子任务列表已更新为空列表")
+                elif isinstance(value[0], Task): # 传入的是 List[Task]
+                    task.subtasks = value
+                    logger.info(f"任务 {task_id} 的子任务列表已直接更新 (传入类型: List[Task])")
+                elif isinstance(value[0], dict): # 传入的是 List[Dict]
+                    try:
+                        task.subtasks = [self._dict_to_task(sub_dict) for sub_dict in value]
+                        logger.info(f"任务 {task_id} 的子任务列表已更新 (传入类型: List[Dict], 已转换为 List[Task])")
+                    except Exception as convert_e:
+                        logger.error(f"更新任务 {task_id} 时转换子任务字典列表失败: {convert_e}", exc_info=True)
+                        continue # 跳过更新此字段
+                else: # 列表包含未知类型
+                    logger.error(f"更新任务 {task_id} 失败: subtasks 列表包含无效类型 ({type(value[0])})")
+                    continue
+
+            elif hasattr(task, field) and field != "id":
                 setattr(task, field, value)
         
         # 更新时间戳
@@ -535,11 +582,10 @@ class TaskStorage:
     def get_next_executable_tasks(self, limit: int = 5) -> List[Task]:
         """获取下一批可执行的任务
         
-        修改后的逻辑：
-        1. 首先查找状态为in_progress的主任务及其子任务
-        2. 如果没有in_progress的主任务或子任务不足以达到限制数量，
-           则查找状态为todo且没有未完成依赖的主任务及其子任务
-        3. 如果仍未达到限制数量，则返回主任务本身
+        新的逻辑：
+        1. 先找出最优先的主任务（没有被阻塞且状态为todo或in_progress）
+        2. 只在这个主任务的子任务中查找最优先的子任务
+        3. 如果主任务有可执行的子任务，则返回子任务，否则返回主任务本身
         
         Args:
             limit: 返回任务数量限制
@@ -550,35 +596,20 @@ class TaskStorage:
         # 结果任务列表
         final_tasks = []
         
-        # 第一步: 找出所有正在进行中的主任务（即顶级任务，不是子任务）
-        in_progress_parent_tasks = [
-            task for task in self.tasks.values()
-            if task.status == TaskStatus.IN_PROGRESS and "." not in task.id
-        ]
-        
-        # 第二步: 找出所有状态为todo且没有未完成依赖的主任务
+        # 找出所有没有被阻塞的主任务（不包括子任务）
         executable_parent_tasks = [
             task for task in self.tasks.values()
-            if task.status == TaskStatus.TODO and 
+            if (task.status == TaskStatus.TODO or task.status == TaskStatus.IN_PROGRESS) and 
             len(task.blocked_by) == 0 and 
             "." not in task.id
         ]
         
-        # 按优先级和创建时间排序进行中的主任务
-        sorted_in_progress_parents = sorted(
-            in_progress_parent_tasks,
-            key=lambda t: (
-                # 优先级从高到低
-                {"critical": 0, "high": 1, "medium": 2, "low": 3}.get(t.priority, 4),
-                # 创建时间（越早创建越优先）
-                t.created_at
-            )
-        )
-        
-        # 按优先级、依赖关系和创建时间排序可执行的主任务
-        sorted_executable_parents = sorted(
+        # 按优先级、依赖关系和创建时间排序主任务
+        sorted_parent_tasks = sorted(
             executable_parent_tasks,
             key=lambda t: (
+                # 状态优先级：in_progress优先于todo
+                0 if t.status == TaskStatus.IN_PROGRESS else 1,
                 # 优先级从高到低
                 {"critical": 0, "high": 1, "medium": 2, "low": 3}.get(t.priority, 4),
                 # 依赖该任务的任务数量（越多越优先）
@@ -588,24 +619,52 @@ class TaskStorage:
             )
         )
         
-        # 第三步: 优先查找进行中主任务的子任务
-        for parent_task in sorted_in_progress_parents:
-            # 检查这个主任务是否有子任务列表
-            subtasks = getattr(parent_task, 'subtasks', None)
+        # 如果没有可执行的主任务，返回空列表
+        if not sorted_parent_tasks:
+            return []
+        
+        # 获取最优先的主任务
+        top_parent_task = sorted_parent_tasks[0]
+        logger.info(f"最优先的主任务是: {top_parent_task.id} ({top_parent_task.name}), 优先级: {top_parent_task.priority}")
+        
+        # 检查主任务是否有子任务
+        subtasks = getattr(top_parent_task, 'subtasks', None)
+        has_executable_subtasks = False
+        
+        if subtasks and isinstance(subtasks, list) and len(subtasks) > 0:
+            logger.info(f"主任务 {top_parent_task.id} 有 {len(subtasks)} 个子任务")
             
-            if subtasks and isinstance(subtasks, list):
-                # 找出进行中或可执行的子任务：状态为in_progress或(状态为todo且没有未完成依赖)
-                executable_subtasks = []
+            # 第一步：找出所有子任务的ID、状态和阻塞列表
+            subtask_obj_map = {}
+            for subtask in subtasks:
+                if isinstance(subtask, Task):
+                    subtask_obj_map[subtask.id] = subtask
+                    logger.info(f"  检查子任务 {subtask.id} ({subtask.name}), 状态: {subtask.status}, 阻塞: {subtask.blocked_by}")
+            
+            # 当前主任务的可执行子任务
+            executable_subtasks = []
+            
+            # 第二步：检查每个子任务是否可执行
+            for subtask_id, subtask_obj in subtask_obj_map.items():
+                # 子任务必须状态为todo或in_progress且没有被阻塞
+                if (subtask_obj.status == TaskStatus.TODO or subtask_obj.status == TaskStatus.IN_PROGRESS) and \
+                   len(subtask_obj.blocked_by) == 0:
+                    logger.info(f"  子任务 {subtask_id} 可执行 (状态: {subtask_obj.status}, 无阻塞)")
+                    executable_subtasks.append(subtask_obj)
+                elif (subtask_obj.status == TaskStatus.TODO or subtask_obj.status == TaskStatus.IN_PROGRESS):
+                    logger.info(f"  子任务 {subtask_id} 不可执行 (状态: {subtask_obj.status}, 被阻塞: {subtask_obj.blocked_by})")
+            
+            # 构建子任务ID到依赖数量的映射 (用于排序)
+            subtask_dependencies = {}
+            for subtask in executable_subtasks:
+                dep_count = len(subtask.dependencies)
+                subtask_dependencies[subtask.id] = dep_count
+            
+            # 如果找到了可执行的子任务
+            if executable_subtasks:
+                has_executable_subtasks = True
                 
-                for subtask in subtasks:
-                    if not isinstance(subtask, Task):
-                        continue
-                        
-                    # 修改此处逻辑，允许状态为in_progress的子任务被包含
-                    if subtask.status == TaskStatus.IN_PROGRESS or (subtask.status == TaskStatus.TODO and len(subtask.blocked_by) == 0):
-                        executable_subtasks.append(subtask)
-                
-                # 按状态（in_progress优先）、优先级和创建时间排序子任务
+                # 按状态、优先级、依赖数量和创建时间排序子任务
                 sorted_executable_subtasks = sorted(
                     executable_subtasks,
                     key=lambda t: (
@@ -613,64 +672,32 @@ class TaskStorage:
                         0 if t.status == TaskStatus.IN_PROGRESS else 1,
                         # 优先级从高到低
                         {"critical": 0, "high": 1, "medium": 2, "low": 3}.get(t.priority, 4),
+                        # 依赖任务的数量（越少越优先）
+                        subtask_dependencies.get(t.id, 0),
                         # 创建时间（越早创建越优先）
                         t.created_at
                     )
                 )
                 
                 # 将排序后的子任务添加到结果列表
-                final_tasks.extend(sorted_executable_subtasks)
-                
-                # 如果已经达到限制，则返回结果
-                if len(final_tasks) >= limit:
-                    return final_tasks[:limit]
+                for st in sorted_executable_subtasks[:limit]:
+                    logger.info(f"选中可执行子任务: {st.id} ({st.name}), 优先级: {st.priority}, 依赖数量: {subtask_dependencies.get(st.id, 0)}")
+                    final_tasks.append(st)
         
-        # 第四步: 如果还没达到限制，查找可执行主任务的子任务
-        for parent_task in sorted_executable_parents:
-            # 检查这个主任务是否有子任务列表
-            subtasks = getattr(parent_task, 'subtasks', None)
-            
-            if subtasks and isinstance(subtasks, list):
-                # 找出可执行的子任务：状态为todo且没有未完成依赖
-                executable_subtasks = []
-                
+        # 如果主任务没有可执行的子任务
+        if not has_executable_subtasks:
+            # 检查主任务是否有子任务且是否全部完成
+            all_subtasks_done = True
+            if subtasks and isinstance(subtasks, list) and len(subtasks) > 0:
                 for subtask in subtasks:
-                    if not isinstance(subtask, Task):
-                        continue
-                        
-                    # 这里也允许状态为in_progress的子任务被包含
-                    if subtask.status == TaskStatus.IN_PROGRESS or (subtask.status == TaskStatus.TODO and len(subtask.blocked_by) == 0):
-                        executable_subtasks.append(subtask)
-                
-                # 按状态（in_progress优先）、优先级和创建时间排序子任务
-                sorted_executable_subtasks = sorted(
-                    executable_subtasks,
-                    key=lambda t: (
-                        # 状态优先级：in_progress优先于todo
-                        0 if t.status == TaskStatus.IN_PROGRESS else 1,
-                        # 优先级从高到低
-                        {"critical": 0, "high": 1, "medium": 2, "low": 3}.get(t.priority, 4),
-                        # 创建时间（越早创建越优先）
-                        t.created_at
-                    )
-                )
-                
-                # 将排序后的子任务添加到结果列表
-                final_tasks.extend(sorted_executable_subtasks)
-                
-                # 如果已经达到限制，则返回结果
-                if len(final_tasks) >= limit:
-                    return final_tasks[:limit]
-        
-        # 第五步: 如果还没达到限制，添加进行中的主任务本身
-        final_tasks.extend(sorted_in_progress_parents)
-        
-        # 如果已经达到限制，则返回结果
-        if len(final_tasks) >= limit:
-            return final_tasks[:limit]
-        
-        # 第六步: 如果还没达到限制，添加可执行的主任务本身
-        final_tasks.extend(sorted_executable_parents)
+                    if isinstance(subtask, Task) and subtask.status != TaskStatus.DONE:
+                        all_subtasks_done = False
+                        break
+            
+            # 如果没有子任务或所有子任务都完成，则主任务可执行
+            if not subtasks or len(subtasks) == 0 or all_subtasks_done:
+                logger.info(f"主任务 {top_parent_task.id} 可执行 (没有子任务或所有子任务已完成)")
+                final_tasks.append(top_parent_task)
         
         # 返回限制数量的任务
         return final_tasks[:limit]
@@ -702,20 +729,34 @@ class TaskStorage:
         
         return False
     
+    def _unblock_dependents(self, task_id: str) -> None:
+        """解除依赖于给定任务ID的所有任务的阻塞状态"""
+        blocked_tasks = self.dependency_graph.get(task_id, set())
+        if not blocked_tasks:
+            return
+        
+        logger.info(f"任务 {task_id} 完成/状态变更，尝试解除对以下任务的阻塞: {blocked_tasks}")
+        for blocked_id in blocked_tasks:
+            blocked_task = self.get_task(blocked_id)
+            if blocked_task:
+                logger.info(f"  - 正在从任务 {blocked_id} 的 blocked_by 列表中移除 {task_id}")
+                blocked_task.remove_blocked_by(task_id)
+                logger.info(f"  - 任务 {blocked_id} 的 blocked_by 列表更新为: {blocked_task.blocked_by}")
+            else:
+                logger.warning(f"  - 未找到任务 {blocked_id}，无法解除阻塞")
+
     def mark_task_done(self, task_id: str) -> bool:
         """将任务标记为已完成"""
         task = self.get_task(task_id)
         if not task:
             return False
         
+        original_status = task.status # 记录原始状态
         task.mark_as_done()
         
-        # 解除对其他任务的阻塞
-        blocked_tasks = self.dependency_graph.get(task_id, set())
-        for blocked_id in blocked_tasks:
-            blocked_task = self.get_task(blocked_id)
-            if blocked_task:
-                blocked_task.remove_blocked_by(task_id)
+        # --- 调用新的解除阻塞方法 ---
+        if original_status != TaskStatus.DONE: # 仅当状态确实改变为DONE时才解除阻塞
+            self._unblock_dependents(task_id)
         
         # 保存到文件
         self._save_tasks_to_file()

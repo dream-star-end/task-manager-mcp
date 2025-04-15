@@ -1,0 +1,377 @@
+[
+  {
+    "id": "1",
+    "name": "React前端界面开发",
+    "description": "设计和实现大富翁游戏的React前端界面，包括地图、玩家信息展示、骰子动画、交易界面等核心组件。目标是提供一个用户友好的、交互性强的游戏体验。",
+    "status": "todo",
+    "priority": "high",
+    "complexity": "medium",
+    "dependencies": [
+      "2"
+    ],
+    "blocked_by": [
+      "2"
+    ],
+    "tags": [
+      "React",
+      "前端",
+      "UI",
+      "大富翁",
+      "界面开发",
+      "组件设计",
+      "交互设计",
+      "动画效果",
+      "交易界面"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "created_at": "2025-04-16T01:51:26.845244",
+    "updated_at": "2025-04-16T01:52:28.851572",
+    "completed_at": null,
+    "parent_task_id": null,
+    "subtasks": []
+  },
+  {
+    "id": "2",
+    "name": "游戏逻辑与状态管理",
+    "description": "构建大富翁游戏的核心逻辑，包括玩家状态管理、棋盘数据处理、事件触发机制、交易逻辑、破产结算等。主要在前端实现状态管理和规则引擎。",
+    "status": "in_progress",
+    "priority": "high",
+    "complexity": "medium",
+    "dependencies": [],
+    "blocked_by": [],
+    "tags": [
+      "游戏逻辑",
+      "状态管理",
+      "Redux",
+      "React",
+      "棋盘逻辑",
+      "事件处理",
+      "规则引擎"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "created_at": "2025-04-16T01:51:26.845787",
+    "updated_at": "2025-04-16T01:55:39.585834",
+    "completed_at": null,
+    "parent_task_id": null,
+    "subtasks": [
+      {
+        "id": "2.1",
+        "name": "设计游戏数据结构",
+        "description": "设计大富翁游戏的核心数据结构，包括玩家信息（如资金、位置、状态、拥有的地产等）、棋盘信息（如格子类型、地产价格、租金等）、以及游戏状态（如当前玩家、回合数等）。需要考虑数据的可扩展性和性能，选择合适的数据结构和存储方式。",
+        "status": "done",
+        "priority": "critical",
+        "complexity": "medium",
+        "dependencies": [],
+        "blocked_by": [],
+        "tags": [
+          "数据结构",
+          "状态管理"
+        ],
+        "assigned_to": null,
+        "estimated_hours": 8.0,
+        "actual_hours": null,
+        "code_references": [
+          "src/constants/playerConstants.js",
+          "src/constants/boardConstants.js",
+          "src/constants/propertyConstants.js",
+          "src/constants/cardConstants.js",
+          "src/constants/gameStateConstants.js"
+        ],
+        "created_at": "2025-04-16T01:53:56.030271",
+        "updated_at": "2025-04-16T01:55:39.585834",
+        "completed_at": "2025-04-16T01:55:28.110821",
+        "parent_task_id": "2",
+        "subtasks": []
+      },
+      {
+        "id": "2.2",
+        "name": "实现玩家状态管理",
+        "description": "实现玩家状态管理模块，包括玩家的创建、更新、删除，以及玩家状态的查询。需要考虑玩家状态的并发访问和修改，保证数据的一致性。例如，玩家购买地产后，需要更新玩家的资金和拥有的地产列表。",
+        "status": "todo",
+        "priority": "critical",
+        "complexity": "high",
+        "dependencies": [
+          "2.1"
+        ],
+        "blocked_by": [
+          "2.1"
+        ],
+        "tags": [
+          "状态管理",
+          "玩家"
+        ],
+        "assigned_to": null,
+        "estimated_hours": 16.0,
+        "actual_hours": null,
+        "code_references": [],
+        "created_at": "2025-04-16T01:53:56.030271",
+        "updated_at": "2025-04-16T01:53:56.030271",
+        "completed_at": null,
+        "parent_task_id": "2",
+        "subtasks": []
+      },
+      {
+        "id": "2.3",
+        "name": "实现棋盘数据处理",
+        "description": "实现棋盘数据处理模块，包括棋盘的初始化、格子的查询、格子的更新。需要考虑棋盘数据的存储和访问效率，选择合适的数据结构和算法。例如，玩家走到某个格子后，需要查询该格子的类型和属性，并根据类型触发相应的事件。",
+        "status": "todo",
+        "priority": "critical",
+        "complexity": "high",
+        "dependencies": [
+          "2.2",
+          "2.1"
+        ],
+        "blocked_by": [
+          "2.2",
+          "2.1"
+        ],
+        "tags": [
+          "棋盘",
+          "数据处理"
+        ],
+        "assigned_to": null,
+        "estimated_hours": 16.0,
+        "actual_hours": null,
+        "code_references": [],
+        "created_at": "2025-04-16T01:53:56.030271",
+        "updated_at": "2025-04-16T01:53:56.030271",
+        "completed_at": null,
+        "parent_task_id": "2",
+        "subtasks": []
+      },
+      {
+        "id": "2.4",
+        "name": "实现事件触发机制",
+        "description": "实现事件触发机制，包括事件的定义、事件的注册、事件的触发。需要考虑事件的优先级和执行顺序，保证游戏的正确性和流畅性。例如，玩家走到机会格子后，需要触发机会事件，并根据事件的结果更新玩家的状态。",
+        "status": "todo",
+        "priority": "high",
+        "complexity": "medium",
+        "dependencies": [
+          "2.2",
+          "2.3"
+        ],
+        "blocked_by": [
+          "2.2",
+          "2.3"
+        ],
+        "tags": [
+          "事件",
+          "触发"
+        ],
+        "assigned_to": null,
+        "estimated_hours": 12.0,
+        "actual_hours": null,
+        "code_references": [],
+        "created_at": "2025-04-16T01:53:56.030271",
+        "updated_at": "2025-04-16T01:53:56.030271",
+        "completed_at": null,
+        "parent_task_id": "2",
+        "subtasks": []
+      },
+      {
+        "id": "2.5",
+        "name": "实现交易逻辑与破产结算",
+        "description": "实现交易逻辑和破产结算，包括玩家之间的交易、玩家与银行之间的交易、以及玩家破产后的处理。需要考虑交易的公平性和安全性，保证游戏的平衡性。例如，玩家购买地产时，需要扣除玩家的资金，并增加银行的资金；玩家破产后，需要将玩家的地产收回，并分配给其他玩家或银行。",
+        "status": "todo",
+        "priority": "high",
+        "complexity": "medium",
+        "dependencies": [
+          "2.2",
+          "2.4",
+          "2.3"
+        ],
+        "blocked_by": [
+          "2.2",
+          "2.4",
+          "2.3"
+        ],
+        "tags": [
+          "交易",
+          "破产"
+        ],
+        "assigned_to": null,
+        "estimated_hours": 12.0,
+        "actual_hours": null,
+        "code_references": [],
+        "created_at": "2025-04-16T01:53:56.030787",
+        "updated_at": "2025-04-16T01:53:56.030787",
+        "completed_at": null,
+        "parent_task_id": "2",
+        "subtasks": []
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "玩家账户系统",
+    "description": "设计和实现玩家账户系统，包括注册、登录、账户管理等功能。目标是提供安全、便捷的账户管理服务。",
+    "status": "todo",
+    "priority": "low",
+    "complexity": "medium",
+    "dependencies": [],
+    "blocked_by": [],
+    "tags": [
+      "账户系统",
+      "注册",
+      "登录",
+      "账户管理",
+      "用户认证",
+      "权限控制",
+      "安全"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "created_at": "2025-04-16T01:51:26.846298",
+    "updated_at": "2025-04-16T01:52:34.319929",
+    "completed_at": null,
+    "parent_task_id": null,
+    "subtasks": []
+  },
+  {
+    "id": "4",
+    "name": "多人在线游戏功能",
+    "description": "实现多人在线游戏功能，包括实时通信、房间管理、玩家匹配等。目标是支持多人同时在线游戏。",
+    "status": "todo",
+    "priority": "low",
+    "complexity": "medium",
+    "dependencies": [],
+    "blocked_by": [],
+    "tags": [
+      "多人在线",
+      "实时通信",
+      "房间管理",
+      "玩家匹配",
+      "网络同步",
+      "游戏大厅"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "created_at": "2025-04-16T01:51:26.846814",
+    "updated_at": "2025-04-16T01:52:39.066779",
+    "completed_at": null,
+    "parent_task_id": null,
+    "subtasks": []
+  },
+  {
+    "id": "5",
+    "name": "支付系统",
+    "description": "设计和实现支付系统，支持玩家购买游戏币、道具等。目标是提供安全、可靠的支付服务。",
+    "status": "todo",
+    "priority": "low",
+    "complexity": "medium",
+    "dependencies": [],
+    "blocked_by": [],
+    "tags": [
+      "支付系统",
+      "游戏币",
+      "道具",
+      "支付接口",
+      "支付安全",
+      "交易"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "created_at": "2025-04-16T01:51:26.846814",
+    "updated_at": "2025-04-16T01:53:18.660241",
+    "completed_at": null,
+    "parent_task_id": null,
+    "subtasks": []
+  },
+  {
+    "id": "6",
+    "name": "排行榜功能",
+    "description": "设计和实现排行榜功能，展示玩家的游戏成就。目标是增加游戏的竞争性和趣味性。",
+    "status": "todo",
+    "priority": "low",
+    "complexity": "medium",
+    "dependencies": [],
+    "blocked_by": [],
+    "tags": [
+      "排行榜",
+      "游戏成就",
+      "数据统计",
+      "排名算法",
+      "用户激励"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "created_at": "2025-04-16T01:51:26.847327",
+    "updated_at": "2025-04-16T01:53:23.828960",
+    "completed_at": null,
+    "parent_task_id": null,
+    "subtasks": []
+  },
+  {
+    "id": "7",
+    "name": "客服系统",
+    "description": "设计和实现客服系统，提供用户反馈和问题解答渠道。目标是提升用户满意度。",
+    "status": "todo",
+    "priority": "low",
+    "complexity": "medium",
+    "dependencies": [],
+    "blocked_by": [],
+    "tags": [
+      "客服系统",
+      "用户反馈",
+      "问题解答",
+      "工单系统",
+      "用户支持"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "created_at": "2025-04-16T01:51:26.847327",
+    "updated_at": "2025-04-16T01:53:27.432027",
+    "completed_at": null,
+    "parent_task_id": null,
+    "subtasks": []
+  },
+  {
+    "id": "8",
+    "name": "游戏测试",
+    "description": "进行游戏测试，包括功能测试、性能测试、兼容性测试等。目标是保证游戏的质量和稳定性。",
+    "status": "todo",
+    "priority": "high",
+    "complexity": "medium",
+    "dependencies": [
+      "2",
+      "1"
+    ],
+    "blocked_by": [
+      "2",
+      "1"
+    ],
+    "tags": [
+      "游戏测试",
+      "功能测试",
+      "性能测试",
+      "兼容性测试",
+      "质量保证",
+      "bug修复"
+    ],
+    "assigned_to": null,
+    "estimated_hours": null,
+    "actual_hours": null,
+    "code_references": [],
+    "created_at": "2025-04-16T01:51:26.847870",
+    "updated_at": "2025-04-16T01:53:37.278174",
+    "completed_at": null,
+    "parent_task_id": null,
+    "subtasks": []
+  }
+]
