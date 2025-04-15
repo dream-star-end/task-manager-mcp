@@ -222,9 +222,9 @@ class TaskStorage:
         """获取下一批可执行的任务
         
         修改后的逻辑：
-        1. 首先查找状态为in_progress的主任务，并优先检查其子任务
-        2. 如果没有in_progress的主任务或其子任务不足以达到限制数量，
-           则查找状态为todo且没有未完成依赖的主任务，并优先检查其子任务
+        1. 首先查找状态为in_progress的主任务及其子任务
+        2. 如果没有in_progress的主任务或子任务不足以达到限制数量，
+           则查找状态为todo且没有未完成依赖的主任务及其子任务
         3. 如果仍未达到限制数量，则返回主任务本身
         
         Args:
@@ -280,7 +280,7 @@ class TaskStorage:
             subtasks = getattr(parent_task, 'subtasks', None)
             
             if subtasks and isinstance(subtasks, list):
-                # 找出可执行的子任务：状态为todo且没有未完成依赖
+                # 找出进行中或可执行的子任务：状态为in_progress或(状态为todo且没有未完成依赖)
                 executable_subtasks = []
                 
                 for subtask_dict in subtasks:
@@ -289,7 +289,8 @@ class TaskStorage:
                         subtask_status = subtask_dict.get('status')
                         subtask_blocked_by = subtask_dict.get('blocked_by', [])
                         
-                        if subtask_status == 'todo' and len(subtask_blocked_by) == 0:
+                        # 修改此处逻辑，允许状态为in_progress的子任务被包含
+                        if subtask_status == TaskStatus.IN_PROGRESS or (subtask_status == 'todo' and len(subtask_blocked_by) == 0):
                             # 把子任务字典转换为Task对象
                             # 注意：这里可能需要根据实际Task类构造函数调整
                             subtask = Task(
@@ -318,10 +319,12 @@ class TaskStorage:
                                 
                             executable_subtasks.append(subtask)
                 
-                # 按优先级和创建时间排序子任务
+                # 按状态（in_progress优先）、优先级和创建时间排序子任务
                 sorted_executable_subtasks = sorted(
                     executable_subtasks,
                     key=lambda t: (
+                        # 状态优先级：in_progress优先于todo
+                        0 if t.status == TaskStatus.IN_PROGRESS else 1,
                         # 优先级从高到低
                         {"critical": 0, "high": 1, "medium": 2, "low": 3}.get(t.priority, 4),
                         # 创建时间（越早创建越优先）
@@ -351,7 +354,8 @@ class TaskStorage:
                         subtask_status = subtask_dict.get('status')
                         subtask_blocked_by = subtask_dict.get('blocked_by', [])
                         
-                        if subtask_status == 'todo' and len(subtask_blocked_by) == 0:
+                        # 这里也允许状态为in_progress的子任务被包含
+                        if subtask_status == TaskStatus.IN_PROGRESS or (subtask_status == 'todo' and len(subtask_blocked_by) == 0):
                             # 把子任务字典转换为Task对象
                             subtask = Task(
                                 id=subtask_dict.get('id', ''),
@@ -379,10 +383,12 @@ class TaskStorage:
                                 
                             executable_subtasks.append(subtask)
                 
-                # 按优先级和创建时间排序子任务
+                # 按状态（in_progress优先）、优先级和创建时间排序子任务
                 sorted_executable_subtasks = sorted(
                     executable_subtasks,
                     key=lambda t: (
+                        # 状态优先级：in_progress优先于todo
+                        0 if t.status == TaskStatus.IN_PROGRESS else 1,
                         # 优先级从高到低
                         {"critical": 0, "high": 1, "medium": 2, "low": 3}.get(t.priority, 4),
                         # 创建时间（越早创建越优先）
