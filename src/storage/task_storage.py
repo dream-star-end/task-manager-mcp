@@ -2,7 +2,7 @@
 任务存储层
 
 提供任务数据的存储和检索功能。
-目前实现内存存储，未来可扩展为数据库存储。
+使用 JSON 文件进行持久化存储。
 """
 
 import uuid
@@ -25,13 +25,217 @@ except (ImportError, ValueError):
 logger = logging.getLogger(__name__)
 
 class TaskStorage:
-    """任务内存存储类"""
+    """任务 JSON 文件存储类"""
     
-    def __init__(self):
-        """初始化内存存储"""
+    def __init__(self, tasks_dir: str = None):
+        """初始化任务存储
+        
+        Args:
+            tasks_dir: 任务 JSON 文件存储目录，若为 None 则使用默认目录
+        """
+        # 如果未指定目录，使用默认路径
+        if tasks_dir is None:
+            # 获取项目根目录
+            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            self.tasks_dir = os.path.join(project_root, 'output', 'tasks')
+        else:
+            self.tasks_dir = tasks_dir
+            
+        # 确保目录存在
+        os.makedirs(self.tasks_dir, exist_ok=True)
+        
+        self.master_file_path = os.path.join(self.tasks_dir, "all_tasks.json")
+        
+        # 任务字典 (内存缓存)
         self.tasks: Dict[str, Task] = {}
         # 依赖关系图（任务ID -> 被该任务阻塞的任务ID集合）
         self.dependency_graph: Dict[str, Set[str]] = {}
+        
+        # 从文件加载任务
+        self._load_tasks_from_file()
+    
+    def _load_tasks_from_file(self) -> None:
+        """从主任务 JSON 文件加载所有任务"""
+        if not os.path.exists(self.master_file_path):
+            logger.info(f"主任务文件不存在，将创建新文件: {self.master_file_path}")
+            return
+        
+        try:
+            with open(self.master_file_path, 'r', encoding='utf-8') as f:
+                tasks_data = json.load(f)
+                
+            # 清空当前缓存
+            self.tasks.clear()
+            self.dependency_graph.clear()
+            
+            # 加载主任务及其子任务
+            for task_dict in tasks_data:
+                task_id = task_dict.get('id')
+                if not task_id:
+                    logger.warning(f"跳过无效任务数据: 缺少ID")
+                    continue
+                
+                # 创建任务对象
+                task = self._dict_to_task(task_dict)
+                
+                # 存储主任务
+                self.tasks[task_id] = task
+                self.dependency_graph[task_id] = set()
+                
+                # 加载子任务
+                if 'subtasks' in task_dict and isinstance(task_dict['subtasks'], list):
+                    subtasks = []
+                    for subtask_dict in task_dict['subtasks']:
+                        if not isinstance(subtask_dict, dict):
+                            continue
+                        
+                        subtask_id = subtask_dict.get('id')
+                        if not subtask_id:
+                            continue
+                            
+                        # 为子任务创建 Task 对象
+                        subtask = self._dict_to_task(subtask_dict)
+                        subtasks.append(subtask)
+                    
+                    # 设置子任务列表
+                    task.subtasks = subtasks
+            
+            # 重建依赖关系图
+            self._rebuild_dependency_graph()
+            
+            logger.info(f"从文件加载了 {len(self.tasks)} 个主任务")
+            
+        except Exception as e:
+            logger.error(f"从文件加载任务失败: {str(e)}")
+    
+    def _dict_to_task(self, task_dict: Dict) -> Task:
+        """将任务字典转换为 Task 对象"""
+        task = Task(
+            id=task_dict.get('id', ''),
+            name=task_dict.get('name', ''),
+            description=task_dict.get('description', ''),
+            status=task_dict.get('status', 'todo'),
+            priority=task_dict.get('priority', 'medium'),
+            complexity=task_dict.get('complexity', 'medium'),
+            dependencies=set(task_dict.get('dependencies', [])),
+            blocked_by=set(task_dict.get('blocked_by', [])),
+            tags=task_dict.get('tags', []),
+            assigned_to=task_dict.get('assigned_to'),
+            estimated_hours=task_dict.get('estimated_hours'),
+            actual_hours=task_dict.get('actual_hours'),
+            code_references=task_dict.get('code_references', []),
+        )
+        
+        # 设置时间字段
+        if 'created_at' in task_dict and task_dict['created_at']:
+            try:
+                task.created_at = datetime.fromisoformat(task_dict['created_at'])
+            except (ValueError, TypeError):
+                task.created_at = datetime.now()
+                
+        if 'updated_at' in task_dict and task_dict['updated_at']:
+            try:
+                task.updated_at = datetime.fromisoformat(task_dict['updated_at'])
+            except (ValueError, TypeError):
+                task.updated_at = datetime.now()
+                
+        if 'completed_at' in task_dict and task_dict['completed_at']:
+            try:
+                task.completed_at = datetime.fromisoformat(task_dict['completed_at'])
+            except (ValueError, TypeError):
+                task.completed_at = None
+        
+        return task
+    
+    def _rebuild_dependency_graph(self) -> None:
+        """重建依赖关系图"""
+        self.dependency_graph.clear()
+        
+        # 处理主任务依赖
+        for task_id, task in self.tasks.items():
+            self.dependency_graph[task_id] = set()
+            
+            # 添加依赖关系
+            for dep_id in task.dependencies:
+                if dep_id in self.tasks:
+                    if dep_id not in self.dependency_graph:
+                        self.dependency_graph[dep_id] = set()
+                    self.dependency_graph[dep_id].add(task_id)
+        
+        # 处理子任务依赖
+        for task_id, task in self.tasks.items():
+            if hasattr(task, 'subtasks') and isinstance(task.subtasks, list):
+                for subtask in task.subtasks:
+                    if not isinstance(subtask, Task):
+                        continue
+                    
+                    subtask_id = subtask.id
+                    if not subtask_id:
+                        continue
+                    
+                    # 确保存在依赖图条目
+                    if subtask_id not in self.dependency_graph:
+                        self.dependency_graph[subtask_id] = set()
+                    
+                    # 添加子任务的依赖关系
+                    for dep_id in subtask.dependencies:
+                        if dep_id not in self.dependency_graph:
+                            self.dependency_graph[dep_id] = set()
+                        self.dependency_graph[dep_id].add(subtask_id)
+    
+    def _save_tasks_to_file(self) -> None:
+        """将所有任务保存到主任务 JSON 文件"""
+        try:
+            # 将任务对象转换为可序列化的字典
+            tasks_data = []
+            
+            for task_id, task in self.tasks.items():
+                # 只保存主任务（不含点号的ID）
+                if "." in task_id:
+                    continue
+                
+                task_dict = self._task_to_dict(task)
+                
+                # 处理子任务
+                if hasattr(task, 'subtasks') and task.subtasks:
+                    task_dict['subtasks'] = [
+                        self._task_to_dict(subtask) 
+                        for subtask in task.subtasks 
+                        if isinstance(subtask, Task)
+                    ]
+                else:
+                    task_dict['subtasks'] = []
+                
+                tasks_data.append(task_dict)
+            
+            # 写入文件
+            with open(self.master_file_path, 'w', encoding='utf-8') as f:
+                json.dump(tasks_data, f, ensure_ascii=False, indent=2)
+                
+            logger.debug(f"所有任务已保存到文件: {self.master_file_path}")
+        except Exception as e:
+            logger.error(f"保存任务到文件失败: {str(e)}")
+    
+    def _task_to_dict(self, task: Task) -> Dict:
+        """将 Task 对象转换为字典"""
+        return {
+            'id': task.id,
+            'name': task.name,
+            'description': task.description,
+            'status': task.status,
+            'priority': task.priority,
+            'complexity': task.complexity,
+            'dependencies': list(task.dependencies),
+            'blocked_by': list(task.blocked_by),
+            'tags': task.tags,
+            'assigned_to': task.assigned_to,
+            'estimated_hours': task.estimated_hours,
+            'actual_hours': task.actual_hours,
+            'code_references': task.code_references,
+            'created_at': task.created_at.isoformat() if task.created_at else None,
+            'updated_at': task.updated_at.isoformat() if task.updated_at else None,
+            'completed_at': task.completed_at.isoformat() if task.completed_at else None,
+        }
     
     def create_task(
         self, 
@@ -74,30 +278,89 @@ class TaskStorage:
             **({"code_references": code_references} if code_references is not None else {})
         )
         
-        # 存储任务
-        self.tasks[task_id] = task
+        # 判断是否为子任务
+        if "." in task_id:
+            # 寻找父任务
+            parent_id = task_id.split(".")[0]
+            parent_task = self.tasks.get(parent_id)
+            
+            if parent_task:
+                # 初始化父任务的子任务列表（如果不存在）
+                if not hasattr(parent_task, 'subtasks') or parent_task.subtasks is None:
+                    parent_task.subtasks = []
+                
+                # 添加到父任务的子任务列表
+                parent_task.subtasks.append(task)
+                logger.info(f"子任务 {task_id} 已添加到父任务 {parent_id}")
+            else:
+                logger.warning(f"未找到子任务 {task_id} 的父任务 {parent_id}，将作为独立任务处理")
+                # 仍将其存储为独立任务
+                self.tasks[task_id] = task
+        else:
+            # 主任务直接存储
+            self.tasks[task_id] = task
+        
+        # 更新依赖关系图
         self.dependency_graph[task_id] = set()
         
         # 处理依赖关系
         if task_dependencies:
             for dep_id in task_dependencies:
-                if dep_id in self.tasks:
+                # 查找依赖是主任务还是子任务
+                if dep_id in self.tasks:  # 主任务
                     # 更新依赖图
                     if dep_id not in self.dependency_graph:
                         self.dependency_graph[dep_id] = set()
                     self.dependency_graph[dep_id].add(task_id)
                     # 更新被阻塞状态
                     task.add_blocked_by(dep_id)
+                else:
+                    # 检查是否为某个主任务的子任务
+                    found = False
+                    for main_task in self.tasks.values():
+                        if hasattr(main_task, 'subtasks') and isinstance(main_task.subtasks, list):
+                            for subtask in main_task.subtasks:
+                                if isinstance(subtask, Task) and subtask.id == dep_id:
+                                    # 更新依赖图
+                                    if dep_id not in self.dependency_graph:
+                                        self.dependency_graph[dep_id] = set()
+                                    self.dependency_graph[dep_id].add(task_id)
+                                    # 更新被阻塞状态
+                                    task.add_blocked_by(dep_id)
+                                    found = True
+                                    break
+                        if found:
+                            break
+        
+        # 保存到文件
+        self._save_tasks_to_file()
         
         return task
     
     def get_task(self, task_id: str) -> Optional[Task]:
-        """获取任务信息"""
-        return self.tasks.get(task_id)
+        """获取任务信息
+        
+        先从内存中查找主任务，如果是子任务则在父任务的子任务列表中查找
+        """
+        # 检查是否为主任务
+        if task_id in self.tasks:
+            return self.tasks[task_id]
+        
+        # 如果是子任务，找到父任务然后在子任务列表中查找
+        if "." in task_id:
+            parent_id = task_id.split(".")[0]
+            parent_task = self.tasks.get(parent_id)
+            
+            if parent_task and hasattr(parent_task, 'subtasks') and isinstance(parent_task.subtasks, list):
+                for subtask in parent_task.subtasks:
+                    if isinstance(subtask, Task) and subtask.id == task_id:
+                        return subtask
+        
+        return None
     
     def update_task(self, task_id: str, **kwargs) -> Optional[Task]:
         """更新任务信息"""
-        task = self.tasks.get(task_id)
+        task = self.get_task(task_id)
         if not task:
             return None
         
@@ -109,15 +372,20 @@ class TaskStorage:
         # 更新时间戳
         task.updated_at = datetime.now()
         
+        # 保存到文件
+        self._save_tasks_to_file()
+        
         return task
     
     def delete_task(self, task_id: str) -> bool:
         """删除任务"""
-        if task_id not in self.tasks:
+        # 先尝试找到这个任务
+        task = self.get_task(task_id)
+        if not task:
             return False
         
         # 清理依赖关系
-        dependencies = self.tasks[task_id].dependencies
+        dependencies = task.dependencies
         for dep_id in dependencies:
             if dep_id in self.dependency_graph:
                 self.dependency_graph[dep_id].discard(task_id)
@@ -125,13 +393,33 @@ class TaskStorage:
         # 清理被阻塞关系
         blocked_tasks = self.dependency_graph.get(task_id, set())
         for blocked_id in blocked_tasks:
-            if blocked_id in self.tasks:
-                self.tasks[blocked_id].blocked_by.discard(task_id)
+            blocked_task = self.get_task(blocked_id)
+            if blocked_task:
+                blocked_task.blocked_by.discard(task_id)
         
-        # 删除任务和依赖图条目
-        del self.tasks[task_id]
+        # 判断是主任务还是子任务
+        if "." in task_id:
+            # 子任务，从父任务的子任务列表中删除
+            parent_id = task_id.split(".")[0]
+            parent_task = self.tasks.get(parent_id)
+            
+            if parent_task and hasattr(parent_task, 'subtasks') and isinstance(parent_task.subtasks, list):
+                # 从父任务的子任务列表中删除
+                parent_task.subtasks = [
+                    subtask for subtask in parent_task.subtasks 
+                    if not isinstance(subtask, Task) or subtask.id != task_id
+                ]
+        else:
+            # 主任务，直接从字典中删除
+            if task_id in self.tasks:
+                del self.tasks[task_id]
+        
+        # 从依赖图中删除
         if task_id in self.dependency_graph:
             del self.dependency_graph[task_id]
+        
+        # 保存到文件
+        self._save_tasks_to_file()
         
         return True
     
@@ -145,9 +433,23 @@ class TaskStorage:
         page_size: int = 100
     ) -> Tuple[List[Task], int]:
         """列出任务，支持筛选和分页"""
-        filtered_tasks = self.tasks.values()
+        # 收集所有任务（主任务和子任务）
+        all_tasks = []
+        
+        # 添加主任务
+        for task in self.tasks.values():
+            all_tasks.append(task)
+            
+            # 添加子任务
+            if hasattr(task, 'subtasks') and isinstance(task.subtasks, list):
+                all_tasks.extend([
+                    subtask for subtask in task.subtasks 
+                    if isinstance(subtask, Task)
+                ])
         
         # 应用筛选
+        filtered_tasks = all_tasks
+        
         if status:
             filtered_tasks = [t for t in filtered_tasks if t.status == status]
         if priority:
@@ -173,8 +475,12 @@ class TaskStorage:
     
     def set_task_dependency(self, task_id: str, depends_on_id: str) -> Tuple[bool, Optional[str]]:
         """设置任务依赖关系"""
+        # 获取任务对象
+        task = self.get_task(task_id)
+        depends_on_task = self.get_task(depends_on_id)
+        
         # 检查任务是否存在
-        if task_id not in self.tasks or depends_on_id not in self.tasks:
+        if not task or not depends_on_task:
             return False, "One or both tasks do not exist"
         
         # 不能依赖自己
@@ -186,7 +492,6 @@ class TaskStorage:
             return False, "This would create a circular dependency"
         
         # 添加依赖关系
-        task = self.tasks[task_id]
         task.add_dependency(depends_on_id)
         task.add_blocked_by(depends_on_id)
         
@@ -196,25 +501,34 @@ class TaskStorage:
         self.dependency_graph[depends_on_id].add(task_id)
         
         # 如果被依赖任务已完成，移除阻塞
-        if self.tasks[depends_on_id].status == TaskStatus.DONE:
+        if depends_on_task.status == TaskStatus.DONE:
             task.remove_blocked_by(depends_on_id)
+        
+        # 保存到文件
+        self._save_tasks_to_file()
         
         return True, None
     
     def remove_task_dependency(self, task_id: str, depends_on_id: str) -> bool:
         """移除任务依赖关系"""
+        # 获取任务对象
+        task = self.get_task(task_id)
+        depends_on_task = self.get_task(depends_on_id)
+        
         # 检查任务是否存在
-        if task_id not in self.tasks or depends_on_id not in self.tasks:
+        if not task or not depends_on_task:
             return False
         
         # 移除依赖关系
-        task = self.tasks[task_id]
         task.remove_dependency(depends_on_id)
         task.remove_blocked_by(depends_on_id)
         
         # 更新依赖图
         if depends_on_id in self.dependency_graph:
             self.dependency_graph[depends_on_id].discard(task_id)
+        
+        # 保存到文件
+        self._save_tasks_to_file()
         
         return True
     
@@ -283,41 +597,13 @@ class TaskStorage:
                 # 找出进行中或可执行的子任务：状态为in_progress或(状态为todo且没有未完成依赖)
                 executable_subtasks = []
                 
-                for subtask_dict in subtasks:
-                    # 检查子任务是否为字典格式（新的嵌套结构）
-                    if isinstance(subtask_dict, dict):
-                        subtask_status = subtask_dict.get('status')
-                        subtask_blocked_by = subtask_dict.get('blocked_by', [])
+                for subtask in subtasks:
+                    if not isinstance(subtask, Task):
+                        continue
                         
-                        # 修改此处逻辑，允许状态为in_progress的子任务被包含
-                        if subtask_status == TaskStatus.IN_PROGRESS or (subtask_status == 'todo' and len(subtask_blocked_by) == 0):
-                            # 把子任务字典转换为Task对象
-                            # 注意：这里可能需要根据实际Task类构造函数调整
-                            subtask = Task(
-                                id=subtask_dict.get('id', ''),
-                                name=subtask_dict.get('name', ''),
-                                description=subtask_dict.get('description', ''),
-                                status=subtask_dict.get('status', 'todo'),
-                                priority=subtask_dict.get('priority', 'medium'),
-                                dependencies=set(subtask_dict.get('dependencies', [])),
-                                blocked_by=set(subtask_dict.get('blocked_by', [])),
-                                tags=subtask_dict.get('tags', []),
-                                assigned_to=subtask_dict.get('assigned_to'),
-                                estimated_hours=subtask_dict.get('estimated_hours'),
-                                actual_hours=subtask_dict.get('actual_hours'),
-                                code_references=subtask_dict.get('code_references', []),
-                                complexity=subtask_dict.get('complexity', 'medium'),
-                            )
-                            
-                            # 设置时间字段（如果存在）
-                            if 'created_at' in subtask_dict:
-                                subtask.created_at = datetime.fromisoformat(subtask_dict['created_at'])
-                            if 'updated_at' in subtask_dict:
-                                subtask.updated_at = datetime.fromisoformat(subtask_dict['updated_at'])
-                            if 'completed_at' in subtask_dict and subtask_dict['completed_at']:
-                                subtask.completed_at = datetime.fromisoformat(subtask_dict['completed_at'])
-                                
-                            executable_subtasks.append(subtask)
+                    # 修改此处逻辑，允许状态为in_progress的子任务被包含
+                    if subtask.status == TaskStatus.IN_PROGRESS or (subtask.status == TaskStatus.TODO and len(subtask.blocked_by) == 0):
+                        executable_subtasks.append(subtask)
                 
                 # 按状态（in_progress优先）、优先级和创建时间排序子任务
                 sorted_executable_subtasks = sorted(
@@ -348,40 +634,13 @@ class TaskStorage:
                 # 找出可执行的子任务：状态为todo且没有未完成依赖
                 executable_subtasks = []
                 
-                for subtask_dict in subtasks:
-                    # 检查子任务是否为字典格式（新的嵌套结构）
-                    if isinstance(subtask_dict, dict):
-                        subtask_status = subtask_dict.get('status')
-                        subtask_blocked_by = subtask_dict.get('blocked_by', [])
+                for subtask in subtasks:
+                    if not isinstance(subtask, Task):
+                        continue
                         
-                        # 这里也允许状态为in_progress的子任务被包含
-                        if subtask_status == TaskStatus.IN_PROGRESS or (subtask_status == 'todo' and len(subtask_blocked_by) == 0):
-                            # 把子任务字典转换为Task对象
-                            subtask = Task(
-                                id=subtask_dict.get('id', ''),
-                                name=subtask_dict.get('name', ''),
-                                description=subtask_dict.get('description', ''),
-                                status=subtask_dict.get('status', 'todo'),
-                                priority=subtask_dict.get('priority', 'medium'),
-                                dependencies=set(subtask_dict.get('dependencies', [])),
-                                blocked_by=set(subtask_dict.get('blocked_by', [])),
-                                tags=subtask_dict.get('tags', []),
-                                assigned_to=subtask_dict.get('assigned_to'),
-                                estimated_hours=subtask_dict.get('estimated_hours'),
-                                actual_hours=subtask_dict.get('actual_hours'),
-                                code_references=subtask_dict.get('code_references', []),
-                                complexity=subtask_dict.get('complexity', 'medium'),
-                            )
-                            
-                            # 设置时间字段（如果存在）
-                            if 'created_at' in subtask_dict:
-                                subtask.created_at = datetime.fromisoformat(subtask_dict['created_at'])
-                            if 'updated_at' in subtask_dict:
-                                subtask.updated_at = datetime.fromisoformat(subtask_dict['updated_at'])
-                            if 'completed_at' in subtask_dict and subtask_dict['completed_at']:
-                                subtask.completed_at = datetime.fromisoformat(subtask_dict['completed_at'])
-                                
-                            executable_subtasks.append(subtask)
+                    # 这里也允许状态为in_progress的子任务被包含
+                    if subtask.status == TaskStatus.IN_PROGRESS or (subtask.status == TaskStatus.TODO and len(subtask.blocked_by) == 0):
+                        executable_subtasks.append(subtask)
                 
                 # 按状态（in_progress优先）、优先级和创建时间排序子任务
                 sorted_executable_subtasks = sorted(
@@ -431,14 +690,21 @@ class TaskStorage:
                 continue
                 
             visited.add(current)
-            dependencies = self.tasks.get(current, Task(id="", name="")).dependencies
+            
+            # 获取当前任务对象
+            current_task = self.get_task(current)
+            if not current_task:
+                continue
+                
+            # 添加当前任务的依赖到队列
+            dependencies = current_task.dependencies
             queue.extend([dep for dep in dependencies if dep not in visited])
         
         return False
     
     def mark_task_done(self, task_id: str) -> bool:
         """将任务标记为已完成"""
-        task = self.tasks.get(task_id)
+        task = self.get_task(task_id)
         if not task:
             return False
         
@@ -447,9 +713,12 @@ class TaskStorage:
         # 解除对其他任务的阻塞
         blocked_tasks = self.dependency_graph.get(task_id, set())
         for blocked_id in blocked_tasks:
-            if blocked_id in self.tasks:
-                blocked_task = self.tasks[blocked_id]
+            blocked_task = self.get_task(blocked_id)
+            if blocked_task:
                 blocked_task.remove_blocked_by(task_id)
+        
+        # 保存到文件
+        self._save_tasks_to_file()
         
         return True
     
@@ -457,8 +726,15 @@ class TaskStorage:
         """统计各状态任务数量"""
         counts = {status.value: 0 for status in TaskStatus}
         
+        # 统计主任务状态
         for task in self.tasks.values():
             counts[task.status] += 1
+            
+            # 统计子任务状态
+            if hasattr(task, 'subtasks') and isinstance(task.subtasks, list):
+                for subtask in task.subtasks:
+                    if isinstance(subtask, Task):
+                        counts[subtask.status] += 1
             
         return counts
 
@@ -466,4 +742,12 @@ class TaskStorage:
         """清空所有任务和依赖关系"""
         self.tasks.clear()
         self.dependency_graph.clear()
-        logger.info("所有任务和依赖关系已被清空")
+        
+        # 同时清空文件
+        try:
+            if os.path.exists(self.master_file_path):
+                with open(self.master_file_path, 'w', encoding='utf-8') as f:
+                    json.dump([], f)
+            logger.info("所有任务和依赖关系已被清空，文件已重置")
+        except Exception as e:
+            logger.error(f"清空任务文件失败: {str(e)}")

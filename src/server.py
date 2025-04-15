@@ -54,9 +54,12 @@ llm_client = get_llm_client() # Returns LLMInterface instance or None
 # 创建MCP实例 - 使用标准变量名 'mcp' 而不是 'mcp_app'
 mcp = FastMCP("task-manager-mcp")
 
-# ----> 创建任务服务实例，并注入 LLM 客户端 <----
+# ----> 创建任务服务实例，并注入 LLM 客户端和任务存储目录 <----
 logger.info("Initializing TaskService...")
-task_service = TaskService(llm_client=llm_client)
+# 创建TaskStorage实例，使用TASKS_DIR作为存储目录
+from storage.task_storage import TaskStorage
+task_storage = TaskStorage(tasks_dir=TASKS_DIR)
+task_service = TaskService(storage=task_storage, llm_client=llm_client)
 logger.info(f"TaskService initialized successfully.")
 
 # 以下是从server.py中移除的工具函数，它们已经被移到了utils目录中的相应模块
@@ -82,13 +85,29 @@ async def decompose_prd(prd_content: str) -> list[types.TextContent]:
     # 先清空所有任务和相关文件
     try:
         # 清空任务存储
+        logger.info("清空任务存储中的所有任务...")
         task_service.clear_all_tasks()
-        logger.info("旧任务已成功清空")
         
         # 清空任务JSON文件和Markdown文件
         clear_directory(TASKS_DIR)
         clear_directory(MD_DIR)
         logger.info("所有任务相关文件已清空")
+        
+        # 验证清空操作是否成功
+        all_tasks_file = os.path.join(TASKS_DIR, "all_tasks.json")
+        if os.path.exists(all_tasks_file):
+            # 检查文件是否为空数组
+            try:
+                with open(all_tasks_file, 'r', encoding='utf-8') as f:
+                    content = json.load(f)
+                    if content and len(content) > 0:
+                        logger.warning(f"任务文件清空后仍包含 {len(content)} 个任务，尝试重新创建空文件")
+                        with open(all_tasks_file, 'w', encoding='utf-8') as f:
+                            json.dump([], f)
+            except Exception as e:
+                logger.warning(f"检查任务文件时出错: {e}，将重新创建空文件")
+                with open(all_tasks_file, 'w', encoding='utf-8') as f:
+                    json.dump([], f)
     except Exception as clear_e:
         logger.error(f"清空任务或文件失败: {clear_e}")
         # 即使清空失败，也继续尝试解析，但要记录错误
@@ -178,25 +197,12 @@ async def decompose_prd(prd_content: str) -> list[types.TextContent]:
                     md_content += f"- **标签**: {', '.join(task['tags'])}\n"
                 md_content += f"- **描述**: {task['description']}\n\n"
             
-            # 同时为每个任务单独创建JSON文件
-            for task in tasks:
-                save_task_to_json(task, TASKS_DIR)
-            
-            # 保存任务到JSON文件
-            import datetime
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            json_filename = f"prd_tasks_{timestamp}.json"
-            json_file_path = os.path.join(TASKS_DIR, json_filename)
-            try:
-                with open(json_file_path, "w", encoding="utf-8") as f:
-                    json.dump(result["tasks"], f, ensure_ascii=False, indent=2)
-                logger.info(f"任务列表已保存到JSON文件: {json_file_path}")
-            except Exception as json_e:
-                logger.error(f"保存JSON文件失败: {str(json_e)}")
-            
             # 修改保存Markdown文件的路径
-            md_filename = f"prd_main_tasks_{timestamp}.md"
+            md_filename = f"prd_main_tasks.md"
             md_file_path = os.path.join(MD_DIR, md_filename)
+ 
+            json_file_name = f"all_tasks.json"
+            json_file_path = os.path.join(TASKS_DIR, json_file_name)
             
             try:
                 with open(md_file_path, "w", encoding="utf-8") as f:
@@ -332,12 +338,6 @@ async def add_task(
             estimated_hours=float(estimated_hours) if estimated_hours else None,
             dependencies=task_dependencies
         )
-        
-        # 如果创建成功，保存任务到JSON文件
-        if result.get("success") and result.get("task"):
-            task_json_path = save_task_to_json(result["task"])
-            if task_json_path:
-                result["task_json_path"] = task_json_path
         
         return [
             types.TextContent(
@@ -476,12 +476,6 @@ async def update_task(
     
     # 执行更新
     result = task_service.update_task(task_id, **update_params)
-    
-    # 如果更新成功，更新任务的JSON文件
-    if result.get("success") and result.get("task"):
-        task_json_path = save_task_to_json(result["task"], TASKS_DIR)
-        if task_json_path:
-            result["task_json_path"] = task_json_path
     
     return [
         types.TextContent(
@@ -813,6 +807,28 @@ async def expand_task(task_id: str, num_subtasks: str = "5") -> list[types.TextC
             
             parent_task["subtasks"] = subtasks
             
+            # 将更新后的父任务保存到存储中
+            update_result = task_service.update_task(parent_task["id"], subtasks=subtasks)
+            if not update_result["success"]:
+                logger.error(f"更新父任务 {parent_task['id']} 的子任务失败: {update_result.get('error')}")
+                return [
+                    types.TextContent(
+                        type="text",
+                        text=json.dumps({
+                            "success": False,
+                            "error": f"子任务生成成功但无法保存到父任务: {update_result.get('error')}",
+                            "parent_task": parent_task,
+                            "subtasks": subtasks
+                        }, ensure_ascii=False)
+                    )
+                ]
+            
+            # 获取更新后的父任务以确保subtasks字段已正确更新
+            updated_parent_task = task_service.storage.get_task(parent_task["id"])
+            if updated_parent_task:
+                parent_task = task_service._task_to_dict(updated_parent_task)
+                logger.info(f"父任务 {parent_task['id']} 子任务更新成功，现有 {len(parent_task.get('subtasks', []))} 个子任务")
+            
             # 构建Markdown子任务列表
             md_content = f"# 任务 '{parent_task['name']}' 的子任务列表\n\n"
             md_content += f"## 父任务信息\n"
@@ -868,17 +884,8 @@ async def expand_task(task_id: str, num_subtasks: str = "5") -> list[types.TextC
             
             md_content += "```\n"
             
-            # 添加timestamp定义
-            import datetime
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            
-            # 更新父任务的JSON文件（包含子任务信息）
-            task_json_path = save_task_to_json(parent_task, TASKS_DIR)
-            if task_json_path:
-                logger.info(f"包含子任务的父任务已保存到JSON文件: {task_json_path}")
-            
             # 保存Markdown文件
-            md_filename = f"task_{parent_task['id']}_subtasks_{timestamp}.md"
+            md_filename = f"task_{parent_task['id']}_subtasks.md"
             md_file_path = os.path.join(MD_DIR, md_filename)
             
             try:
@@ -898,7 +905,7 @@ async def expand_task(task_id: str, num_subtasks: str = "5") -> list[types.TextC
 
 成功为任务生成了 **{subtask_count}** 个子任务。
 - 子任务列表已保存到Markdown文件: **{md_file_path}**
-- 子任务已添加到父任务的subtasks字段并保存: **{task_json_path}**
+- 子任务已添加到父任务的subtasks字段并保存
 
 ### 子任务列表
 {table}
@@ -963,12 +970,6 @@ async def update_task_code_references(task_id: str, code_files: str) -> list[typ
     references = [f.strip() for f in code_files.split(",") if f.strip()]
     
     result = task_service.update_task_code_references(task_id, references)
-    
-    # 如果更新成功，更新任务的JSON文件
-    if result.get("success") and result.get("task"):
-        task_json_path = save_task_to_json(result["task"], TASKS_DIR)
-        if task_json_path:
-            result["task_json_path"] = task_json_path
     
     # 如果成功，返回格式化的任务详情，否则返回错误JSON
     if result["success"] and result.get("task"):
