@@ -64,7 +64,7 @@ class Task(BaseModel):
     code_references: List[str] = Field(default_factory=list, description="关联的代码引用")
     
     parent_task_id: Optional[str] = Field(None, description="父任务ID")
-    subtasks: List[Dict[str, Any]] = Field(default_factory=list, description="子任务列表")
+    subtasks: List['Task'] = Field(default_factory=list, description="子任务列表")
     
     class Config:
         use_enum_values = True
@@ -133,4 +133,7 @@ class ErrorResponse(BaseModel):
     success: bool = False
     error: str
     error_code: str
-    details: Optional[Dict] = None 
+    details: Optional[Dict] = None
+
+# Update forward refs for recursive model
+Task.model_rebuild() 

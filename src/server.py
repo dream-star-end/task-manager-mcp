@@ -22,6 +22,7 @@ from config import get_llm_client
 from utils.logging_config import setup_logging
 from utils.file_operations import save_task_to_json, save_tasks_to_json, clear_directory
 from utils.task_utils import generate_next_task_id, format_task_table
+from src.models.task import Task
 
 # 全局变量，用于保存项目的PRD内容
 PROJECT_PRD_CONTENT = ""
@@ -676,67 +677,194 @@ async def get_next_executable_task(limit: str = "5") -> list[types.TextContent]:
     logger.info("获取下一个可执行任务")
     
     try:
-        limit_num = int(limit)
-    except ValueError:
-        limit_num = 5
-    
-    result = task_service.get_next_executable_task(limit=limit_num)
-    
-    if result["success"]:
-        if not result.get("found", False):
+        # 转换limit为整数
+        limit_int = int(limit)
+        result = task_service.get_next_executable_task(limit=limit_int)
+        
+        if not result["success"]:
             return [
                 types.TextContent(
                     type="text",
-                    text="## 可执行任务\n\n当前没有可执行的任务。所有任务可能已完成或仍有依赖未满足。"
+                    text=f"获取可执行任务失败: {result.get('error', '未知错误')}"
                 )
             ]
         
+        if not result["found"]:
+            return [
+                types.TextContent(
+                    type="text",
+                    text="没有找到可执行的任务。所有任务可能已完成，或被阻塞，或没有任务。"
+                )
+            ]
+        
+        # 获取到的任务
         task = result["task"]
+        task_id = task["id"]
         
-        output = "## 下一个待执行任务\n\n"
+        # 判断是主任务还是子任务
+        is_subtask = "." in task_id
+        parent_task_info = ""
         
-        # 任务基本信息
-        output += f"### {task['name']}\n\n"
-        output += f"- **ID**: `{task['id']}`\n"
-        output += f"- **优先级**: {task['priority']}\n"
+        if is_subtask:
+            # 是子任务，获取父任务信息
+            parent_id = task["parent_task_id"] or task_id.split(".")[0]
+            parent_task_result = task_service.storage.get_task(parent_id)
+            
+            if parent_task_result:
+                parent_task_dict = task_service.storage._task_to_dict(parent_task_result)
+                parent_task_info = f"""
+## 父任务信息
+
+**ID**: {parent_id}
+**名称**: {parent_task_dict['name']}
+**优先级**: {parent_task_dict['priority']}
+**状态**: {parent_task_dict['status']}
+"""
         
-        # 附加信息
-        if task.get('estimated_hours'):
-            output += f"- **预计耗时**: {task['estimated_hours']} 小时\n"
+        # 检查是否为主任务且有子任务
+        has_subtasks = False
+        subtasks_info = ""
+        if not is_subtask and task.get("subtasks") and len(task["subtasks"]) > 0:
+            has_subtasks = True
+            subtasks_count = len(task["subtasks"])
+            todo_subtasks = [st for st in task["subtasks"] if st.get("status") == "todo"]
+            in_progress_subtasks = [st for st in task["subtasks"] if st.get("status") == "in_progress"]
+            done_subtasks = [st for st in task["subtasks"] if st.get("status") == "done"]
+            
+            subtasks_info = f"\n\n⚠️ **注意**: 此任务有 {subtasks_count} 个子任务"
+            subtasks_info += f" ({len(todo_subtasks)} 待办, {len(in_progress_subtasks)} 进行中, {len(done_subtasks)} 已完成)。"
+            
+            if todo_subtasks or in_progress_subtasks:
+                subtasks_info += "\n\n**建议优先处理以下子任务**:"
+                
+                # 添加子任务列表
+                # 先添加进行中的子任务
+                if in_progress_subtasks:
+                    subtasks_info += "\n\n**进行中的子任务**:"
+                    for i, subtask in enumerate(in_progress_subtasks[:3]):  # 最多显示3个子任务
+                        st_id = subtask.get("id", "无ID")
+                        st_name = subtask.get("name", "无名称")
+                        st_deps = subtask.get("dependencies", [])
+                        st_deps_str = ", ".join(st_deps) if st_deps else "无"
+                        subtasks_info += f"\n- {st_id}: {st_name} (依赖: {st_deps_str})"
+                    
+                    if len(in_progress_subtasks) > 3:
+                        subtasks_info += f"\n... 及其他 {len(in_progress_subtasks) - 3} 个进行中的子任务"
+                
+                # 然后添加待办的子任务
+                if todo_subtasks:
+                    subtasks_info += "\n\n**待办的子任务**:"
+                    for i, subtask in enumerate(todo_subtasks[:5]):  # 最多显示5个子任务
+                        st_id = subtask.get("id", "无ID")
+                        st_name = subtask.get("name", "无名称")
+                        st_deps = subtask.get("dependencies", [])
+                        st_deps_str = ", ".join(st_deps) if st_deps else "无"
+                        subtasks_info += f"\n- {st_id}: {st_name} (依赖: {st_deps_str})"
+                    
+                    if len(todo_subtasks) > 5:
+                        subtasks_info += f"\n... 及其他 {len(todo_subtasks) - 5} 个待办的子任务"
+                
+                subtasks_info += "\n\n可以使用`get_task {子任务ID}`命令获取子任务详情。"
         
-        tags = ", ".join(task['tags']) if task.get('tags') else "无"
-        output += f"- **标签**: {tags}\n"
+        # 处理依赖信息
+        dependencies = task.get("dependencies", [])
+        dependency_info = ""
+        has_unfinished_dependencies = False
         
-        # 描述
-        output += f"\n**任务描述**:\n{task['description']}\n\n"
+        if dependencies:
+            dependency_info = "\n\n**依赖任务**:\n"
+            for dep_id in dependencies:
+                dep_task = task_service.storage.get_task(dep_id)
+                if dep_task:
+                    dep_status = dep_task.status
+                    dep_task_dict = task_service.storage._task_to_dict(dep_task)
+                    is_done = dep_status == "done"
+                    status_mark = "✅" if is_done else "⏳"
+                    
+                    if not is_done:
+                        has_unfinished_dependencies = True
+                        
+                    dependency_info += f"- {status_mark} {dep_id}: {dep_task_dict['name']} (状态: {dep_status})\n"
+                else:
+                    dependency_info += f"- ❓ {dep_id}: 未找到任务\n"
         
-        # 依赖信息
-        if task.get('dependencies'):
-            deps = ", ".join([f"`{d}`" for d in task['dependencies']])
-            output += f"**依赖任务**: {deps}\n\n"
+        # 处理任务详情的展示
+        tags_str = ", ".join(task["tags"]) if task["tags"] else "无"
         
-        # 父任务信息
-        if task.get('parent_task_id'):
-            output += f"**父任务**: `{task['parent_task_id']}`\n\n"
+        # 如果是子任务，添加其他子任务的依赖关系
+        sibling_tasks_info = ""
+        if is_subtask:
+            parent_id = task["parent_task_id"] or task_id.split(".")[0]
+            parent_task_result = task_service.storage.get_task(parent_id)
+            
+            if parent_task_result and hasattr(parent_task_result, 'subtasks') and parent_task_result.subtasks:
+                # 找出兄弟任务及其依赖关系
+                sibling_tasks = []
+                for subtask in parent_task_result.subtasks:
+                    if isinstance(subtask, Task) and subtask.id != task_id:
+                        sibling_tasks.append(task_service.storage._task_to_dict(subtask))
+                
+                if sibling_tasks:
+                    sibling_tasks_info = "\n\n**相关子任务**:\n"
+                    for sibling in sibling_tasks:
+                        sibling_id = sibling["id"]
+                        sibling_name = sibling["name"]
+                        sibling_status = sibling["status"]
+                        sibling_deps = sibling["dependencies"]
+                        
+                        # 检查是否有依赖关系
+                        depends_on_current = task_id in sibling_deps
+                        current_depends_on = sibling_id in dependencies
+                        
+                        relation = ""
+                        if depends_on_current:
+                            relation = f"(依赖当前任务)"
+                        elif current_depends_on:
+                            relation = f"(当前任务依赖它)"
+                        
+                        sibling_tasks_info += f"- {sibling_id}: {sibling_name} (状态: {sibling_status}) {relation}\n"
         
-        # 添加详细JSON数据
-        output += "### 详细数据\n\n"
-        output += f"```json\n{json.dumps(result, ensure_ascii=False, indent=2)}\n```"
+        # 任务指导信息
+        guidance = ""
+        if has_unfinished_dependencies:
+            guidance = f"\n\n⚠️ **注意**: 此任务有未完成的依赖任务。建议先完成上面列出的依赖任务，然后再处理此任务。"
+        elif is_subtask:
+            guidance = f"\n\n**建议操作**:\n1. 查看任务详情: `get_task {task_id}`\n2. 开始处理任务\n3. 完成后标记为已完成: `update_task {task_id} status=done`"
+        elif has_subtasks and (todo_subtasks or in_progress_subtasks):
+            guidance = "\n\n**建议操作**:\n优先处理子任务，子任务全部完成后再标记主任务为已完成。"
+        else:
+            guidance = f"\n\n**建议操作**:\n1. 查看任务详情: `get_task {task_id}`\n2. 开始处理任务\n3. 完成后标记为已完成: `update_task {task_id} status=done`"
+        
+        # 构造最终响应
+        task_type = "子任务" if is_subtask else "主任务"
+        response = f"""## 下一个可执行{task_type}
+
+**ID**: {task_id}
+**名称**: {task["name"]}
+**优先级**: {task["priority"]}
+**状态**: {task["status"]}
+**描述**: {task["description"]}
+**标签**: {tags_str}
+**负责人**: {task["assigned_to"] or "未分配"}
+**预估工时**: {task["estimated_hours"] or "未设置"}
+**创建时间**: {task["created_at"]}{parent_task_info}{dependency_info}{sibling_tasks_info}{subtasks_info}{guidance}
+"""
+
+        return [
+            types.TextContent(
+                type="text",
+                text=response
+            )
+        ]
+    except Exception as e:
+        logger.error(f"获取可执行任务时出错: {str(e)}", exc_info=True)
         
         return [
             types.TextContent(
                 type="text",
-                text=output
+                text=f"获取可执行任务时出错: {str(e)}"
             )
         ]
-    
-    # 如果没有成功获取任务或发生错误，返回原始JSON
-    return [
-        types.TextContent(
-            type="text",
-            text=json.dumps(result, ensure_ascii=False, indent=2)
-        )
-    ]
 
 
 @mcp.tool("expand_task")
@@ -770,7 +898,7 @@ async def expand_task(task_id: str, num_subtasks: str = "5") -> list[types.TextC
         try:
             all_tasks = task_service.storage.list_tasks()
             # 只提取顶级任务（ID中不包含点号的任务）
-            main_tasks = [task_service._task_to_dict(task) for task in all_tasks if "." not in task.id]
+            main_tasks = [task_service.storage._task_to_dict(task) for task in all_tasks if "." not in task.id]
             logger.info(f"获取到 {len(main_tasks)} 个主任务作为上下文")
         except Exception as e:
             logger.warning(f"获取主任务列表失败: {str(e)}")
@@ -801,6 +929,14 @@ async def expand_task(task_id: str, num_subtasks: str = "5") -> list[types.TextC
             subtasks = result["subtasks"]
             subtask_count = len(subtasks)
             
+            # 确保新生成的子任务的 blocked_by 字段包含其所有依赖项
+            for subtask in subtasks:
+                dependencies = set(subtask.get('dependencies', []))
+                blocked_by = set(subtask.get('blocked_by', []))
+                blocked_by.update(dependencies) # 将所有依赖项加入 blocked_by
+                subtask['blocked_by'] = list(blocked_by) # 更新回列表格式
+                logger.debug(f"子任务 {subtask.get('id')} blocked_by 已更新为: {subtask['blocked_by']}")
+            
             # 将子任务添加到父任务的subtasks字段中
             if "subtasks" not in parent_task:
                 parent_task["subtasks"] = []
@@ -826,7 +962,7 @@ async def expand_task(task_id: str, num_subtasks: str = "5") -> list[types.TextC
             # 获取更新后的父任务以确保subtasks字段已正确更新
             updated_parent_task = task_service.storage.get_task(parent_task["id"])
             if updated_parent_task:
-                parent_task = task_service._task_to_dict(updated_parent_task)
+                parent_task = task_service.storage._task_to_dict(updated_parent_task)
                 logger.info(f"父任务 {parent_task['id']} 子任务更新成功，现有 {len(parent_task.get('subtasks', []))} 个子任务")
             
             # 构建Markdown子任务列表

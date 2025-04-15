@@ -84,7 +84,7 @@ class TaskService:
             response_data = {
                 "success": True,
                 "message": f"已从PRD中提取{len(tasks)}个任务",
-                "tasks": [self._task_to_dict(task) for task in tasks]
+                "tasks": [self.storage._task_to_dict(task) for task in tasks]
             }
             
             # 如果存在LLM解析错误，将其添加到响应中
@@ -153,7 +153,7 @@ class TaskService:
             return {
                 "success": True,
                 "message": "Task created successfully",
-                "task": self._task_to_dict(task)
+                "task": self.storage._task_to_dict(task)
             }
         except Exception as e:
             logger.error(f"创建任务失败: {str(e)}")
@@ -184,50 +184,90 @@ class TaskService:
                 
                 if parent_task and hasattr(parent_task, 'subtasks') and parent_task.subtasks:
                     subtask_found = False
+                    updated_subtask_object = None # 用于存储找到并更新的Task对象
+                    
                     for i, subtask in enumerate(parent_task.subtasks):
-                        if isinstance(subtask, dict) and subtask.get('id') == task_id:
-                            # 更新子任务属性 (不包括依赖，子任务依赖由父任务决定或单独管理)
+                        # --- 修复: 检查Task对象而不是字典 ---
+                        if isinstance(subtask, Task) and subtask.id == task_id:
+                            logger.info(f"找到子任务对象: {task_id}")
+                            # --- 修复: 直接更新Task对象的属性 ---
                             update_data_for_subtask = {k: v for k, v in kwargs.items() if k != 'dependencies'}
                             for field, value in update_data_for_subtask.items():
-                                if field != "id":
-                                    subtask[field] = value
+                                if hasattr(subtask, field) and field != "id":
+                                    # 特别处理枚举类型
+                                    if field == "status" and isinstance(value, str):
+                                        try: value = TaskStatus(value.lower())
+                                        except ValueError: 
+                                            logger.warning(f"更新子任务 {task_id} 时遇到无效状态值: {value}, 跳过更新状态")
+                                            continue
+                                    if field == "priority" and isinstance(value, str):
+                                        try: value = TaskPriority(value.lower())
+                                        except ValueError: 
+                                            logger.warning(f"更新子任务 {task_id} 时遇到无效优先级值: {value}, 跳过更新优先级")
+                                            continue
+                                    setattr(subtask, field, value)
                             
-                            subtask['updated_at'] = datetime.now().isoformat()
-                            if 'status' in update_data_for_subtask and update_data_for_subtask['status'] == TaskStatus.DONE:
-                                subtask['completed_at'] = datetime.now().isoformat()
+                            subtask.updated_at = datetime.now()
+                            if 'status' in update_data_for_subtask and subtask.status == TaskStatus.DONE:
+                                subtask.completed_at = datetime.now()
                             
-                            updated_parent = self.storage.update_task(parent_task_id, subtasks=parent_task.subtasks)
-                            
-                            status_changed = 'status' in update_data_for_subtask
-                            if status_changed and updated_parent:
-                                self._sync_parent_task_status(parent_task_id)
-                            
-                            if updated_parent:
-                                return {
-                                    "success": True,
-                                    "task": subtask,
-                                    "message": f"子任务 {task_id} 已更新"
-                                }
-                            else:
-                                return {
-                                    "success": False,
-                                    "error": f"更新父任务 {parent_task_id} 失败",
-                                    "error_code": "parent_task_update_failed"
-                                }
+                            subtask_found = True
+                            updated_subtask_object = subtask # 保存更新后的对象引用
+                            break # 找到并更新后退出循环
                     
                     if not subtask_found:
+                        logger.error(f"在父任务 {parent_task_id} 的子任务对象列表中未找到 ID 为 {task_id} 的任务")
                         return {
                             "success": False,
-                            "error": f"在父任务 {parent_task_id} 的子任务列表中未找到任务 {task_id}",
+                            "error": f"在父任务 {parent_task_id} 的子任务列表中未找到任务 {task_id}", # 保持错误信息一致性
                             "error_code": "subtask_not_found"
                         }
+                        
+                    # --- 修复: 调用 storage.update_task 保存整个父任务 (因为子任务是父任务的一部分) ---
+                    # TaskStorage.update_task 内部会处理 Task 对象列表
+                    logger.info(f"准备调用 storage.update_task 更新父任务 {parent_task_id} 以保存子任务 {task_id} 的变更")
+                    updated_parent = self.storage.update_task(parent_task_id, subtasks=parent_task.subtasks)
+                    
+                    if updated_parent:
+                        logger.info(f"父任务 {parent_task_id} 更新成功，子任务 {task_id} 变更已保存")
+                        
+                        # --- 新增: 如果子任务状态变为DONE，则解除其依赖者的阻塞 ---
+                        status_changed_to_done = False
+                        if 'status' in update_data_for_subtask and updated_subtask_object.status == TaskStatus.DONE:
+                            status_changed_to_done = True
+                        
+                        if status_changed_to_done:
+                            logger.info(f"子任务 {task_id} 状态更新为 DONE，调用解除依赖者阻塞逻辑")
+                            self.storage._unblock_dependents(task_id)
+                        
+                        # 同步父任务状态 (如果子任务状态改变)
+                        status_changed = 'status' in update_data_for_subtask
+                        if status_changed:
+                            self._sync_parent_task_status(parent_task_id)
+                            
+                        return {
+                            "success": True,
+                            # --- 修复: 返回更新后的子任务对象的字典表示 ---
+                            "task": self.storage._task_to_dict(updated_subtask_object),
+                            "message": f"子任务 {task_id} 已更新"
+                        }
+                    else:
+                        logger.error(f"调用 storage.update_task 更新父任务 {parent_task_id} 失败")
+                        return {
+                            "success": False,
+                            "error": f"更新父任务 {parent_task_id} 失败",
+                            "error_code": "parent_task_update_failed"
+                        }
+
                 else:
+                    # 父任务不存在或没有子任务列表的情况
+                    logger.error(f"查找父任务 {parent_task_id} 失败或该任务没有子任务列表")
                     return {
                         "success": False,
                         "error": f"父任务 {parent_task_id} 不存在或没有子任务列表",
                         "error_code": "parent_task_not_found"
                     }
-            
+
             # 处理普通任务(非子任务)的更新
             # 检查任务是否存在
             task = self.storage.get_task(task_id)
@@ -274,12 +314,17 @@ class TaskService:
                              self.storage.set_task_dependency(task_id, old_dep_id) # 忽略恢复的错误
                         return {"success": False, "error": f"Failed to set new dependency {new_dep_id}: {msg}", "error_code": "set_dependency_failed"}
 
+            task_was_updated_to_done = False # 标记状态是否变更为 DONE
             # 处理状态
             if "status" in kwargs:
                 status = kwargs["status"]
                 if isinstance(status, str):
                     try:
-                        kwargs["status"] = TaskStatus(status.lower())
+                        new_status_enum = TaskStatus(status.lower())
+                        # 检查状态是否实际改变为 DONE
+                        if task.status != TaskStatus.DONE and new_status_enum == TaskStatus.DONE:
+                            task_was_updated_to_done = True 
+                        kwargs["status"] = new_status_enum # 更新kwargs中的值为枚举
                     except ValueError:
                         return {
                             "success": False,
@@ -305,6 +350,13 @@ class TaskService:
             # 更新任务
             updated_task = self.storage.update_task(task_id, **kwargs)
             
+            # --- 新增: 如果任务状态变为DONE，则解除其依赖者的阻塞 ---
+            if task_was_updated_to_done and updated_task:
+                logger.info(f"任务 {task_id} 状态更新为 DONE，调用解除依赖者阻塞逻辑")
+                self.storage._unblock_dependents(task_id)
+                # 需要重新获取任务以反映解除阻塞后的 blocked_by 状态
+                updated_task = self.storage.get_task(task_id)
+
             # 处理代码引用更新
             if "code_files" in kwargs and kwargs["code_files"]:
                 code_files = kwargs["code_files"]
@@ -319,7 +371,7 @@ class TaskService:
                 final_task = self.storage.get_task(task_id) if new_dependencies is not None else updated_task
                 return {
                     "success": True,
-                    "task": self._task_to_dict(final_task),
+                    "task": self.storage._task_to_dict(final_task),
                     "message": f"Task {task_id} updated successfully"
                 }
             else:
@@ -359,10 +411,14 @@ class TaskService:
             # 收集所有子任务状态
             child_statuses = []
             for subtask in parent_task.subtasks:
-                if isinstance(subtask, dict) and 'status' in subtask:
+                # --- 修复: 从 Task 对象获取状态 ---
+                if isinstance(subtask, Task):
+                    child_statuses.append(subtask.status)
+                elif isinstance(subtask, dict) and 'status' in subtask: # 保留对旧格式字典的兼容性（以防万一）
                     child_statuses.append(subtask['status'])
             
             if not child_statuses:
+                logger.warning(f"无法从父任务 {parent_task_id} 的子任务列表获取状态")
                 return
             
             # 确定父任务的新状态
@@ -432,7 +488,7 @@ class TaskService:
                 "success": True,
                 "message": "Dependencies updated",
                 "results": results,
-                "task": self._task_to_dict(updated_task)
+                "task": self.storage._task_to_dict(updated_task)
             }
         except Exception as e:
             logger.error(f"设置任务依赖关系失败: {str(e)}")
@@ -509,7 +565,7 @@ class TaskService:
                 "total": total,
                 "page": page,
                 "page_size": page_size,
-                "tasks": [self._task_to_dict(task) for task in tasks]
+                "tasks": [self.storage._task_to_dict(task) for task in tasks]
             }
         except Exception as e:
             logger.error(f"获取任务列表失败: {str(e)}")
@@ -548,7 +604,7 @@ class TaskService:
             return {
                 "success": True,
                 "found": True,
-                "task": self._task_to_dict(next_task)
+                "task": self.storage._task_to_dict(next_task)
             }
         except Exception as e:
             logger.error(f"获取可执行任务失败: {str(e)}")
@@ -586,7 +642,7 @@ class TaskService:
             return {
                 "success": True,
                 "message": f"Task {task_id} has been marked as done",
-                "task": self._task_to_dict(task)
+                "task": self.storage._task_to_dict(task)
             }
         except Exception as e:
             logger.error(f"标记任务完成失败: {str(e)}")
@@ -641,11 +697,15 @@ class TaskService:
                 
                 if parent_task and hasattr(parent_task, 'subtasks') and parent_task.subtasks:
                     subtask_found = False
+                    updated_subtask_object = None
                     for subtask in parent_task.subtasks:
-                        if isinstance(subtask, dict) and subtask.get('id') == task_id:
-                            subtask['code_references'] = code_references
-                            subtask['updated_at'] = datetime.now().isoformat()
+                        # --- 修复: 检查 Task 对象 ---
+                        if isinstance(subtask, Task) and subtask.id == task_id:
+                            # --- 修复: 更新 Task 对象属性 ---
+                            subtask.code_references = code_references
+                            subtask.updated_at = datetime.now()
                             subtask_found = True
+                            updated_subtask_object = subtask
                             break
                     
                     if not subtask_found:
@@ -655,15 +715,14 @@ class TaskService:
                             "error_code": "subtask_not_found"
                         }
                         
-                    # 更新父任务以保存子任务变更
+                    # --- 修复: 更新父任务以保存子任务变更 ---
                     updated_parent = self.storage.update_task(parent_task_id, subtasks=parent_task.subtasks)
                     if updated_parent:
-                        # 查找更新后的子任务字典返回
-                        updated_subtask_dict = next((st for st in updated_parent.subtasks if isinstance(st, dict) and st.get('id') == task_id), None)
+                        # --- 修复: 返回更新后的子任务对象的字典表示 ---
                         return {
                             "success": True,
                             "message": f"Successfully updated code references for subtask {task_id}",
-                            "task": updated_subtask_dict
+                            "task": self.storage._task_to_dict(updated_subtask_object) # 使用 _task_to_dict 转换
                         }
                     else:
                         return {
@@ -694,7 +753,7 @@ class TaskService:
                     return {
                         "success": True,
                         "message": f"Successfully updated code references for task {task_id}",
-                        "task": self._task_to_dict(updated_task)
+                        "task": self.storage._task_to_dict(updated_task)
                     }
                 else:
                     # 更新失败通常意味着任务不存在，虽然前面检查过，但以防万一
@@ -711,37 +770,6 @@ class TaskService:
                 "error": f"Error updating code references for task {task_id}: {e}",
                 "error_code": "update_code_reference_error"
             }
-    
-    def _task_to_dict(self, task: Task) -> Dict[str, Any]:
-        """将Task对象转换为字典"""
-        if not task:
-            return {}
-            
-        # 从任务ID中提取父任务ID，如果有的话
-        parent_task_id = None
-        if "." in task.id:
-            parent_task_id = task.id.rsplit(".", 1)[0]
-            
-        return {
-            "id": task.id,
-            "name": task.name,
-            "description": task.description,
-            "status": task.status,
-            "priority": task.priority,
-            "dependencies": list(task.dependencies),
-            "blocked_by": list(task.blocked_by),
-            "created_at": task.created_at.isoformat(),
-            "updated_at": task.updated_at.isoformat(),
-            "completed_at": task.completed_at.isoformat() if task.completed_at else None,
-            "tags": task.tags,
-            "assigned_to": task.assigned_to,
-            "estimated_hours": task.estimated_hours,
-            "actual_hours": task.actual_hours,
-            "code_references": task.code_references,
-            "parent_task_id": parent_task_id,
-            "complexity": task.complexity,
-            "subtasks": task.subtasks if hasattr(task, 'subtasks') else []
-        }
     
     async def expand_task(
         self,
@@ -773,7 +801,7 @@ class TaskService:
         if not self.prd_parser.llm_client:
             return {"success": False, "error": "LLM client not available. Cannot generate subtasks."}
         
-        parent_task_dict = self._task_to_dict(parent_task)
+        parent_task_dict = self.storage._task_to_dict(parent_task)
         
         try:
             # 调用LLM客户端生成子任务数据
@@ -786,13 +814,11 @@ class TaskService:
 
             processed_subtasks_data = []
             # 获取父任务当前的 subtasks 列表，用于生成 ID 和合并
-            # **警告**: 这假设 parent_task.subtasks 是 List[Dict] 或 None/List[]
             current_subtasks_list = []
-            if isinstance(parent_task.subtasks, list):
+            if hasattr(parent_task, 'subtasks') and isinstance(parent_task.subtasks, list):
                 current_subtasks_list = parent_task.subtasks
-            elif parent_task.subtasks:
-                 logger.warning(f"Parent task {task_id} subtasks field is not a list or None. Initializing as empty list.")
-
+            else:
+                logger.warning(f"Parent task {task_id} subtasks field is not a list or None. Initializing as empty list.")
 
             for index, subtask_data in enumerate(subtasks_data_from_llm):
                 # 确保有 ID，如果LLM没提供，生成一个基于父ID的
@@ -830,9 +856,22 @@ class TaskService:
 
                 processed_subtasks_data.append(subtask_data)
 
-            # 更新父任务，将新的子任务数据列表合并到现有列表后存入 subtasks 字段
-            # **警告**: 这假设 TaskStorage.update_task 和 Task model 支持 subtasks: List[Dict]
-            all_subtasks_data = current_subtasks_list + processed_subtasks_data
+            # 将新的子任务数据加入现有子任务后更新父任务
+            # 直接使用字典操作，避免类型混用问题
+            all_subtasks_data = []
+            # 确保现有子任务是以字典形式
+            for subtask in current_subtasks_list:
+                if isinstance(subtask, dict):
+                    all_subtasks_data.append(subtask)
+                elif hasattr(subtask, '__dict__'):  # 如果是Task对象
+                    all_subtasks_data.append(self.storage._task_to_dict(subtask))
+                else:
+                    logger.warning(f"跳过无效子任务数据类型: {type(subtask)}")
+            
+            # 添加新生成的子任务
+            all_subtasks_data.extend(processed_subtasks_data)
+            
+            # 更新父任务
             update_result = self.storage.update_task(task_id, subtasks=all_subtasks_data)
 
             if not update_result:
@@ -846,7 +885,7 @@ class TaskService:
 
             # 获取更新后的父任务以确认更改
             updated_parent_task = self.storage.get_task(task_id)
-            updated_parent_task_dict = self._task_to_dict(updated_parent_task) if updated_parent_task else parent_task_dict
+            updated_parent_task_dict = self.storage._task_to_dict(updated_parent_task) if updated_parent_task else parent_task_dict
 
 
             # 返回结果
