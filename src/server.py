@@ -502,8 +502,32 @@ async def get_task(task_id: str) -> list[types.TextContent]:
         List: 包含任务详细信息的格式化响应
     """
     logger.info(f"获取任务 {task_id} 的详情")
-    
-    task = task_service.storage.get_task(task_id)
+    if "." in task_id:
+        # 找到主任务，按原有方式处理
+        task = task_service.storage.get_task(task_id)
+    else:
+        # 找到子任务，按子任务方式处理
+        # 先找到主任务
+        main_task_id = task_id.split(".")[0]
+        task = task_service.storage.get_task(main_task_id)
+        if not task:
+            return [
+                types.TextContent(
+                    type="text",
+                    text=json.dumps({
+                        "success": False,
+                        "error": f"Task not found: {task_id}",
+                        "error_code": "task_not_found"
+                    }, ensure_ascii=False)
+                )
+            ]
+        else:
+            # 找到子任务，按子任务方式处理
+            subtasks = task.subtasks
+            for subtask in subtasks:
+                if subtask.id == task_id:
+                    task = subtask
+                    break
     if not task:
         result = {
             "success": False,
@@ -642,7 +666,7 @@ async def get_next_executable_task(limit: str = "5") -> list[types.TextContent]:
     """获取下一个可执行任务
     
     返回一个最优先的可执行任务，按照以下逻辑排序：
-    1. 首先查找状态为'in_progress'的任务，优先返回这些任务
+    1. 首先查找状态为'in_progress'的任务（包括主任务和子任务），优先返回这些任务
     2. 如果没有'in_progress'状态的任务，则查找所有状态为'todo'且没有未完成依赖的任务
     3. 按优先级排序（critical > high > medium > low）
     4. 同等优先级下，被更多任务依赖的排前面
