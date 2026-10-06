@@ -4,11 +4,14 @@
 提供任务的业务逻辑实现
 """
 
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Callable, Dict, List, Optional, Any, Tuple
 import logging
 import sys
 import os
 import traceback
+import copy
+import json
+import tempfile
 from datetime import datetime
 
 # 将项目根目录添加到Python路径
@@ -20,12 +23,14 @@ try:
     from ..storage.task_storage import TaskStorage
     from ..services.prd_parser import PrdParser
     # Import the LLM interface for type hinting
-    from ..llm.base import LLMInterface 
+    from ..llm.base import LLMInterface
+    from ..utils.file_operations import replace_text_files
 except (ImportError, ValueError):
     from src.models.task import Task, TaskStatus, TaskPriority
     from src.storage.task_storage import TaskStorage
     from src.services.prd_parser import PrdParser
     from src.llm.base import LLMInterface
+    from src.utils.file_operations import replace_text_files
 
 # 配置日志
 logger = logging.getLogger(__name__)
@@ -50,16 +55,28 @@ class TaskService:
         """清空所有任务"""
         self.storage.clear_all_tasks()
     
-    async def decompose_prd(self, prd_content: str) -> Dict[str, Any]:
+    async def decompose_prd(
+        self,
+        prd_content: str,
+        prepare_outputs: Optional[Callable[[Dict[str, Any]], Dict[str, str]]] = None,
+    ) -> Dict[str, Any]:
         """
         解析PRD文档，自动拆解为任务列表
         
         Args:
             prd_content: PRD文档内容或文件路径
+            prepare_outputs: 可选的同步导出函数，返回文件路径到文本内容的映射。
             
         Returns:
             Dict: 包含提取任务信息的响应
         """
+        if not isinstance(prd_content, str) or not prd_content.strip():
+            return {
+                "success": False,
+                "error": "PRD content must be a non-empty string",
+                "error_code": "invalid_prd_content",
+            }
+
         logger.info(f"解析PRD文档: {prd_content[:50]}...")
         
         # 处理文件路径
@@ -76,23 +93,77 @@ class TaskService:
                     "error_code": "file_read_error"
                 }
         
-        try:
-            # 解析PRD，现在返回 (任务列表, LLM错误信息或None)
-            tasks, llm_error = await self.prd_parser.parse(prd_content)
-            
-            # 构造成功响应
-            response_data = {
-                "success": True,
-                "message": f"已从PRD中提取{len(tasks)}个任务",
-                "tasks": [self.storage._task_to_dict(task) for task in tasks]
+        if not prd_content.strip():
+            return {
+                "success": False,
+                "error": "PRD content must not be empty",
+                "error_code": "invalid_prd_content",
             }
-            
-            # 如果存在LLM解析错误，将其添加到响应中
-            if llm_error:
-                response_data["llm_parsing_warning"] = f"LLM parsing failed, fell back to basic parsing. Error: {llm_error}"
-                
-            return response_data
-            
+
+        try:
+            # Parse into a private store: both parser paths write as they go, and
+            # the LLM path clears its store before awaiting the provider.
+            original_tasks = copy.deepcopy(self.storage.tasks)
+            original_graph = copy.deepcopy(self.storage.dependency_graph)
+            with tempfile.TemporaryDirectory(
+                prefix="task-manager-prd-", ignore_cleanup_errors=True,
+            ) as staging_dir:
+                staged_storage = TaskStorage(tasks_dir=staging_dir)
+                parser = copy.copy(self.prd_parser)
+                parser.storage = staged_storage
+                tasks, llm_error = await parser.parse(prd_content)
+                if not tasks or not staged_storage.tasks:
+                    return {
+                        "success": False,
+                        "error": "No tasks could be extracted from the PRD",
+                        "error_code": "no_tasks_extracted",
+                    }
+
+                # TaskStorage only persists top-level main tasks. Orphan
+                # subtasks (including children listed before their parent) must
+                # not turn a nonempty parse into an empty/truncated saved result.
+                if any(not task_id or "." in task_id for task_id in staged_storage.tasks):
+                    return {
+                        "success": False,
+                        "error": "Parsed tasks contain an invalid root ID or orphan subtask",
+                        "error_code": "invalid_task_hierarchy",
+                    }
+                persisted_tasks = [
+                    staged_storage._task_to_dict(task)
+                    for task in staged_storage.tasks.values()
+                ]
+
+                response_data = {
+                    "success": True,
+                    "message": f"已从PRD中提取{len(tasks)}个任务",
+                    "tasks": [staged_storage._task_to_dict(task) for task in tasks],
+                }
+                if llm_error:
+                    response_data["llm_parsing_warning"] = (
+                        "LLM parsing failed, fell back to basic parsing. "
+                        f"Error: {llm_error}"
+                    )
+
+                # Build every output before touching the current result. Use
+                # in-memory tasks because legacy staging writes log I/O errors.
+                outputs = prepare_outputs(response_data) if prepare_outputs else {}
+                outputs[self.storage.master_file_path] = json.dumps(
+                    persisted_tasks,
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                if (self.storage.tasks != original_tasks
+                        or self.storage.dependency_graph != original_graph):
+                    return {
+                        "success": False,
+                        "error": "Tasks changed while parsing; please retry",
+                        "error_code": "tasks_changed",
+                    }
+                replace_text_files(outputs)
+                self.storage.tasks = staged_storage.tasks
+                self.storage.dependency_graph = staged_storage.dependency_graph
+                return response_data
+
         except Exception as e:
             # 记录更详细的错误信息，包括异常类型和堆栈跟踪
             error_details = traceback.format_exc()

@@ -9,7 +9,6 @@ import os
 import json
 # ----> Remove httpx, add google.genai <----
 # import httpx 
-import google.generativeai as genai
 from typing import List, Dict, Optional, Any, Tuple
 # ----> Remove asyncio? (Maybe not needed directly) <----
 # import asyncio 
@@ -24,12 +23,10 @@ try:
     from ..models.task import Task, TaskStatus, TaskPriority
     from ..storage.task_storage import TaskStorage
     # ----> Import the new LLM class <----
-    from ..llm.gemini import GeminiLLM
     from ..llm.base import LLMInterface # Import base for type hinting if needed
 except (ImportError, ValueError):
     from src.models.task import Task, TaskStatus, TaskPriority
     from src.storage.task_storage import TaskStorage
-    from src.llm.gemini import GeminiLLM
     from src.llm.base import LLMInterface
 
 # ----> 获取 logger 实例 <----
@@ -95,7 +92,8 @@ class PrdParser:
                 llm_error_msg = f"{type(e).__name__}: {str(e)}"
                 logger.error(f"[PrdParser Parse] LLM parsing failed: {llm_error_msg}", exc_info=True) 
                 logger.info("[PrdParser Parse] Falling back to basic regex parsing.")
-                llm_error = llm_error_msg 
+                llm_error = llm_error_msg
+                self.storage.clear_all_tasks()
         else:
              # No LLM client provided, go directly to fallback
              logger.info("[PrdParser Parse] No LLM client provided. Using basic regex parsing.")
