@@ -20,7 +20,7 @@ from services.task_service import TaskService
 from config import get_llm_client
 # 导入新的工具函数
 from utils.logging_config import setup_logging
-from utils.file_operations import save_task_to_json, save_tasks_to_json, clear_directory
+from utils.file_operations import save_task_to_json, save_tasks_to_json
 from utils.task_utils import generate_next_task_id, format_task_table
 from src.models.task import Task
 
@@ -77,143 +77,101 @@ async def decompose_prd(prd_content: str) -> list[types.TextContent]:
     """
     global PROJECT_PRD_CONTENT
     
-    logger.info(f"清空现有任务并解析PRD文档为主任务: {prd_content[:50]}...")
-    
-    # 保存PRD内容到全局变量
-    PROJECT_PRD_CONTENT = prd_content
-    logger.info("已保存PRD内容到全局变量，供后续任务展开使用")
-    
-    # 先清空所有任务和相关文件
-    try:
-        # 清空任务存储
-        logger.info("清空任务存储中的所有任务...")
-        task_service.clear_all_tasks()
-        
-        # 清空任务JSON文件和Markdown文件
-        clear_directory(TASKS_DIR)
-        clear_directory(MD_DIR)
-        logger.info("所有任务相关文件已清空")
-        
-        # 验证清空操作是否成功
-        all_tasks_file = os.path.join(TASKS_DIR, "all_tasks.json")
-        if os.path.exists(all_tasks_file):
-            # 检查文件是否为空数组
-            try:
-                with open(all_tasks_file, 'r', encoding='utf-8') as f:
-                    content = json.load(f)
-                    if content and len(content) > 0:
-                        logger.warning(f"任务文件清空后仍包含 {len(content)} 个任务，尝试重新创建空文件")
-                        with open(all_tasks_file, 'w', encoding='utf-8') as f:
-                            json.dump([], f)
-            except Exception as e:
-                logger.warning(f"检查任务文件时出错: {e}，将重新创建空文件")
-                with open(all_tasks_file, 'w', encoding='utf-8') as f:
-                    json.dump([], f)
-    except Exception as clear_e:
-        logger.error(f"清空任务或文件失败: {clear_e}")
-        # 即使清空失败，也继续尝试解析，但要记录错误
-        pass
-    
-    try:
-        result = await task_service.decompose_prd(prd_content)
-        
-        if result["success"] and result["tasks"]:
-            # 只保留主任务（无 . 的任务ID）
-            main_tasks = [task for task in result["tasks"] if "." not in task["id"]]
-            
-            # 为每个主任务添加空的subtasks字段
-            for task in main_tasks:
-                if "subtasks" not in task:
-                    task["subtasks"] = []
-            
-            result["tasks"] = main_tasks
-            result["message"] = f"已从PRD中提取{len(main_tasks)}个主任务"
-            
-            tasks = main_tasks
-            task_count = len(tasks)
-            
-            # 计算任务状态和优先级统计
-            status_stats = {}
-            priority_stats = {}
-            tag_stats = {}
-            
-            for task in tasks:
-                # 状态统计
-                status = task["status"]
-                status_stats[status] = status_stats.get(status, 0) + 1
-                
-                # 优先级统计
-                priority = task["priority"]
-                priority_stats[priority] = priority_stats.get(priority, 0) + 1
-                
-                # 标签统计
-                for tag in task["tags"]:
-                    tag_stats[tag] = tag_stats.get(tag, 0) + 1
-            
-            # 构建任务列表表格
-            table = format_task_table(tasks, ["id", "name", "status", "priority", "estimated_hours", "tags"])
-            
-            # 构建优先级统计表格
-            priority_table = "| 优先级 | 数量 | 百分比 |\n"
-            priority_table += "|--------|------|--------|\n"
-            
-            for priority in ["critical", "high", "medium", "low"]:
-                count = priority_stats.get(priority, 0)
-                percentage = (count / task_count) * 100 if task_count > 0 else 0
-                priority_table += f"| {priority} | {count} | {percentage:.1f}% |\n"
-            
-            # 构建标签统计
-            tag_list = [f"**{tag}** ({count})" for tag, count in sorted(tag_stats.items(), key=lambda x: x[1], reverse=True)]
-            tag_summary = ", ".join(tag_list) if tag_list else "无标签"
-            
-            # 检查是否有 LLM 解析警告
-            llm_warning = ""
-            if "llm_parsing_warning" in result:
-                llm_warning = f"\n\n**警告: 使用大模型解析PRD失败，已回退到基本标题解析。**\n错误详情: `{result['llm_parsing_warning']}`\n"
-            
-            # 创建Markdown任务列表
-            md_content = "# PRD主任务列表\n\n"
-            md_content += f"## 摘要\n已从PRD中提取 **{task_count}** 个主任务。\n\n"
-            
-            if llm_warning:
-                md_content += f"## 警告\n{llm_warning}\n\n"
-            
-            md_content += "## 优先级分布\n"
-            md_content += priority_table + "\n\n"
-            
-            md_content += f"## 标签统计\n{tag_summary}\n\n"
-            
-            md_content += "## 任务列表\n"
-            
-            for task in tasks:
-                md_content += f"### {task['name']}\n"
-                md_content += f"- **ID**: {task['id']}\n"
-                md_content += f"- **优先级**: {task['priority']}\n"
-                md_content += f"- **状态**: {task['status']}\n"
-                if task.get("parent_task_id"):
-                    md_content += f"- **父任务**: {task['parent_task_id']}\n"
-                if task["estimated_hours"]:
-                    md_content += f"- **估计工时**: {task['estimated_hours']} 小时\n"
-                if task["tags"]:
-                    md_content += f"- **标签**: {', '.join(task['tags'])}\n"
-                md_content += f"- **描述**: {task['description']}\n\n"
-            
-            # 修改保存Markdown文件的路径
-            md_filename = f"prd_main_tasks.md"
-            md_file_path = os.path.join(MD_DIR, md_filename)
- 
-            json_file_name = f"all_tasks.json"
-            json_file_path = os.path.join(TASKS_DIR, json_file_name)
-            
-            try:
-                with open(md_file_path, "w", encoding="utf-8") as f:
-                    f.write(md_content)
-                logger.info(f"主任务列表已写入文件: {md_file_path}")
-            except Exception as file_e:
-                logger.error(f"写入Markdown文件失败: {str(file_e)}")
-            
-            # 最终输出
-            formatted_output = f"""## PRD解析结果 - 仅主任务
+    formatted_output = ""
+
+    def prepare_outputs(result):
+        # Render before committing either JSON or Markdown so export failures
+        # cannot replace a previously successful result.
+        nonlocal formatted_output
+        # 只保留主任务（无 . 的任务ID）
+        main_tasks = [task for task in result["tasks"] if "." not in task["id"]]
+
+        # 为每个主任务添加空的subtasks字段
+        for task in main_tasks:
+            if "subtasks" not in task:
+                task["subtasks"] = []
+
+        result["tasks"] = main_tasks
+        result["message"] = f"已从PRD中提取{len(main_tasks)}个主任务"
+
+        tasks = main_tasks
+        task_count = len(tasks)
+
+        # 计算任务状态和优先级统计
+        status_stats = {}
+        priority_stats = {}
+        tag_stats = {}
+
+        for task in tasks:
+            # 状态统计
+            status = task["status"]
+            status_stats[status] = status_stats.get(status, 0) + 1
+
+            # 优先级统计
+            priority = task["priority"]
+            priority_stats[priority] = priority_stats.get(priority, 0) + 1
+
+            # 标签统计
+            for tag in task["tags"]:
+                tag_stats[tag] = tag_stats.get(tag, 0) + 1
+
+        # 构建任务列表表格
+        table = format_task_table(tasks, ["id", "name", "status", "priority", "estimated_hours", "tags"])
+
+        # 构建优先级统计表格
+        priority_table = "| 优先级 | 数量 | 百分比 |\n"
+        priority_table += "|--------|------|--------|\n"
+
+        for priority in ["critical", "high", "medium", "low"]:
+            count = priority_stats.get(priority, 0)
+            percentage = (count / task_count) * 100 if task_count > 0 else 0
+            priority_table += f"| {priority} | {count} | {percentage:.1f}% |\n"
+
+        # 构建标签统计
+        tag_list = [f"**{tag}** ({count})" for tag, count in sorted(tag_stats.items(), key=lambda x: x[1], reverse=True)]
+        tag_summary = ", ".join(tag_list) if tag_list else "无标签"
+
+        # 检查是否有 LLM 解析警告
+        llm_warning = ""
+        if "llm_parsing_warning" in result:
+            llm_warning = f"\n\n**警告: 使用大模型解析PRD失败，已回退到基本标题解析。**\n错误详情: `{result['llm_parsing_warning']}`\n"
+
+        # 创建Markdown任务列表
+        md_content = "# PRD主任务列表\n\n"
+        md_content += f"## 摘要\n已从PRD中提取 **{task_count}** 个主任务。\n\n"
+
+        if llm_warning:
+            md_content += f"## 警告\n{llm_warning}\n\n"
+
+        md_content += "## 优先级分布\n"
+        md_content += priority_table + "\n\n"
+
+        md_content += f"## 标签统计\n{tag_summary}\n\n"
+
+        md_content += "## 任务列表\n"
+
+        for task in tasks:
+            md_content += f"### {task['name']}\n"
+            md_content += f"- **ID**: {task['id']}\n"
+            md_content += f"- **优先级**: {task['priority']}\n"
+            md_content += f"- **状态**: {task['status']}\n"
+            if task.get("parent_task_id"):
+                md_content += f"- **父任务**: {task['parent_task_id']}\n"
+            if task["estimated_hours"]:
+                md_content += f"- **估计工时**: {task['estimated_hours']} 小时\n"
+            if task["tags"]:
+                md_content += f"- **标签**: {', '.join(task['tags'])}\n"
+            md_content += f"- **描述**: {task['description']}\n\n"
+
+        # 修改保存Markdown文件的路径
+        md_filename = f"prd_main_tasks.md"
+        md_file_path = os.path.join(MD_DIR, md_filename)
+
+        json_file_name = f"all_tasks.json"
+        json_file_path = os.path.join(TASKS_DIR, json_file_name)
+
+        # 最终输出
+        formatted_output = f"""## PRD解析结果 - 仅主任务
 {llm_warning}
 ### 摘要
 已从PRD中提取 **{task_count}** 个主任务。
@@ -234,14 +192,15 @@ async def decompose_prd(prd_content: str) -> list[types.TextContent]:
 {json.dumps(result, ensure_ascii=False, indent=2)}
 ```
 """
-            
-            return [
-                types.TextContent(
-                    type="text",
-                    text=formatted_output
-                )
-            ]
-        
+
+        return {md_file_path: md_content}
+
+    try:
+        result = await task_service.decompose_prd(prd_content, prepare_outputs=prepare_outputs)
+        if result["success"]:
+            PROJECT_PRD_CONTENT = prd_content
+            return [types.TextContent(type="text", text=formatted_output)]
+
         # 如果没有成功提取任务或处理失败，返回原始JSON或添加提示
         if not result["success"] and result.get("tasks"):
             # 任务已创建但后续处理失败
@@ -270,18 +229,18 @@ async def decompose_prd(prd_content: str) -> list[types.TextContent]:
             ]
     except Exception as e:
         logger.error(f"PRD解析失败: {str(e)}", exc_info=True)  # 添加exc_info=True获取完整堆栈
-        
+
         # 获取详细的异常信息
         import traceback
         error_traceback = traceback.format_exc()
-        
+
         error_result = {
             "success": False,
             "error": f"PRD解析失败: {str(e)}",
             "error_code": "prd_parse_error",
             "error_details": error_traceback  # 添加完整的异常堆栈信息
         }
-        
+
         return [
             types.TextContent(
                 type="text",

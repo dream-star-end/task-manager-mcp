@@ -373,4 +373,30 @@
 | `estimated_hours` | number | 预估工时 |
 | `actual_hours` | number | 实际工时 |
 | `assigned_to` | string | 任务负责人 |
-| `tags` | array | 任务标签列表 | 
+| `tags` | array | 任务标签列表 |
+
+### PRD replacement and failure safety
+
+`decompose_prd` replaces the current task collection only after parsing yields
+at least one task and the new JSON/Markdown outputs have been prepared. Missing,
+unreadable, invalid UTF-8 or empty input files, empty input text, parsing errors,
+and results without tasks leave the previous task collection and outputs intact.
+Invalid root IDs and orphan subtasks return `invalid_task_hierarchy`; put parent
+tasks before their children when supplying a custom parser/provider.
+The server also keeps its previous PRD context until publication succeeds.
+
+Outputs are prepared in temporary files beside their destinations, then each
+file is replaced atomically. If a replacement raises an error, previously
+replaced files are restored from temporary backups. A persistent disk failure
+can also prevent rollback; in that case the remaining recovery backup path is
+logged and its file is retained. This is not crash-atomic across multiple files
+and does not coordinate multiple server processes. Keep normal backups.
+
+A concurrent task edit during an awaited parse returns `tasks_changed` rather
+than overwriting that edit. A provider failure may still successfully use the
+existing heading-based fallback, reported with `llm_parsing_warning`.
+
+The operation no longer clears entire output directories. It updates only
+`all_tasks.json` and `prd_main_tasks.md`; unrelated files and previous per-task
+exports are retained. Those historical exports may be stale after a successful
+replacement. Use `all_tasks.json` or the task tools as the current source of truth.

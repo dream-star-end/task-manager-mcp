@@ -7,9 +7,73 @@
 import logging
 import os
 import json
+import shutil
+import tempfile
 from typing import Dict, Any, Optional, List
 
 logger = logging.getLogger(__name__)
+
+
+def replace_text_files(contents: Dict[str, str]) -> None:
+    """Prepare all outputs, then replace each file atomically.
+
+    Roll back already replaced files on an ordinary I/O failure. This is not a
+    cross-process transaction or a crash-recovery journal. Unrelated files are
+    never removed, and recovery backups are retained if rollback itself fails.
+    """
+    prepared = {}
+    backups = {}
+    published = []
+    retained_backups = set()
+    try:
+        for destination, content in contents.items():
+            path = os.path.abspath(destination)
+            if path in prepared or os.path.islink(path):
+                raise ValueError(f"Duplicate or symlink output path: {path}")
+            directory = os.path.dirname(path)
+            with tempfile.NamedTemporaryFile(
+                mode="w", encoding="utf-8", dir=directory,
+                prefix=".prd-new-", delete=False,
+            ) as output:
+                prepared[path] = output.name
+                output.write(content)
+                output.flush()
+                os.fsync(output.fileno())
+            backups[path] = None
+            if os.path.exists(path):
+                with tempfile.NamedTemporaryFile(
+                    dir=directory, prefix=".prd-backup-", delete=False,
+                ) as backup:
+                    backups[path] = backup.name
+                shutil.copy2(path, backups[path])
+                shutil.copymode(path, prepared[path])
+
+        for path, temporary_path in prepared.items():
+            os.replace(temporary_path, path)
+            published.append(path)
+    except BaseException:
+        for path in reversed(published):
+            try:
+                if backups[path] is None:
+                    os.unlink(path)
+                else:
+                    os.replace(backups[path], path)
+            except OSError:
+                if backups[path] is not None:
+                    retained_backups.add(backups[path])
+                logger.exception(
+                    "Could not restore %s; recovery backup: %s", path, backups[path]
+                )
+        raise
+    finally:
+        for path in list(prepared.values()) + list(backups.values()):
+            if path is not None and path not in retained_backups:
+                try:
+                    os.unlink(path)
+                except FileNotFoundError:
+                    pass
+                except OSError:
+                    logger.warning("Could not remove temporary file %s", path)
 
 def save_task_to_json(task_dict: Dict[str, Any], tasks_dir: str) -> Optional[str]:
     """将任务保存到JSON文件
