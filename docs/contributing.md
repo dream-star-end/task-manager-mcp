@@ -267,4 +267,18 @@ task-manager-mcp/
 
 ---
 
-再次感谢您的贡献！如有任何问题，请随时联系项目维护者。 
+再次感谢您的贡献！如有任何问题，请随时联系项目维护者。
+
+### Offline PRD data-safety regressions
+
+Run the regression suite without API keys or live provider calls:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+The tests need Python 3.10+, Pydantic 2 and the MCP SDK. They use temporary
+synthetic files, the real parser/service/storage and the registered server
+function; the provider factory is replaced in server tests. Permission errors,
+provider failures and output failures are injected deterministically. This is
+not a live-provider or MCP transport integration test.
